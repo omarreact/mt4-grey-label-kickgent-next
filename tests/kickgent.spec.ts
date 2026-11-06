@@ -36,7 +36,7 @@ test("mobile global navigation and submenu are usable", async ({ page }, testInf
   await expect(toggle).toHaveCSS("min-height", "44px");
   await toggle.click();
   await expect(toggle).toHaveAttribute("aria-expanded", "true");
-  await expect(navigation).toHaveClass(/is-open/);
+  await expect(navigation).toBeVisible();
   const solutions = navigation.getByRole("button", { name: "Solutions" });
   await solutions.click();
   await expect(solutions).toHaveAttribute("aria-expanded", "true");
