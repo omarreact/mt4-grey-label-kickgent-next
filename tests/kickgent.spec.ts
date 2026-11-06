@@ -125,3 +125,24 @@ test("legacy inner-page image overlays receive the global glass treatment", asyn
   await expect(overlay).toBeVisible();
   await expect(overlay).toHaveCSS("backdrop-filter", /blur/);
 });
+
+
+test("fixed floating header and image-backed hero are preserved", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Visual shell check runs once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/");
+
+  const header = page.locator("[data-site-header]");
+  await expect(header).toHaveCSS("position", "fixed");
+
+  const hero = page.locator("[data-hero-banner]");
+  await expect(hero).toBeVisible();
+  const image = hero.locator("img").first();
+  await expect(image).toHaveAttribute("src", /images\.unsplash\.com\/photo-1556761175-4b46a572b786/);
+
+  const floats = hero.locator("[data-hero-float]");
+  await expect(floats).toHaveCount(3);
+  for (let index = 0; index < 3; index += 1) {
+    await expect(floats.nth(index)).toHaveCSS("backdrop-filter", /blur/);
+  }
+});

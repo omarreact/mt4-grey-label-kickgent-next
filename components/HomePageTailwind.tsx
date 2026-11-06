@@ -172,86 +172,105 @@ export function HomePageTailwind() {
 
   return (
     <main className="overflow-hidden bg-[#100414] text-white">
-      <section className="relative isolate px-4 pb-20 pt-20 sm:px-6 sm:pb-24 sm:pt-24 lg:pb-28">
-        <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_50%_34%,rgba(148,72,247,.34),transparent_34%),radial-gradient(circle_at_12%_82%,rgba(219,39,119,.16),transparent_28%),linear-gradient(180deg,#120518_0%,#1a0723_58%,#47106f_100%)]" />
-        <div className="absolute inset-x-[8%] top-24 -z-10 h-[620px] rounded-[50%] border border-fuchsia-200/10 blur-[.2px]" />
+      <section
+        data-hero-banner
+        className="relative isolate min-h-[930px] overflow-hidden px-4 pb-0 pt-[150px] text-white sm:px-6 sm:pt-[170px] lg:pt-[190px]"
+      >
+        <img
+          src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=2200&q=88"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 -z-30 h-full w-full object-cover object-center"
+        />
+        <div className="absolute inset-0 -z-20 backdrop-blur-[1.5px]" />
+        <div className="absolute inset-x-[8%] top-[145px] -z-10 hidden h-[700px] rounded-[50%] border border-white/25 md:block" />
 
         <div className="mx-auto max-w-[1180px] text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-fuchsia-200/25 bg-white/10 px-3.5 py-2 text-xs font-bold tracking-[.12em] text-fuchsia-100 backdrop-blur-xl">
-            <span className="grid size-5 place-items-center rounded-full bg-white text-violet-700">✦</span>
-            MT4 & MT5 BROKERAGE TECHNOLOGY
-          </span>
-
-          <h1 className="mx-auto mt-8 max-w-[940px] text-balance text-[clamp(3rem,7vw,6.4rem)] font-semibold leading-[.96] tracking-[-.065em]">
-            Launch a brokerage.
-            <span className="block bg-gradient-to-r from-white via-fuchsia-100 to-violet-300 bg-clip-text text-transparent">
-              Connect every system.
+          <div className="mx-auto max-w-[820px]">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/14 px-3.5 py-2 text-xs font-bold tracking-[.12em] text-white shadow-[0_10px_30px_rgba(15,23,42,.18)] backdrop-blur-2xl">
+              <span className="grid size-5 place-items-center rounded-full border border-white/40 bg-white/20">✦</span>
+              MT4 & MT5 BROKERAGE TECHNOLOGY
             </span>
-          </h1>
 
-          <p className="mx-auto mt-6 max-w-[680px] text-pretty text-base leading-8 text-violet-100/72 sm:text-lg">
-            MT4 and MT5 grey label, CRM, PAMM and MAM, liquidity connectivity and broker websites — coordinated as one practical technology stack.
-          </p>
+            <h1 className="mx-auto mt-9 max-w-[940px] text-balance text-[clamp(3.2rem,6.2vw,5.9rem)] font-semibold leading-[.97] tracking-[-.065em] drop-shadow-[0_4px_22px_rgba(15,23,42,.45)]">
+              Launch a brokerage.
+              <span className="block">Connect every system.</span>
+            </h1>
 
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <a
-              href="#solutions"
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 px-5 text-sm font-extrabold text-white shadow-[0_15px_38px_rgba(124,58,237,.35)] transition hover:-translate-y-0.5"
-            >
-              Explore solutions <ArrowIcon />
-            </a>
-            <a
-              href="#how-it-works"
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/8 px-5 text-sm font-bold text-white backdrop-blur-xl transition hover:bg-white/14"
-            >
-              See how it works <ArrowIcon />
-            </a>
+            <p className="mx-auto mt-6 max-w-[610px] text-pretty text-base font-medium leading-8 text-white/88 drop-shadow-[0_3px_18px_rgba(15,23,42,.45)] sm:text-lg">
+              MT4 and MT5 grey label, CRM, PAMM and MAM plugins, liquidity connectivity and broker websites, brought together by one technology partner.
+            </p>
+
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <a
+                href="#solutions"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/35 bg-white/18 px-5 text-sm font-extrabold text-white shadow-[0_15px_38px_rgba(15,23,42,.22)] backdrop-blur-2xl transition hover:-translate-y-0.5 hover:bg-white/24"
+              >
+                Explore solutions <ArrowIcon />
+              </a>
+              <a
+                href="#how-it-works"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/30 bg-white/12 px-5 text-sm font-bold text-white shadow-[0_12px_34px_rgba(15,23,42,.18)] backdrop-blur-2xl transition hover:-translate-y-0.5 hover:bg-white/20"
+              >
+                See how it works <ArrowIcon />
+              </a>
+            </div>
           </div>
 
-          <div className="relative mx-auto mt-14 min-h-[500px] max-w-[980px] overflow-hidden rounded-[34px] border border-white/15 bg-white/[.055] p-4 shadow-[0_36px_100px_rgba(8,2,14,.38)] backdrop-blur-xl sm:p-6 md:min-h-[440px]">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_18%,rgba(216,180,254,.22),transparent_30%),linear-gradient(135deg,rgba(255,255,255,.03),transparent_45%)]" />
+          <div className="relative z-10 mx-auto mt-[78px] h-auto min-h-[338px] w-[min(1010px,calc(100%_-_8px))] md:h-[338px]">
+            <div className="absolute left-1/2 top-3 hidden h-[345px] w-[590px] -translate-x-1/2 rounded-[50%] border border-white/25 md:block" />
+
+            <div className="absolute right-12 top-4 hidden size-[84px] place-items-center rounded-full border border-white/30 bg-white/14 text-2xl shadow-[0_18px_48px_rgba(15,23,42,.2)] backdrop-blur-2xl md:grid">
+              ✦
+            </div>
+            <div className="absolute bottom-2 left-14 hidden size-[88px] place-items-center rounded-full border border-white/30 bg-white/14 text-2xl shadow-[0_18px_48px_rgba(15,23,42,.2)] backdrop-blur-2xl md:grid">
+              ✉
+            </div>
 
             <div
               data-hero-float
-              className={`relative z-10 mx-auto w-full min-w-0 max-w-[390px] overflow-hidden rounded-[26px] p-5 text-left md:absolute md:bottom-0 md:left-1/2 md:-translate-x-1/2 ${glass}`}
+              className="relative z-20 mx-auto w-full min-w-0 max-w-[380px] overflow-hidden rounded-[28px] border border-white/30 bg-white/14 p-5 text-left shadow-[0_26px_70px_rgba(15,23,42,.24)] backdrop-blur-2xl md:absolute md:bottom-[-31px] md:left-1/2 md:min-h-[301px] md:-translate-x-1/2 md:p-6"
             >
+              <div className="mx-auto -mt-5 mb-4 h-2.5 w-14 rounded-b-xl border-x border-b border-white/20 bg-white/20 md:-mt-6" />
               <div className="flex min-w-0 items-center justify-between gap-3">
-                <span className="grid size-10 shrink-0 place-items-center rounded-full bg-white/10 text-fuchsia-100">✦</span>
-                <span className="min-w-0 flex-1 break-words text-xs font-bold text-violet-100/75">BROKEROS ASSISTANT</span>
-                <span className="grid size-9 shrink-0 place-items-center rounded-full bg-white/10">↗</span>
+                <span className="grid size-10 shrink-0 place-items-center rounded-full border border-white/20 bg-white/16">☰</span>
+                <span className="min-w-0 flex-1 break-words text-center text-xs font-bold tracking-[.08em] text-white/85">BrokerOS Assistant</span>
+                <span className="grid size-10 shrink-0 place-items-center rounded-full border border-white/20 bg-white/16">✎</span>
               </div>
-              <strong className="mt-10 block break-words text-3xl font-medium leading-tight tracking-[-.05em] sm:text-4xl">
+              <strong className="mt-10 block break-words text-center text-3xl font-medium leading-tight tracking-[-.055em] sm:text-[2.15rem]">
                 Ready to launch.
               </strong>
-              <p className="mt-2 break-words text-sm leading-6 text-violet-100/70">Choose the systems you want connected first.</p>
-              <div className="mt-8 grid min-w-0 grid-cols-2 gap-2">
-                <span className="min-w-0 break-words rounded-xl border border-white/10 bg-white/7 p-3 text-xs text-violet-50">MT5 setup</span>
-                <span className="min-w-0 break-words rounded-xl border border-white/10 bg-white/7 p-3 text-xs text-violet-50">CRM workflow</span>
+              <p className="mt-2 break-words text-center text-sm leading-6 text-white/78">
+                What would you like to connect?
+              </p>
+              <div className="mt-9 grid min-w-0 grid-cols-2 gap-2">
+                <span className="min-w-0 break-words rounded-xl border border-white/18 bg-white/10 p-3 text-xs text-white/90 backdrop-blur-xl">MT5 setup</span>
+                <span className="min-w-0 break-words rounded-xl border border-white/18 bg-white/10 p-3 text-xs text-white/90 backdrop-blur-xl">CRM workflow</span>
               </div>
             </div>
 
             <div
               data-hero-float
-              className={`relative z-10 mt-3 w-full min-w-0 max-w-[260px] overflow-hidden rounded-2xl p-4 text-left md:absolute md:bottom-10 md:left-6 md:mt-0 ${glass}`}
+              className="relative z-20 mt-3 w-full min-w-0 max-w-[255px] overflow-hidden rounded-[20px] border border-white/30 bg-white/14 p-4 text-left shadow-[0_20px_55px_rgba(15,23,42,.22)] backdrop-blur-2xl md:absolute md:bottom-[38px] md:left-[110px] md:mt-0"
             >
-              <span className="block break-words text-[11px] font-bold uppercase tracking-[.12em] text-violet-100/65">Brokerage launch</span>
-              <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/10">
-                <div className="h-full w-[64%] rounded-full bg-gradient-to-r from-violet-400 to-fuchsia-300" />
+              <span className="block break-words text-[11px] font-bold uppercase tracking-[.12em] text-white/75">Brokerage launch</span>
+              <div className="relative mx-auto mt-4 h-[74px] w-[148px] overflow-hidden rounded-t-full border-[12px] border-b-0 border-white/35">
+                <span className="absolute inset-x-0 bottom-1 text-center text-sm font-black text-white">64%</span>
               </div>
               <div className="mt-3 flex min-w-0 items-center justify-between gap-3 text-xs">
-                <span className="min-w-0 break-words text-violet-100/70">Configuration aligned</span>
-                <strong className="shrink-0 text-fuchsia-100">64%</strong>
+                <span className="min-w-0 break-words text-white/75">Configuration aligned</span>
+                <strong className="shrink-0 text-white">Live</strong>
               </div>
             </div>
 
             <div
               data-hero-float
-              className={`relative z-10 mt-3 ml-auto w-full min-w-0 max-w-[280px] overflow-hidden rounded-2xl p-4 text-left md:absolute md:bottom-7 md:right-6 md:mt-0 ${glass}`}
+              className="relative z-20 mt-3 ml-auto w-full min-w-0 max-w-[230px] overflow-hidden rounded-[20px] border border-white/30 bg-white/14 p-4 text-left shadow-[0_20px_55px_rgba(15,23,42,.22)] backdrop-blur-2xl md:absolute md:bottom-1 md:right-[75px] md:mt-0"
             >
-              <span className="block break-words text-[11px] font-bold uppercase tracking-[.12em] text-violet-100/65">Connected systems</span>
+              <span className="block break-words text-[11px] font-bold uppercase tracking-[.12em] text-white/75">Connected systems</span>
               {["Client onboarding", "PAMM / MAM", "Liquidity bridge"].map((item) => (
-                <div key={item} className="mt-2 flex min-w-0 items-center gap-2 rounded-lg border border-white/8 bg-white/5 px-3 py-2 text-xs text-violet-50">
-                  <span className="shrink-0 text-fuchsia-300">↗</span>
+                <div key={item} className="mt-2 flex min-w-0 items-center gap-2 border-b border-white/12 pb-2 text-xs text-white/90 last:border-0 last:pb-0">
+                  <span className="shrink-0">↗</span>
                   <span className="min-w-0 break-words">{item}</span>
                 </div>
               ))}

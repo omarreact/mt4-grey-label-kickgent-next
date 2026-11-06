@@ -130,7 +130,7 @@ export function SharedSiteHeader() {
   const active = (href: string) => path === href;
 
   return (
-    <header className="sticky top-0 z-[500] px-3 py-3 sm:px-5">
+    <header data-site-header className="fixed inset-x-0 top-0 z-[500] px-3 py-3 sm:px-5">
       <div className="relative mx-auto flex min-h-[68px] w-full max-w-[1180px] items-center gap-3 rounded-[22px] border border-white/75 bg-white/78 px-3.5 shadow-[0_18px_55px_rgba(47,22,66,.16)] backdrop-blur-2xl supports-[backdrop-filter]:bg-white/68 sm:px-5">
         <Link href="/" className="shrink-0 text-slate-950" aria-label="GreyLabel Technology home">
           <BrandLogo className="h-11 w-[190px] max-[430px]:w-[158px]" />
