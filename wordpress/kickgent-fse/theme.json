@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.wp.org/wp/6.7/theme.json",
+  "version": 3,
+  "settings": {
+    "appearanceTools": true,
+    "layout": { "contentSize": "760px", "wideSize": "1180px" },
+    "color": { "palette": [
+      { "slug": "ink", "color": "#261238", "name": "Ink" },
+      { "slug": "violet", "color": "#7b3ec2", "name": "Violet" },
+      { "slug": "lilac", "color": "#f3e8ff", "name": "Lilac" },
+      { "slug": "aqua", "color": "#dff4f4", "name": "Aqua" },
+      { "slug": "paper", "color": "#fffcff", "name": "Paper" }
+    ] },
+    "spacing": { "spacingSizes": [ { "slug": "20", "size": "20px", "name": "XS" }, { "slug": "40", "size": "40px", "name": "S" }, { "slug": "60", "size": "clamp(3rem, 6vw, 5.5rem)", "name": "L" } ] },
+    "typography": { "fluid": true, "fontSizes": [ { "slug": "body", "size": "1rem", "name": "Body" }, { "slug": "heading", "size": "clamp(2.4rem, 6vw, 5.8rem)", "name": "Heading" } ] }
+  },
+  "styles": {
+    "color": { "background": "var(--wp--preset--color--paper)", "text": "var(--wp--preset--color--ink)" },
+    "typography": { "fontFamily": "Arial, sans-serif", "lineHeight": "1.55" },
+    "elements": { "heading": { "typography": { "fontWeight": "700", "lineHeight": "1.05" } }, "link": { "color": { "text": "var(--wp--preset--color--violet)" } } },
+    "blocks": { "core/button": { "border": { "radius": "10px" }, "color": { "background": "var(--wp--preset--color--violet)", "text": "#ffffff" } } }
+  },
+  "templateParts": [ { "name": "header", "title": "Header", "area": "header" }, { "name": "footer", "title": "Footer", "area": "footer" } ]
+}
