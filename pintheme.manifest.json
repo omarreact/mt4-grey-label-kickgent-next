@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "1.0",
+  "generator": "pintheme",
+  "themeName": "Kickgent GreyLabel",
+  "themeSlug": "kickgent-pintheme",
+  "themeVersion": "1.0.0",
+  "wordpressCompatible": true,
+  "htmlExport": true,
+  "repository": "omarreact/mt4-grey-label-kickgent-next",
+  "branch": "main",
+  "sourceCommit": "c6ad3781934919c51d0c24f893ca0b341fa0cd8e",
+  "generatedAt": "2026-11-06T19:52:17.298Z",
+  "pageCount": 11,
+  "contentFeed": "wordpress/kickgent-pintheme/data/kickgent-pages.json",
+  "contentFeedSha256": "02da9859d99dc0920b3c0df3c1367e5119036bc3bbd6917edd83bcb6b0fa8c8d",
+  "releaseAssets": {
+    "theme": "kickgent-pintheme-theme.zip",
+    "plugin": "pintheme-manager-plugin.zip",
+    "html": "kickgent-pintheme-html.zip",
+    "content": "kickgent-pages.json"
+  }
+}
