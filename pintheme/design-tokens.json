@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "1.0",
+  "project": "kickgent-greylabel",
+  "colors": {
+    "background": "#0b0311",
+    "surface": "#1d0929",
+    "primary": "#9b4de8",
+    "primarySoft": "#d69aff",
+    "text": "#ffffff",
+    "muted": "#c8b3d3"
+  },
+  "typography": {
+    "headingFont": "Inter, system-ui, sans-serif",
+    "bodyFont": "Inter, system-ui, sans-serif"
+  },
+  "layout": {
+    "containerWidth": "1180px",
+    "sectionSpacing": "72px",
+    "radius": "14px"
+  },
+  "breakpoints": {
+    "mobile": "430px",
+    "tablet": "768px",
+    "desktop": "1024px"
+  }
+}

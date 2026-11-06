@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "1.0",
+  "components": {
+    "globalHeader": {"next": "SharedSiteHeader", "html": "static export", "wordpress": "header.php", "status": "supported"},
+    "globalFooter": {"next": "SharedSiteFooter", "html": "static export", "wordpress": "footer.php", "status": "supported"},
+    "pageMarkup": {"next": "KickgentExperience/PageRenderer", "html": "static export", "wordpress": "post_content + source-parity.css", "status": "supported"},
+    "navigation": {"next": "React menu", "html": "semantic HTML + JS", "wordpress": "wp_nav_menu + theme.js", "status": "supported"},
+    "responsiveStyles": {"next": "site-pages.css", "html": "Next static export", "wordpress": "source-parity.css", "status": "supported"},
+    "clientAnimations": {"next": "KickgentExperience", "html": "exported JS", "wordpress": "theme.js / CSS where compatible", "status": "partial"}
+  }
+}

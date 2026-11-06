@@ -1,29 +1,56 @@
-name: Synchronize WordPress import package
+name: Build PinTheme distributions
 on:
   push:
     branches: [main]
-    paths: ['app/**','components/**','content/**','scripts/build-wordpress-sync.mjs','scripts/generate-wordpress-theme.mjs','wordpress/kickgent-fse/**','wordpress/kickgent-github-sync/**','.github/workflows/sync-wordpress.yml']
+    paths:
+      - 'app/**'
+      - 'components/**'
+      - 'content/**'
+      - 'pintheme/**'
+      - 'pintheme.config.mjs'
+      - 'scripts/**'
+      - 'wordpress/kickgent-pintheme/**'
+      - 'wordpress/pintheme-manager/**'
+      - 'next.config.ts'
+      - 'package.json'
+      - '.github/workflows/sync-wordpress.yml'
   workflow_dispatch:
 permissions: { contents: write }
-concurrency: { group: kickgent-wordpress-sync, cancel-in-progress: false }
+concurrency: { group: kickgent-pintheme-build, cancel-in-progress: false }
 jobs:
-  sync:
+  build:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
-      - run: npm run build:wordpress-sync
-      - run: npm run verify:wordpress-sync
-      - run: |
-          npm run generate:wordpress
-          mkdir -p artifacts
-          cd dist && zip -qr ../artifacts/kickgent-fse-theme.zip kickgent-fse && zip -qr ../artifacts/kickgent-github-sync-plugin.zip kickgent-github-sync
-          cp website.xml artifacts/kickgent-pages.xml
-      - uses: actions/upload-artifact@v4
-        with: { name: kickgent-wordpress-sync-package, path: artifacts/, retention-days: 30 }
-      - if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      - uses: shivammathur/setup-php@v2
+        with: { php-version: '8.2' }
+      - run: npm install
+      - run: npm run check
+      - name: Validate WordPress PHP
+        run: find wordpress/kickgent-pintheme wordpress/pintheme-manager -name '*.php' -print0 | xargs -0 -n1 php -l
+      - run: npm run generate:wordpress
+      - name: Package release artifacts
         run: |
-          git add website.xml wordpress/kickgent-fse/data wordpress/kickgent-fse/assets/source-parity.css
-          git diff --cached --quiet || (git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'chore(wordpress): synchronize import feed from Next.js' && git push origin HEAD:main)
+          mkdir -p artifacts
+          cd dist
+          zip -qr ../artifacts/kickgent-pintheme-theme.zip kickgent-pintheme
+          zip -qr ../artifacts/pintheme-manager-plugin.zip pintheme-manager
+          cd ../out
+          zip -qr ../artifacts/kickgent-pintheme-html.zip .
+          cd ..
+          cp website.xml artifacts/kickgent-pages.xml
+          cp wordpress/kickgent-pintheme/data/kickgent-pages.json artifacts/kickgent-pages.json
+          cp pintheme.manifest.json artifacts/pintheme.manifest.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kickgent-pintheme-distributions
+          path: artifacts/
+          retention-days: 30
+      - name: Synchronize generated GitHub import metadata
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.actor != 'github-actions[bot]'
+        run: |
+          git add pintheme.manifest.json website.xml wordpress/kickgent-pintheme/data wordpress/kickgent-pintheme/assets/source-parity.css
+          git diff --cached --quiet || (git -c user.name='github-actions[bot]' -c user.email='41898282+omarreact@users.noreply.github.com' commit -m 'chore(pintheme): synchronize generated distributions' && git push origin HEAD:main)

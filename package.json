@@ -2,20 +2,22 @@
   "name": "kickgent-next-wordpress-generator",
   "version": "1.0.0",
   "private": true,
-  "engines": {
-    "node": ">=20.9"
-  },
+  "engines": {"node": ">=20.9"},
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "lint": "next lint",
+    "lint": "npx tsc --noEmit",
     "validate": "node scripts/validate-theme.mjs",
     "audit:design": "node scripts/design-lint.mjs",
     "test:ui": "playwright test",
-    "generate:wordpress": "npm run build:wordpress-sync && node scripts/generate-wordpress-theme.mjs",
-    "check": "npm run audit:design && npm run validate && npm run verify:wordpress-sync && npx tsc --noEmit && npm run build",
+    "build:pintheme": "node scripts/build-pintheme.mjs",
     "build:wordpress-sync": "node scripts/build-wordpress-sync.mjs",
-    "verify:wordpress-sync": "node scripts/verify-wordpress-sync.mjs"
+    "validate:html": "node scripts/validate-html-export.mjs",
+    "validate:pintheme": "node scripts/validate-pintheme.mjs",
+    "verify:wordpress-sync": "node scripts/verify-wordpress-sync.mjs",
+    "generate:wordpress": "npm run build:pintheme && npm run validate:pintheme && node scripts/generate-wordpress-theme.mjs",
+    "export:html": "npm run build && npm run validate:html",
+    "check": "npm run audit:design && npm run validate && npx tsc --noEmit && npm run build:pintheme && npm run build && npm run validate:html && npm run validate:pintheme"
   },
   "dependencies": {
     "next": "^15.4.9",

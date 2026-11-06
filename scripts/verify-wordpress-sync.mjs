@@ -1,5 +1,1 @@
-import { createHash } from "node:crypto";import { existsSync,readFileSync } from "node:fs";import { resolve } from "node:path";
-const root=resolve(import.meta.dirname,".."),base=resolve(root,"wordpress/kickgent-fse"),feedPath=resolve(base,"data/kickgent-pages.json"),manifestPath=resolve(base,"data/manifest.json");
-for(const file of [feedPath,manifestPath,resolve(root,"website.xml"),resolve(base,"assets/source-parity.css")])if(!existsSync(file))throw new Error("Missing WordPress sync file: "+file);
-const text=readFileSync(feedPath,"utf8"),feed=JSON.parse(text),manifest=JSON.parse(readFileSync(manifestPath,"utf8")),sha=createHash("sha1").update("blob "+Buffer.byteLength(text)+"\0"+text).digest("hex");
-if(feed.pages.length!==11||manifest.pageCount!==11||manifest.feedGitBlobSha!==sha)throw new Error("Invalid WordPress sync feed.");if(!readFileSync(resolve(root,"website.xml"),"utf8").includes("<wp:wxr_version>1.2</wp:wxr_version>"))throw new Error("Invalid WXR.");console.log("WordPress sync verified: 11 pages.");
+import "./validate-pintheme.mjs";
