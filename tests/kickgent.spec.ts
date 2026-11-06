@@ -127,12 +127,17 @@ test("homepage branding, portraits, carousel and glass overlays render", async (
   await expect(platformOverlay).toHaveCSS("backdrop-filter", /blur/);
 });
 
-test("legacy inner-page image overlays receive the global glass treatment", async ({ page }, testInfo) => {
+test("inner-page supporting surfaces receive the global glass treatment", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Global overlay check runs once in Chromium");
   await page.goto("/scale-forex-brokerage");
-  const overlay = page.locator(".art-bubble").first();
-  await expect(overlay).toBeVisible();
-  await expect(overlay).toHaveCSS("backdrop-filter", /blur/);
+
+  const sidebar = page.locator(".sidebar-help");
+  await expect(sidebar).toBeVisible();
+  await expect(sidebar).toHaveCSS("backdrop-filter", /blur/);
+
+  const related = page.locator(".related-card").first();
+  await expect(related).toBeVisible();
+  await expect(related).toHaveCSS("backdrop-filter", /blur/);
 });
 
 
@@ -202,7 +207,7 @@ test("inner pages keep layout and receive image-backed glass visual system", asy
   await expect(hero).toBeVisible();
   await expect(hero.locator(".hero-grid")).toBeVisible();
   await expect(hero.locator('[data-pintheme-inner-hero="mt4-grey-label"]')).toBeVisible();
-  await expect(hero.locator(".hero-art")).toHaveCSS("backdrop-filter", /blur/);
+  await expect(hero.locator(".hero-art")).toBeHidden();
 
   const related = page.locator(".related-card").first();
   await expect(related).toHaveCSS("backdrop-filter", /blur/);

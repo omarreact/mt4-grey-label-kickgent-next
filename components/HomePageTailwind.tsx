@@ -199,7 +199,7 @@ export function HomePageTailwind() {
         data-hero-banner
         className="relative isolate min-h-[930px] overflow-hidden px-4 pb-0 pt-[150px] text-white sm:px-6 sm:pt-[170px] lg:pt-[190px]"
       >
-        <div className="absolute inset-0 -z-30" aria-hidden="true">
+        <div className="pointer-events-none absolute inset-0 -z-30" aria-hidden="true">
           {heroSlides.map((slide, index) => (
             <img
               key={slide.image}
@@ -209,8 +209,8 @@ export function HomePageTailwind() {
             />
           ))}
         </div>
-        <div className="absolute inset-0 -z-20 bg-slate-950/38 backdrop-blur-[1.5px]" />
-        <div className="absolute inset-x-[8%] top-[145px] -z-10 hidden h-[700px] rounded-[50%] border border-white/25 md:block" />
+        <div className="pointer-events-none absolute inset-0 -z-20 bg-slate-950/38 backdrop-blur-[1.5px]" />
+        <div className="pointer-events-none absolute inset-x-[8%] top-[145px] -z-10 hidden h-[700px] rounded-[50%] border border-white/25 md:block" />
 
         <div className="mx-auto max-w-[1180px] text-center">
           <div className="mx-auto max-w-[820px] rounded-[32px] border border-white/20 bg-slate-950/22 px-4 py-6 shadow-[0_24px_70px_rgba(15,23,42,.2)] backdrop-blur-md sm:px-7 sm:py-8">
@@ -259,7 +259,7 @@ export function HomePageTailwind() {
           </div>
 
           <div className="relative z-10 mx-auto mt-[78px] h-auto min-h-[338px] w-[min(1010px,calc(100%_-_8px))] md:h-[338px]">
-            <div className="absolute left-1/2 top-3 hidden h-[345px] w-[590px] -translate-x-1/2 rounded-[50%] border border-white/25 md:block" />
+            <div className="pointer-events-none absolute left-1/2 top-3 hidden h-[345px] w-[590px] -translate-x-1/2 rounded-[50%] border border-white/25 md:block" />
 
             <div className="absolute right-12 top-4 hidden size-[84px] place-items-center rounded-full border border-white/30 bg-white/14 text-2xl shadow-[0_18px_48px_rgba(15,23,42,.2)] backdrop-blur-2xl md:grid">
               ✦

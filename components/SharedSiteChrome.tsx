@@ -105,7 +105,7 @@ function MenuGroup({
       <div
         id={id}
         className={[
-          "absolute left-1/2 top-full z-20 grid min-w-[270px] -translate-x-1/2 gap-1 rounded-2xl border border-white/80 bg-white/82 p-2.5 opacity-0 shadow-[0_24px_70px_rgba(44,19,69,.18)] backdrop-blur-2xl transition duration-200",
+          "absolute left-1/2 top-full z-[10000] grid min-w-[270px] -translate-x-1/2 gap-1 rounded-2xl border border-white/80 bg-white/82 p-2.5 opacity-0 shadow-[0_24px_70px_rgba(44,19,69,.18)] backdrop-blur-2xl transition duration-200",
           "invisible pointer-events-none",
           "max-[880px]:static max-[880px]:mt-1 max-[880px]:min-w-0 max-[880px]:translate-x-0 max-[880px]:border-slate-200/70 max-[880px]:bg-white/65 max-[880px]:shadow-none",
           open ? "visible pointer-events-auto opacity-100" : "max-[880px]:hidden",
@@ -150,7 +150,7 @@ export function SharedSiteHeader() {
   const active = (href: string) => path === href;
 
   return (
-    <header data-site-header className="fixed inset-x-0 top-0 z-[500] px-3 py-3 sm:px-5">
+    <header data-site-header className="fixed inset-x-0 top-0 z-[9999] isolate px-3 py-3 sm:px-5">
       <div className="relative mx-auto flex min-h-[68px] w-full max-w-[1180px] items-center gap-3 rounded-[22px] border border-white/75 bg-white/78 px-3.5 shadow-[0_18px_55px_rgba(47,22,66,.16)] backdrop-blur-2xl supports-[backdrop-filter]:bg-white/68 sm:px-5">
         <Link href="/" className="shrink-0 text-slate-950" aria-label="GreyLabel Technology home">
           <BrandLogo className="h-11 w-[190px] max-[430px]:w-[158px]" />
@@ -226,7 +226,7 @@ export function SharedSiteHeader() {
 
         <a
           data-get-started
-          className="ml-2 inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl border border-[#d8c6ea] bg-[#f0e7fb] px-4 text-[.8rem] font-extrabold text-[#4a1f5f] no-underline shadow-[0_10px_28px_rgba(74,31,95,.12)] transition hover:-translate-y-0.5 hover:border-[#c8ace4] hover:bg-white hover:shadow-[0_14px_34px_rgba(74,31,95,.16)] max-[880px]:hidden"
+          className="ml-2 inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl border border-[#d8c6ea] bg-[#f0e7fb] px-4 text-[.8rem] font-extrabold !text-[#4a1f5f] no-underline shadow-[0_10px_28px_rgba(74,31,95,.12)] transition hover:-translate-y-0.5 hover:border-[#c8ace4] hover:bg-white hover:shadow-[0_14px_34px_rgba(74,31,95,.16)] max-[880px]:hidden"
           href="mailto:admin@pincodeit.com?subject=GreyLabel%20Enquiry"
         >
           Get Started
