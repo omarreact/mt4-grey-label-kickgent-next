@@ -88,7 +88,8 @@ test("desktop navigation dropdown opens on hover", async ({ page }, testInfo) =>
   test.skip(testInfo.project.name !== "chromium", "Desktop hover behavior runs once in Chromium");
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/");
-  const solutions = page.getByRole("button", { name: "Solutions" });
+  const navigation = page.locator("#kg-primary-navigation");
+  const solutions = navigation.getByRole("button", { name: "Solutions", exact: true });
   await solutions.hover();
   await expect(solutions).toHaveAttribute("aria-expanded", "true");
   await expect(page.locator("#kg-solutions-menu")).toBeVisible();
