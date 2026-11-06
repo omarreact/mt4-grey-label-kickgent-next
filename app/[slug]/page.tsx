@@ -1,13 +1,21 @@
 import { notFound } from "next/navigation";
-import { redirect } from "next/navigation";
 import type { Metadata } from "next";
-import { PageRenderer } from "@/components/PageRenderer";
-import { pageList, pages } from "@/content/site";
+import { KickgentExperience } from "@/components/KickgentExperience";
+import { kickgentPages, pageSlugs } from "@/content/kickgent-pages";
 
-export function generateStaticParams() { return pageList.map(({ slug }) => ({ slug })); }
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> { const { slug } = await params; const page = pages[slug]; return page ? { title: page.meta, description: page.description } : {}; }
+export function generateStaticParams() {
+  return pageSlugs.map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const page = kickgentPages[slug];
+  return page ? { title: page.title, description: page.description } : {};
+}
+
 export default async function ContentPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  if (!pages[slug]) notFound();
-  redirect(`/source/${slug}/index.html`);
+  const page = kickgentPages[slug];
+  if (!page || slug === "home") notFound();
+  return <KickgentExperience page={page} />;
 }
