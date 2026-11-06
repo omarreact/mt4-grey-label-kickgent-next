@@ -11,12 +11,21 @@ A fully App Router based implementation of the approved Kickgent brokerage websi
 
 All pages are served by Next.js components. There is no public `index.html` entry point and no `/source/` path.
 
+## Design and QA workflow
+
+- `DESIGN.md` is the brand-token, component and motion source of truth.
+- `CLAUDE.md` defines the mandatory implementation and quality rules.
+- `npm run audit:design` checks the design-system guardrails.
+- `npm run test:ui` runs Chromium desktop/mobile route, interaction and screenshot checks.
+- GitHub Actions uploads the Playwright report and screenshots for every pull request and `main` update.
+
 ## Commands
 
 ```bash
 npm install
-npm run validate
-npm run build
+npm run audit:design
+npm run check
+npm run test:ui
 npm run generate:wordpress
 ```
 

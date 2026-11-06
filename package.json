@@ -2,15 +2,18 @@
   "name": "kickgent-next-wordpress-generator",
   "version": "1.0.0",
   "private": true,
-  "engines": { "node": ">=20.9" },
+  "engines": {
+    "node": ">=20.9"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "lint": "next lint",
     "validate": "node scripts/validate-theme.mjs",
+    "audit:design": "node scripts/design-lint.mjs",
+    "test:ui": "playwright test",
     "generate:wordpress": "node scripts/generate-wordpress-theme.mjs",
-    "sync:source": "node scripts/sync-source.mjs",
-    "check": "npm run validate && npx tsc --noEmit && npm run build"
+    "check": "npm run audit:design && npm run validate && npx tsc --noEmit && npm run build"
   },
   "dependencies": {
     "next": "^15.4.9",
@@ -18,6 +21,7 @@
     "react-dom": "^19.2.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
