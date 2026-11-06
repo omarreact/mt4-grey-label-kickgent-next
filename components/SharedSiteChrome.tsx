@@ -77,7 +77,7 @@ export function SharedSiteHeader() {
     <div className="relative mx-auto flex min-h-[76px] w-[min(1180px,calc(100%_-_40px))] items-center gap-[22px] max-[880px]:min-h-[68px] max-[880px]:w-[calc(100%_-_32px)] max-[430px]:gap-2.5">
       <Brand />
       <button
-        className="ml-auto hidden size-11 min-h-11 min-w-11 items-center justify-center rounded-[10px] border border-[#c88df8] bg-white/5 text-[1.3rem] text-white max-[880px]:inline-flex"
+        className="kg-global-menu ml-auto hidden size-11 min-h-11 min-w-11 items-center justify-center rounded-[10px] border border-[#c88df8] bg-white/5 text-[1.3rem] text-white max-[880px]:inline-flex"
         type="button"
         aria-label={mobileOpen?"Close navigation":"Open navigation"}
         aria-expanded={mobileOpen}
