@@ -1,6 +1,5 @@
-import { KickgentExperience } from "@/components/KickgentExperience";
-import { kickgentPages } from "@/content/kickgent-pages";
+import { HomePageTailwind } from "@/components/HomePageTailwind";
 
 export default function HomePage() {
-  return <KickgentExperience page={kickgentPages.home} />;
+  return <HomePageTailwind />;
 }

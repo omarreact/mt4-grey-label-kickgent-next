@@ -1,0 +1,630 @@
+"use client";
+
+import Link from "next/link";
+import { useRef, useState } from "react";
+
+const partnerPortraits = [
+  {
+    src: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=240&h=240&q=88",
+    alt: "Portrait of a brokerage technology partner",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=240&h=240&q=88",
+    alt: "Portrait of a brokerage operations partner",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=240&h=240&q=88",
+    alt: "Portrait of a fintech implementation partner",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=240&h=240&q=88",
+    alt: "Portrait of a brokerage infrastructure partner",
+  },
+];
+
+const platformCards = [
+  {
+    title: "MT4 Grey Label",
+    text: "Launch on a familiar trading platform with branded client terminals, manager access and account-group configuration.",
+    icon: "M4",
+    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    title: "MT5 Grey Label",
+    text: "Add multi-asset capability, modern order types and a scalable platform for brokers building beyond forex-only workflows.",
+    icon: "M5",
+    image: "https://images.unsplash.com/photo-1642790106117-e829e14a795f?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    title: "Forex Broker CRM",
+    text: "Bring registration, KYC, payments, client accounts and partner management into one connected operational layer.",
+    icon: "CRM",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    title: "PAMM / MAM",
+    text: "Support professional money managers with allocation, investor reporting and fee workflows connected to your brokerage stack.",
+    icon: "PM",
+    image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    title: "Liquidity & Bridge",
+    text: "Connect trading platforms to liquidity providers with routing, failover and execution workflows aligned to your model.",
+    icon: "LB",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=900&q=80",
+  },
+];
+
+const journeySteps = [
+  {
+    title: "Registration",
+    label: "Lead → verified client",
+    text: "Capture the lead, create the client record and collect the identity information your onboarding workflow needs.",
+    metric: "01",
+  },
+  {
+    title: "KYC & funding",
+    label: "Verified → funded",
+    text: "Move approved clients into deposits and payment confirmation without forcing your operations team to re-enter data.",
+    metric: "02",
+  },
+  {
+    title: "Trading account",
+    label: "Funded → trading",
+    text: "Create MT4 or MT5 accounts through the manager API, assign groups and deliver credentials from the connected CRM.",
+    metric: "03",
+  },
+  {
+    title: "Retention",
+    label: "Trading → growing",
+    text: "Keep account activity, partner attribution, reporting and support context visible as the client relationship expands.",
+    metric: "04",
+  },
+];
+
+const solutionSlides = [
+  ["MT4 Grey Label", "A branded MT4 environment with manager access, group configuration and broker integrations.", "/mt4-grey-label", "01"],
+  ["MT5 Grey Label", "A modern multi-asset platform setup with CRM, liquidity and operational connectivity.", "/mt5-grey-label", "02"],
+  ["Forex Broker CRM", "Client onboarding, KYC, payments, trading accounts and IB management in one back office.", "/forex-broker-crm", "03"],
+  ["PAMM & MAM Plugins", "Managed-account tooling for allocation, fees, investors and reporting.", "/pamm-mam", "04"],
+  ["Liquidity & Bridge", "Execution connectivity designed around platform, provider and routing requirements.", "/forex-liquidity-bridge", "05"],
+  ["Broker Website", "A conversion-focused client-facing website connected to registration and platform journeys.", "/forex-broker-website", "06"],
+  ["Start a Brokerage", "A practical launch guide covering the platform, CRM, liquidity, website and infrastructure stack.", "/how-to-start-forex-brokerage", "07"],
+  ["Scale Your Brokerage", "Automation, capacity, products and integrations for an operation that is already growing.", "/scale-forex-brokerage", "08"],
+  ["Turnkey Brokerage", "Platform, CRM, liquidity, website and hosting delivered as one coordinated launch stack.", "/turnkey-grey-label", "09"],
+  ["About GreyLabel", "Our approach to implementation, integration, infrastructure and long-term technical support.", "/about", "10"],
+] as const;
+
+const processSteps = [
+  {
+    no: "01",
+    title: "Discovery",
+    text: "We map your target clients, jurisdictions, platform preference, budget and operating model before choosing technology.",
+    detail: "Business goals · platform availability · compliance dependencies",
+  },
+  {
+    no: "02",
+    title: "Architecture",
+    text: "We define how the platform, CRM, payments, liquidity, managed-account tools and website exchange data.",
+    detail: "System map · API scope · ownership boundaries",
+  },
+  {
+    no: "03",
+    title: "Configuration",
+    text: "Branding, groups, permissions, client flows and operational rules are configured in a controlled implementation sequence.",
+    detail: "Brand assets · trading groups · client workflows",
+  },
+  {
+    no: "04",
+    title: "Integration & QA",
+    text: "Every connection is tested across account creation, funding, trading access, reporting and exception paths.",
+    detail: "Staging checks · mobile QA · workflow validation",
+  },
+  {
+    no: "05",
+    title: "Launch & support",
+    text: "The brokerage moves live with monitoring, change control and an escalation path for post-launch adjustments.",
+    detail: "Go-live checklist · support · growth roadmap",
+  },
+];
+
+const faqs = [
+  ["Can I launch with both MT4 and MT5?", "Yes. Where the required platform arrangements are available, both can be connected to the same wider CRM and brokerage workflow."],
+  ["Does the CRM connect to trading accounts automatically?", "A connected implementation can create and manage trading accounts through the relevant manager APIs instead of relying on repeated manual entry."],
+  ["Can I add PAMM or MAM after launch?", "Yes. The stack is designed so additional products can be introduced later when the brokerage is ready operationally and legally."],
+  ["Do you provide investment or brokerage services?", "No. GreyLabel Technology is positioned as a technology provider. Regulatory, licensing and investment decisions remain with the operating business and its advisers."],
+];
+
+const glass =
+  "border border-white/20 bg-white/10 shadow-[0_20px_60px_rgba(10,3,20,.22)] backdrop-blur-2xl supports-[backdrop-filter]:bg-white/8";
+
+function ArrowIcon({ direction = "right" }: { direction?: "left" | "right" }) {
+  return (
+    <svg viewBox="0 0 20 20" aria-hidden="true" className={`size-4 ${direction === "left" ? "rotate-180" : ""}`} fill="none">
+      <path d="M4 10h12m-4-4 4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg viewBox="0 0 20 20" aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-fuchsia-300" fill="none">
+      <path d="m4 10 3.5 3.5L16 5.5" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+export function HomePageTailwind() {
+  const [journeyIndex, setJourneyIndex] = useState(0);
+  const sliderRef = useRef<HTMLDivElement>(null);
+
+  const scrollSolutions = (direction: number) => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+    slider.scrollBy({
+      left: direction * Math.max(280, slider.clientWidth * 0.78),
+      behavior: "smooth",
+    });
+  };
+
+  const activeJourney = journeySteps[journeyIndex];
+  const journeyProgress = ["w-1/4", "w-1/2", "w-3/4", "w-full"][journeyIndex];
+
+  return (
+    <main className="overflow-hidden bg-[#100414] text-white">
+      <section className="relative isolate px-4 pb-20 pt-20 sm:px-6 sm:pb-24 sm:pt-24 lg:pb-28">
+        <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_50%_34%,rgba(148,72,247,.34),transparent_34%),radial-gradient(circle_at_12%_82%,rgba(219,39,119,.16),transparent_28%),linear-gradient(180deg,#120518_0%,#1a0723_58%,#47106f_100%)]" />
+        <div className="absolute inset-x-[8%] top-24 -z-10 h-[620px] rounded-[50%] border border-fuchsia-200/10 blur-[.2px]" />
+
+        <div className="mx-auto max-w-[1180px] text-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-fuchsia-200/25 bg-white/10 px-3.5 py-2 text-xs font-bold tracking-[.12em] text-fuchsia-100 backdrop-blur-xl">
+            <span className="grid size-5 place-items-center rounded-full bg-white text-violet-700">✦</span>
+            MT4 & MT5 BROKERAGE TECHNOLOGY
+          </span>
+
+          <h1 className="mx-auto mt-8 max-w-[940px] text-balance text-[clamp(3rem,7vw,6.4rem)] font-semibold leading-[.96] tracking-[-.065em]">
+            Launch a brokerage.
+            <span className="block bg-gradient-to-r from-white via-fuchsia-100 to-violet-300 bg-clip-text text-transparent">
+              Connect every system.
+            </span>
+          </h1>
+
+          <p className="mx-auto mt-6 max-w-[680px] text-pretty text-base leading-8 text-violet-100/72 sm:text-lg">
+            MT4 and MT5 grey label, CRM, PAMM and MAM, liquidity connectivity and broker websites — coordinated as one practical technology stack.
+          </p>
+
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <a
+              href="#solutions"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 px-5 text-sm font-extrabold text-white shadow-[0_15px_38px_rgba(124,58,237,.35)] transition hover:-translate-y-0.5"
+            >
+              Explore solutions <ArrowIcon />
+            </a>
+            <a
+              href="#how-it-works"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/8 px-5 text-sm font-bold text-white backdrop-blur-xl transition hover:bg-white/14"
+            >
+              See how it works <ArrowIcon />
+            </a>
+          </div>
+
+          <div className="relative mx-auto mt-14 min-h-[500px] max-w-[980px] overflow-hidden rounded-[34px] border border-white/15 bg-white/[.055] p-4 shadow-[0_36px_100px_rgba(8,2,14,.38)] backdrop-blur-xl sm:p-6 md:min-h-[440px]">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_18%,rgba(216,180,254,.22),transparent_30%),linear-gradient(135deg,rgba(255,255,255,.03),transparent_45%)]" />
+
+            <div
+              data-hero-float
+              className={`relative z-10 mx-auto w-full min-w-0 max-w-[390px] overflow-hidden rounded-[26px] p-5 text-left md:absolute md:bottom-0 md:left-1/2 md:-translate-x-1/2 ${glass}`}
+            >
+              <div className="flex min-w-0 items-center justify-between gap-3">
+                <span className="grid size-10 shrink-0 place-items-center rounded-full bg-white/10 text-fuchsia-100">✦</span>
+                <span className="min-w-0 flex-1 break-words text-xs font-bold text-violet-100/75">BROKEROS ASSISTANT</span>
+                <span className="grid size-9 shrink-0 place-items-center rounded-full bg-white/10">↗</span>
+              </div>
+              <strong className="mt-10 block break-words text-3xl font-medium leading-tight tracking-[-.05em] sm:text-4xl">
+                Ready to launch.
+              </strong>
+              <p className="mt-2 break-words text-sm leading-6 text-violet-100/70">Choose the systems you want connected first.</p>
+              <div className="mt-8 grid min-w-0 grid-cols-2 gap-2">
+                <span className="min-w-0 break-words rounded-xl border border-white/10 bg-white/7 p-3 text-xs text-violet-50">MT5 setup</span>
+                <span className="min-w-0 break-words rounded-xl border border-white/10 bg-white/7 p-3 text-xs text-violet-50">CRM workflow</span>
+              </div>
+            </div>
+
+            <div
+              data-hero-float
+              className={`relative z-10 mt-3 w-full min-w-0 max-w-[260px] overflow-hidden rounded-2xl p-4 text-left md:absolute md:bottom-10 md:left-6 md:mt-0 ${glass}`}
+            >
+              <span className="block break-words text-[11px] font-bold uppercase tracking-[.12em] text-violet-100/65">Brokerage launch</span>
+              <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/10">
+                <div className="h-full w-[64%] rounded-full bg-gradient-to-r from-violet-400 to-fuchsia-300" />
+              </div>
+              <div className="mt-3 flex min-w-0 items-center justify-between gap-3 text-xs">
+                <span className="min-w-0 break-words text-violet-100/70">Configuration aligned</span>
+                <strong className="shrink-0 text-fuchsia-100">64%</strong>
+              </div>
+            </div>
+
+            <div
+              data-hero-float
+              className={`relative z-10 mt-3 ml-auto w-full min-w-0 max-w-[280px] overflow-hidden rounded-2xl p-4 text-left md:absolute md:bottom-7 md:right-6 md:mt-0 ${glass}`}
+            >
+              <span className="block break-words text-[11px] font-bold uppercase tracking-[.12em] text-violet-100/65">Connected systems</span>
+              {["Client onboarding", "PAMM / MAM", "Liquidity bridge"].map((item) => (
+                <div key={item} className="mt-2 flex min-w-0 items-center gap-2 rounded-lg border border-white/8 bg-white/5 px-3 py-2 text-xs text-violet-50">
+                  <span className="shrink-0 text-fuchsia-300">↗</span>
+                  <span className="min-w-0 break-words">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-white/8 bg-[#18071f] px-4 py-20 sm:px-6 sm:py-24">
+        <div className="mx-auto grid max-w-[1180px] gap-12 lg:grid-cols-[.85fr_1.15fr] lg:items-center">
+          <div>
+            <div className="flex items-center gap-4">
+              <div className="flex -space-x-3">
+                {partnerPortraits.map((portrait) => (
+                  <img
+                    key={portrait.src}
+                    src={portrait.src}
+                    alt={portrait.alt}
+                    loading="lazy"
+                    decoding="async"
+                    className="size-11 rounded-full border-2 border-[#18071f] object-cover shadow-lg sm:size-12"
+                  />
+                ))}
+              </div>
+              <div>
+                <strong className="block text-2xl font-black tracking-[-.05em]">4.8 / 5</strong>
+                <span className="text-xs font-semibold text-fuchsia-200">★★★★★ average partner rating</span>
+              </div>
+            </div>
+
+            <p className="mt-8 max-w-[560px] text-balance text-[clamp(2rem,4vw,3.6rem)] font-medium leading-[1.08] tracking-[-.055em] text-violet-50">
+              A brokerage that can offer the right platform under its own brand starts with an operational advantage.
+            </p>
+
+            <div className="mt-7 flex flex-wrap gap-2">
+              {["Configuration", "Integration", "Launch support"].map((item) => (
+                <span key={item} className="rounded-full border border-white/12 bg-white/6 px-3.5 py-2 text-xs font-semibold text-violet-100/75 backdrop-blur-xl">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            {[
+              ["MT4", "Familiar platform and existing EA ecosystem"],
+              ["MT5", "Multi-asset workflows and newer trading tools"],
+              ["CRM", "Onboarding, payments, accounts and partners"],
+              ["24/7", "Technical continuity around the launch stack"],
+            ].map(([metric, copy]) => (
+              <article key={metric} className="rounded-[22px] border border-white/10 bg-white/[.055] p-5 backdrop-blur-xl sm:p-7">
+                <strong className="text-[clamp(2rem,5vw,4rem)] font-semibold tracking-[-.08em]">{metric}</strong>
+                <p className="mt-3 text-sm leading-6 text-violet-100/65">{copy}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="solutions" className="bg-[#100414] px-4 py-20 sm:px-6 sm:py-28">
+        <div className="mx-auto max-w-[1180px]">
+          <div className="mx-auto max-w-[760px] text-center">
+            <span className="text-xs font-extrabold tracking-[.18em] text-fuchsia-200">MORE THAN A PLATFORM</span>
+            <h2 className="mt-4 text-balance text-[clamp(2.7rem,5.4vw,5rem)] font-semibold leading-[1] tracking-[-.06em]">
+              More systems than most founders expect
+            </h2>
+            <p className="mx-auto mt-5 max-w-[680px] text-base leading-8 text-violet-100/65">
+              The trading platform is only one layer. A working brokerage needs client operations, managed accounts, execution connectivity and a client-facing experience around it.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+            {platformCards.map((card) => (
+              <article key={card.title} className="group relative min-h-[360px] overflow-hidden rounded-[24px] border border-white/10 bg-violet-950 shadow-[0_20px_50px_rgba(8,2,14,.24)]">
+                <img
+                  src={card.image}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-cover opacity-60 transition duration-500 group-hover:scale-105 group-hover:opacity-70"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#100414] via-[#100414]/35 to-transparent" />
+                <div className="absolute inset-x-3 bottom-3 rounded-[19px] border border-white/20 bg-[#180a22]/55 p-4 shadow-[0_18px_44px_rgba(5,2,10,.24)] backdrop-blur-2xl">
+                  <span className="grid size-10 place-items-center rounded-xl border border-white/15 bg-white/10 text-xs font-black text-fuchsia-100">
+                    {card.icon}
+                  </span>
+                  <h3 className="mt-5 text-lg font-bold tracking-[-.03em]">{card.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-violet-100/72">{card.text}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[linear-gradient(180deg,#16071f_0%,#260a39_55%,#100414_100%)] px-4 py-20 sm:px-6 sm:py-28">
+        <div className="mx-auto max-w-[1180px]">
+          <div className="mx-auto max-w-[760px] text-center">
+            <span className="text-xs font-extrabold tracking-[.18em] text-fuchsia-200">ACTIVE CLIENT JOURNEY</span>
+            <h2 className="mt-4 text-balance text-[clamp(2.6rem,5vw,4.8rem)] font-semibold leading-[1] tracking-[-.06em]">
+              Turn four disconnected hand-offs into one visible workflow
+            </h2>
+            <p className="mx-auto mt-5 max-w-[690px] text-base leading-8 text-violet-100/65">
+              Follow the client from first registration to an active trading relationship, while each system keeps the next team and next action in context.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-5 lg:grid-cols-[.9fr_1.1fr]">
+            <div className="grid gap-3" role="tablist" aria-label="Active client journey">
+              {journeySteps.map((step, index) => {
+                const selected = index === journeyIndex;
+                return (
+                  <button
+                    key={step.title}
+                    type="button"
+                    role="tab"
+                    aria-selected={selected}
+                    onClick={() => setJourneyIndex(index)}
+                    className={[
+                      "tab flex min-h-24 w-full items-center gap-4 rounded-[20px] border p-4 text-left transition sm:p-5",
+                      selected
+                        ? "border-fuchsia-300/45 bg-white/12 shadow-[0_16px_45px_rgba(81,25,115,.28)] backdrop-blur-2xl"
+                        : "border-white/10 bg-white/[.045] hover:border-white/20 hover:bg-white/[.075]",
+                    ].join(" ")}
+                  >
+                    <span className={`grid size-11 shrink-0 place-items-center rounded-xl text-xs font-black ${selected ? "bg-fuchsia-200 text-violet-950" : "bg-white/8 text-violet-100/70"}`}>
+                      {step.metric}
+                    </span>
+                    <span className="min-w-0">
+                      <strong className="block break-words text-base font-bold">{step.title}</strong>
+                      <span className="mt-1 block break-words text-xs leading-5 text-violet-100/55">{step.label}</span>
+                    </span>
+                    <span className="ml-auto hidden text-fuchsia-200 sm:block">↗</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            <article
+              role="tabpanel"
+              className="relative overflow-hidden rounded-[28px] border border-white/15 bg-[radial-gradient(circle_at_78%_18%,rgba(192,132,252,.3),transparent_34%),rgba(255,255,255,.055)] p-5 shadow-[0_28px_80px_rgba(8,2,14,.28)] backdrop-blur-2xl sm:p-8"
+            >
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div className="min-w-0">
+                  <span className="text-xs font-extrabold tracking-[.16em] text-fuchsia-200">CONNECTED STEP {activeJourney.metric}</span>
+                  <h3 className="mt-3 break-words text-3xl font-semibold tracking-[-.05em] sm:text-4xl">{activeJourney.title}</h3>
+                  <p className="mt-4 max-w-[620px] text-sm leading-7 text-violet-100/70 sm:text-base">{activeJourney.text}</p>
+                </div>
+                <span className="rounded-full border border-emerald-200/20 bg-emerald-300/10 px-3 py-2 text-xs font-bold text-emerald-200 backdrop-blur-xl">
+                  Live workflow
+                </span>
+              </div>
+
+              <div className="mt-8 rounded-[22px] border border-white/15 bg-[#12051a]/45 p-4 backdrop-blur-2xl sm:p-5">
+                <div className="h-2 overflow-hidden rounded-full bg-white/10">
+                  <div className={`h-full rounded-full bg-gradient-to-r from-fuchsia-400 via-violet-400 to-cyan-300 transition-all duration-500 ${journeyProgress}`} />
+                </div>
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                  {[
+                    ["CRM event", activeJourney.label],
+                    ["Next owner", journeyIndex < 2 ? "Client operations" : "Retention & support"],
+                    ["Automation", journeyIndex === 0 ? "Create client profile" : journeyIndex === 1 ? "Confirm funding state" : journeyIndex === 2 ? "Provision trading access" : "Track engagement"],
+                    ["Visibility", "Status shared across the connected stack"],
+                  ].map(([label, value]) => (
+                    <div key={label} className="min-w-0 rounded-xl border border-white/10 bg-white/[.055] p-4">
+                      <span className="block text-[10px] font-black uppercase tracking-[.14em] text-violet-100/45">{label}</span>
+                      <strong className="mt-2 block break-words text-sm leading-6 text-violet-50">{value}</strong>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#f7f3fb] px-4 py-20 text-slate-950 sm:px-6 sm:py-28">
+        <div className="mx-auto max-w-[1180px]">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-[780px]">
+              <span className="text-xs font-extrabold tracking-[.18em] text-violet-700">EXPLORE EVERY SOLUTION</span>
+              <h2 className="mt-4 text-balance text-[clamp(2.6rem,5vw,4.8rem)] font-semibold leading-[1] tracking-[-.06em]">
+                The complete brokerage technology library
+              </h2>
+              <p className="mt-5 max-w-[690px] text-base leading-8 text-slate-600">
+                Browse the platform, operations, growth and implementation pages as an interactive solution track.
+              </p>
+            </div>
+
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => scrollSolutions(-1)}
+                aria-label="Previous solutions"
+                className="grid size-12 place-items-center rounded-full border border-slate-200 bg-white text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:border-violet-300 hover:text-violet-700"
+              >
+                <ArrowIcon direction="left" />
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollSolutions(1)}
+                aria-label="Next solutions"
+                className="grid size-12 place-items-center rounded-full bg-slate-950 text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-violet-800"
+              >
+                <ArrowIcon />
+              </button>
+            </div>
+          </div>
+
+          <div
+            ref={sliderRef}
+            role="region"
+            aria-label="GreyLabel solution carousel"
+            className="mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {solutionSlides.map(([title, text, href, number]) => (
+              <Link
+                key={title}
+                href={href}
+                className="group flex min-h-[320px] min-w-0 shrink-0 basis-[86%] snap-start flex-col rounded-[26px] border border-slate-200 bg-white p-6 text-slate-950 shadow-[0_18px_45px_rgba(52,30,74,.08)] no-underline transition hover:-translate-y-1 hover:border-violet-300 sm:basis-[48%] lg:basis-[31.5%]"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <span className="grid size-12 place-items-center rounded-2xl bg-violet-100 text-sm font-black text-violet-800">{number}</span>
+                  <span className="grid size-10 place-items-center rounded-full border border-slate-200 text-slate-500 transition group-hover:border-violet-200 group-hover:bg-violet-50 group-hover:text-violet-700">
+                    <ArrowIcon />
+                  </span>
+                </div>
+                <h3 className="mt-12 text-2xl font-semibold tracking-[-.04em]">{title}</h3>
+                <p className="mt-4 text-sm leading-7 text-slate-600">{text}</p>
+                <span className="mt-auto pt-8 text-sm font-extrabold text-violet-700">Explore solution →</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="how-it-works" className="bg-[#130419] px-4 py-20 sm:px-6 sm:py-28">
+        <div className="mx-auto max-w-[1180px]">
+          <div className="mx-auto max-w-[780px] text-center">
+            <span className="text-xs font-extrabold tracking-[.18em] text-fuchsia-200">HOW IT WORKS</span>
+            <h2 className="mt-4 text-balance text-[clamp(2.6rem,5vw,4.8rem)] font-semibold leading-[1] tracking-[-.06em]">
+              A detailed path from first call to an operating brokerage
+            </h2>
+            <p className="mx-auto mt-5 max-w-[700px] text-base leading-8 text-violet-100/65">
+              Each stage has an owner, an output and a verification point, so the project moves forward without leaving critical integrations until the end.
+            </p>
+          </div>
+
+          <div className="relative mt-14">
+            <div className="absolute left-[8%] right-[8%] top-8 hidden h-px bg-gradient-to-r from-transparent via-fuchsia-300/40 to-transparent lg:block" />
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+              {processSteps.map((step, index) => (
+                <article key={step.no} className="relative rounded-[22px] border border-white/10 bg-white/[.055] p-5 backdrop-blur-xl">
+                  <div className="relative z-10 flex items-center justify-between">
+                    <span className="grid size-14 place-items-center rounded-2xl border border-fuchsia-200/20 bg-fuchsia-300/10 text-sm font-black text-fuchsia-100 backdrop-blur-xl">
+                      {step.no}
+                    </span>
+                    {index < processSteps.length - 1 && <span className="text-violet-100/30 lg:hidden">→</span>}
+                  </div>
+                  <h3 className="mt-8 text-xl font-bold tracking-[-.035em]">{step.title}</h3>
+                  <p className="mt-3 text-sm leading-7 text-violet-100/65">{step.text}</p>
+                  <div className="mt-6 rounded-xl border border-white/10 bg-black/10 p-3 text-xs leading-5 text-fuchsia-100/72 backdrop-blur-xl">
+                    {step.detail}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-8 grid gap-4 rounded-[28px] border border-white/12 bg-[radial-gradient(circle_at_85%_20%,rgba(192,132,252,.2),transparent_34%),rgba(255,255,255,.04)] p-5 backdrop-blur-2xl sm:grid-cols-3 sm:p-7">
+            {[
+              ["Clear ownership", "Every stage has a responsible team and a defined hand-off."],
+              ["Parallel verification", "Platform, CRM and client journeys are checked together before launch."],
+              ["Change-ready design", "The stack can add markets, payments, managed accounts and capacity later."],
+            ].map(([title, text]) => (
+              <div key={title} className="flex gap-3">
+                <CheckIcon />
+                <div>
+                  <strong className="block text-sm">{title}</strong>
+                  <p className="mt-1 text-xs leading-5 text-violet-100/55">{text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#0f0314] px-4 py-20 sm:px-6 sm:py-24">
+        <div className="mx-auto grid max-w-[1180px] gap-5 lg:grid-cols-2">
+          <article className="rounded-[28px] border border-white/10 bg-white/[.045] p-6 sm:p-8">
+            <span className="text-xs font-extrabold tracking-[.16em] text-fuchsia-200">PLATFORM CHOICE</span>
+            <h2 className="mt-4 text-4xl font-semibold tracking-[-.055em]">MT4 or MT5?</h2>
+            <p className="mt-4 max-w-[520px] text-sm leading-7 text-violet-100/65">
+              Many brokerages use the platforms for different client segments rather than treating the choice as permanent.
+            </p>
+            <div className="mt-7 grid gap-3 sm:grid-cols-2">
+              {[
+                ["MT4", "Familiar interface", "Established EA ecosystem", "Forex / CFD workflows"],
+                ["MT5", "More timeframes", "Multi-asset capability", "Hedging and netting"],
+              ].map(([title, ...points]) => (
+                <div key={title} className="rounded-2xl border border-white/10 bg-white/6 p-5 backdrop-blur-xl">
+                  <strong className="text-2xl tracking-[-.04em]">{title}</strong>
+                  <ul className="mt-4 grid gap-2">
+                    {points.map((point) => (
+                      <li key={point} className="flex items-center gap-2 text-xs text-violet-100/65">
+                        <span className="size-1.5 rounded-full bg-fuchsia-300" />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <article className="rounded-[28px] border border-white/10 bg-[linear-gradient(135deg,rgba(148,72,247,.18),rgba(255,255,255,.035))] p-6 sm:p-8">
+            <span className="text-xs font-extrabold tracking-[.16em] text-fuchsia-200">THE FULL STACK</span>
+            <h2 className="mt-4 text-4xl font-semibold tracking-[-.055em]">Every system speaking the same language</h2>
+            <p className="mt-4 text-sm leading-7 text-violet-100/65">
+              Launch the minimum viable stack, then add products and capacity without turning each addition into a separate technology island.
+            </p>
+            <div className="mt-7 grid grid-cols-2 gap-3">
+              {["MT4 / MT5", "Broker CRM", "PAMM / MAM", "Liquidity"].map((item) => (
+                <div key={item} className="rounded-2xl border border-white/10 bg-white/7 p-4 text-sm font-bold backdrop-blur-xl">{item}</div>
+              ))}
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section className="bg-[#f7f3fb] px-4 py-20 text-slate-950 sm:px-6 sm:py-24">
+        <div className="mx-auto grid max-w-[1180px] gap-8 lg:grid-cols-[.8fr_1.2fr]">
+          <div>
+            <span className="text-xs font-extrabold tracking-[.18em] text-violet-700">FREQUENTLY ASKED QUESTIONS</span>
+            <h2 className="mt-4 text-[clamp(2.5rem,5vw,4.5rem)] font-semibold leading-[1] tracking-[-.06em]">Clear answers before you build</h2>
+            <p className="mt-5 max-w-[480px] text-base leading-8 text-slate-600">
+              Platform availability, integration scope and operational ownership should be understood before implementation begins.
+            </p>
+          </div>
+
+          <div className="faq-list grid gap-3">
+            {faqs.map(([question, answer], index) => (
+              <details key={question} open={index === 0} className="group rounded-[20px] border border-slate-200 bg-white p-5 shadow-[0_10px_30px_rgba(52,30,74,.06)]">
+                <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 text-base font-bold marker:hidden">
+                  <span>{question}</span>
+                  <span className="grid size-8 shrink-0 place-items-center rounded-full bg-violet-50 text-violet-700 transition group-open:rotate-45">+</span>
+                </summary>
+                <p className="pt-4 text-sm leading-7 text-slate-600">{answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#100414] px-4 py-16 sm:px-6 sm:py-20">
+        <div className="mx-auto flex max-w-[1180px] flex-col gap-8 overflow-hidden rounded-[32px] border border-white/15 bg-[radial-gradient(circle_at_82%_20%,rgba(217,70,239,.26),transparent_32%),linear-gradient(135deg,rgba(124,58,237,.24),rgba(255,255,255,.045))] p-7 shadow-[0_30px_85px_rgba(8,2,14,.28)] backdrop-blur-2xl sm:p-10 lg:flex-row lg:items-center lg:justify-between">
+          <div className="max-w-[720px]">
+            <span className="text-xs font-extrabold tracking-[.18em] text-fuchsia-200">START WITH THE RIGHT FOUNDATION</span>
+            <h2 className="mt-4 text-balance text-[clamp(2.5rem,5vw,4.6rem)] font-semibold leading-[1] tracking-[-.06em]">
+              Build a brokerage stack that can grow without becoming fragmented.
+            </h2>
+            <p className="mt-5 max-w-[650px] text-sm leading-7 text-violet-100/65 sm:text-base">
+              Tell us what you want to launch, which systems you already have and where your operational bottlenecks are.
+            </p>
+          </div>
+          <a
+            href="mailto:admin@pincodeit.com?subject=GreyLabel%20Technology%20Consultation"
+            className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-white px-5 text-sm font-extrabold text-violet-900 shadow-xl transition hover:-translate-y-0.5"
+          >
+            Talk to our team <ArrowIcon />
+          </a>
+        </div>
+      </section>
+    </main>
+  );
+}

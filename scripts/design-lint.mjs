@@ -5,6 +5,8 @@ const required = [
   "CLAUDE.md",
   "components/KickgentExperience.tsx",
   "components/SharedSiteChrome.tsx",
+  "components/HomePageTailwind.tsx",
+  "components/BrandLogo.tsx",
   "content/kickgent-pages.ts",
   "app/globals.css",
   "styles/pintheme-tailwind.css",
@@ -16,6 +18,9 @@ for (const file of required) if (!existsSync(file)) failures.push(`Missing requi
 const pageData = readFileSync("content/kickgent-pages.ts", "utf8");
 const runtime = readFileSync("components/KickgentExperience.tsx", "utf8");
 const chrome = readFileSync("components/SharedSiteChrome.tsx", "utf8");
+const home = readFileSync("components/HomePageTailwind.tsx", "utf8");
+const logo = readFileSync("components/BrandLogo.tsx", "utf8");
+const homeEntry = readFileSync("app/page.tsx", "utf8");
 const globals = readFileSync("app/globals.css", "utf8");
 const tailwind = readFileSync("styles/pintheme-tailwind.css", "utf8");
 const packageJson = readFileSync("package.json", "utf8");
@@ -28,11 +33,17 @@ if (!globals.includes('@import "tailwindcss"')) failures.push("Next.js must load
 if (!tailwind.includes('@import "tailwindcss"') || !tailwind.includes("@source")) failures.push("WordPress Tailwind compiler entry must scan generated sources.");
 if (!packageJson.includes('"tailwindcss"') || !packageJson.includes('"@tailwindcss/cli"')) failures.push("Tailwind build dependencies are required.");
 if (chrome.includes("<style>")) failures.push("Global header/footer may not maintain a separate component-local CSS system.");
+if (!chrome.includes("backdrop-blur-2xl") || !chrome.includes("onMouseEnter")) failures.push("Header must retain glassmorphism and desktop hover navigation.");
 if (!chrome.includes("max-[880px]")) failures.push("Shared responsive navigation must retain the approved breakpoint behavior.");
-if (/cdn\.tailwindcss\.com/i.test(globals + tailwind + chrome)) failures.push("Tailwind CDN is forbidden in production outputs.");
+if (home.includes("<style>") || home.includes("style={{")) failures.push("Homepage upgrades must use Tailwind utilities rather than embedded or inline CSS.");
+if (!home.includes("backdrop-blur-2xl")) failures.push("Homepage glass overlay treatment is required.");
+if (!home.includes("GreyLabel solution carousel") || !home.includes("data-hero-float")) failures.push("Homepage carousel and banner overflow guardrails are required.");
+if (!logo.includes("<svg") || !logo.includes("GreyLabel Technology")) failures.push("Professional SVG brand mark is required.");
+if (!homeEntry.includes("HomePageTailwind")) failures.push("Homepage must render the Tailwind-native implementation.");
+if (/cdn\.tailwindcss\.com/i.test(globals + tailwind + chrome + home)) failures.push("Tailwind CDN is forbidden in production outputs.");
 
 if (failures.length) {
   console.error("Design gate failed:\n" + failures.map((item) => `- ${item}`).join("\n"));
   process.exit(1);
 }
-console.log("Design gate passed: Tailwind source, shared chrome, accessibility and production guardrails are present.");
+console.log("Design gate passed: Tailwind homepage, glass navigation, SVG branding, accessibility and production guardrails are present.");

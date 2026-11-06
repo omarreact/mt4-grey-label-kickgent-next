@@ -1,136 +1,276 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FocusEvent } from "react";
 import { usePathname } from "next/navigation";
+import { BrandLogo } from "./BrandLogo";
 
 type NavItem = readonly [string, string];
+
 const solutions: readonly NavItem[] = [
-  ["MT4 Grey Label","mt4-grey-label"],
-  ["MT5 Grey Label","mt5-grey-label"],
-  ["Forex Broker CRM","forex-broker-crm"],
-  ["PAMM & MAM Plugins","pamm-mam"],
-  ["Liquidity & Bridge","forex-liquidity-bridge"],
-  ["Broker Website","forex-broker-website"],
+  ["MT4 Grey Label", "mt4-grey-label"],
+  ["MT5 Grey Label", "mt5-grey-label"],
+  ["Forex Broker CRM", "forex-broker-crm"],
+  ["PAMM & MAM Plugins", "pamm-mam"],
+  ["Liquidity & Bridge", "forex-liquidity-bridge"],
+  ["Broker Website", "forex-broker-website"],
 ];
+
 const guides: readonly NavItem[] = [
-  ["Start a Brokerage","how-to-start-forex-brokerage"],
-  ["Scale Your Brokerage","scale-forex-brokerage"],
-  ["Turnkey Brokerage","turnkey-grey-label"],
+  ["Start a Brokerage", "how-to-start-forex-brokerage"],
+  ["Scale Your Brokerage", "scale-forex-brokerage"],
+  ["Turnkey Brokerage", "turnkey-grey-label"],
 ];
 
-const desktopNavItem = "inline-flex min-h-11 items-center gap-1.5 py-2 text-[.84rem] font-semibold leading-none text-[#e9dff0] no-underline transition-colors hover:text-white focus-visible:text-white";
-const mobileNavItem = "max-[880px]:w-full max-[880px]:justify-between max-[880px]:border-b max-[880px]:border-white/10";
+const navItem =
+  "inline-flex min-h-11 items-center gap-1.5 rounded-xl px-3 py-2 text-[.84rem] font-semibold leading-none text-slate-700 no-underline transition hover:bg-white/70 hover:text-slate-950 focus-visible:bg-white/80 focus-visible:text-slate-950";
 
-function Brand() {
-  return <Link href="/" className="inline-flex items-center gap-2.5 whitespace-nowrap text-[1.2rem] font-extrabold tracking-[-.05em] text-white no-underline max-[430px]:text-[1.05rem]">
-    <span
-      className="block size-7 rounded-full bg-[conic-gradient(#d1a1ff,#7826dc,#34105e,#d1a1ff)] drop-shadow-[0_0_8px_#b15dff]"
-      style={{ WebkitMask: "radial-gradient(circle,transparent 31%,#000 33%)", mask: "radial-gradient(circle,transparent 31%,#000 33%)" }}
+function ChevronIcon({ open }: { open: boolean }) {
+  return (
+    <svg
+      viewBox="0 0 20 20"
       aria-hidden="true"
-    />
-    GreyLabel
-  </Link>;
+      className={`size-4 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+      fill="none"
+    >
+      <path d="m5.5 7.5 4.5 4.5 4.5-4.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
 }
 
-function MenuGroup({label,items,id,open,onToggle,onNavigate}:{label:string;items:readonly NavItem[];id:string;open:boolean;onToggle:()=>void;onNavigate:()=>void}) {
-  return <div className="relative w-auto max-[880px]:w-full">
-    <button
-      type="button"
-      aria-expanded={open}
-      aria-controls={id}
-      onClick={onToggle}
-      className={desktopNavItem+" "+mobileNavItem+" border-0 bg-transparent"}
-    >
-      {label}<span aria-hidden="true">⌄</span>
-    </button>
+function MenuGroup({
+  label,
+  items,
+  id,
+  open,
+  setOpen,
+  onNavigate,
+}: {
+  label: string;
+  items: readonly NavItem[];
+  id: string;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  onNavigate: () => void;
+}) {
+  const desktop = () => typeof window !== "undefined" && window.innerWidth > 880;
+
+  const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
+    if (desktop() && !event.currentTarget.contains(event.relatedTarget as Node | null)) {
+      setOpen(false);
+    }
+  };
+
+  return (
     <div
-      id={id}
-      className="absolute left-1/2 top-[calc(100%+8px)] grid min-w-[248px] -translate-x-1/2 rounded-[13px] border border-[#dfbef652] bg-[#1d0929] p-[9px] shadow-[0_20px_45px_#0009] max-[880px]:static max-[880px]:mb-[7px] max-[880px]:min-w-0 max-[880px]:translate-x-0 max-[880px]:border-0 max-[880px]:border-l-2 max-[880px]:border-l-[#d49aff] max-[880px]:bg-transparent max-[880px]:py-[7px] max-[880px]:pl-[13px] max-[880px]:shadow-none"
-      hidden={!open}
+      className="relative w-auto max-[880px]:w-full"
+      onMouseEnter={() => desktop() && setOpen(true)}
+      onMouseLeave={() => desktop() && setOpen(false)}
+      onFocusCapture={() => desktop() && setOpen(true)}
+      onBlur={handleBlur}
     >
-      {items.map(([name,slug]) => <Link
-        href={"/"+slug}
-        key={slug}
-        onClick={onNavigate}
-        className="rounded-lg px-2.5 py-2.5 text-[.8rem] font-semibold leading-[1.35] text-[#eadcf2] no-underline hover:bg-white/10 hover:text-white max-[880px]:px-3.5 max-[880px]:py-3"
-      >{name}</Link>)}
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-controls={id}
+        onClick={() => {
+          if (!desktop()) setOpen(!open);
+        }}
+        className={`${navItem} w-full justify-between border-0 bg-transparent max-[880px]:border-b max-[880px]:border-slate-200/70`}
+      >
+        {label}
+        <ChevronIcon open={open} />
+      </button>
+
+      <div
+        id={id}
+        className={[
+          "absolute left-1/2 top-[calc(100%+10px)] z-20 grid min-w-[270px] -translate-x-1/2 gap-1 rounded-2xl border border-white/80 bg-white/78 p-2.5 opacity-0 shadow-[0_24px_70px_rgba(44,19,69,.18)] backdrop-blur-2xl transition duration-200",
+          "invisible pointer-events-none",
+          "max-[880px]:static max-[880px]:mt-1 max-[880px]:min-w-0 max-[880px]:translate-x-0 max-[880px]:border-slate-200/70 max-[880px]:bg-white/65 max-[880px]:shadow-none",
+          open ? "visible pointer-events-auto opacity-100" : "max-[880px]:hidden",
+        ].join(" ")}
+      >
+        {items.map(([name, slug]) => (
+          <Link
+            href={`/${slug}`}
+            key={slug}
+            onClick={onNavigate}
+            className="flex min-h-11 items-center justify-between rounded-xl px-3.5 py-3 text-[.82rem] font-semibold text-slate-700 no-underline transition hover:bg-violet-50 hover:text-violet-800 focus-visible:bg-violet-50 focus-visible:text-violet-800"
+          >
+            <span>{name}</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true" className="size-4 text-violet-500" fill="none">
+              <path d="M6 14 14 6m0 0H8m6 0v6" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </Link>
+        ))}
+      </div>
     </div>
-  </div>;
+  );
 }
 
 export function SharedSiteHeader() {
-  const [mobileOpen,setMobileOpen]=useState(false);
-  const [expanded,setExpanded]=useState<"solutions"|"guides"|null>(null);
-  const path=usePathname();
-  const close=()=>{setMobileOpen(false);setExpanded(null);};
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [expanded, setExpanded] = useState<"solutions" | "guides" | null>(null);
+  const path = usePathname();
 
-  useEffect(()=>{
-    const esc=(event:KeyboardEvent)=>{if(event.key==="Escape")close();};
-    window.addEventListener("keydown",esc);
-    return()=>window.removeEventListener("keydown",esc);
-  },[]);
+  const close = () => {
+    setMobileOpen(false);
+    setExpanded(null);
+  };
 
-  const active=(href:string)=>path===href;
+  useEffect(() => {
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") close();
+    };
+    window.addEventListener("keydown", escape);
+    return () => window.removeEventListener("keydown", escape);
+  }, []);
 
-  return <header className="sticky top-0 z-[500] border-b border-[#dcAAff2e] bg-[rgba(11,3,17,.94)] backdrop-blur-[18px]">
-    <div className="relative mx-auto flex min-h-[76px] w-[min(1180px,calc(100%_-_40px))] items-center gap-[22px] max-[880px]:min-h-[68px] max-[880px]:w-[calc(100%_-_32px)] max-[430px]:gap-2.5">
-      <Brand />
-      <button
-        className="kg-global-menu ml-auto hidden size-11 min-h-11 min-w-11 items-center justify-center rounded-[10px] border border-[#c88df8] bg-white/5 text-[1.3rem] text-white max-[880px]:inline-flex"
-        type="button"
-        aria-label={mobileOpen?"Close navigation":"Open navigation"}
-        aria-expanded={mobileOpen}
-        aria-controls="kg-primary-navigation"
-        onClick={()=>{setMobileOpen(value=>!value);setExpanded(null);}}
-      >{mobileOpen?"×":"☰"}</button>
+  const active = (href: string) => path === href;
 
-      <nav
-        id="kg-primary-navigation"
-        className={[
-          "flex flex-1 items-center justify-center gap-[21px]",
-          "max-[880px]:absolute max-[880px]:left-0 max-[880px]:right-0 max-[880px]:top-full max-[880px]:max-h-[calc(100dvh_-_68px)] max-[880px]:flex-col max-[880px]:items-stretch max-[880px]:gap-0 max-[880px]:overflow-y-auto max-[880px]:rounded-b-[14px] max-[880px]:border max-[880px]:border-t-0 max-[880px]:border-[#d5a8fa40] max-[880px]:bg-[#15061f] max-[880px]:px-4 max-[880px]:pb-[18px] max-[880px]:pt-3 max-[880px]:shadow-[0_24px_40px_#0008]",
-          mobileOpen ? "max-[880px]:flex" : "max-[880px]:hidden",
-        ].join(" ")}
-        aria-label="Primary navigation"
-      >
-        <Link href="/" aria-current={active("/")?"page":undefined} onClick={close} className={desktopNavItem+" "+mobileNavItem+(active("/")?" !text-[#d69aff]":"")}>Home</Link>
-        <MenuGroup label="Solutions" id="kg-solutions-menu" items={solutions} open={expanded==="solutions"} onToggle={()=>setExpanded(expanded==="solutions"?null:"solutions")} onNavigate={close}/>
-        <MenuGroup label="Guides" id="kg-guides-menu" items={guides} open={expanded==="guides"} onToggle={()=>setExpanded(expanded==="guides"?null:"guides")} onNavigate={close}/>
-        <Link href="/about" aria-current={active("/about")?"page":undefined} onClick={close} className={desktopNavItem+" "+mobileNavItem+(active("/about")?" !text-[#d69aff]":"")}>About</Link>
-      </nav>
+  return (
+    <header className="sticky top-0 z-[500] px-3 py-3 sm:px-5">
+      <div className="relative mx-auto flex min-h-[68px] w-full max-w-[1180px] items-center gap-3 rounded-[22px] border border-white/75 bg-white/78 px-3.5 shadow-[0_18px_55px_rgba(47,22,66,.16)] backdrop-blur-2xl supports-[backdrop-filter]:bg-white/68 sm:px-5">
+        <Link href="/" className="shrink-0 text-slate-950" aria-label="GreyLabel Technology home">
+          <BrandLogo className="h-11 w-[190px] max-[430px]:w-[158px]" />
+        </Link>
 
-      <a
-        className="inline-flex min-h-[43px] items-center justify-center whitespace-nowrap rounded-[10px] bg-[linear-gradient(135deg,#8138db,#b567ff)] px-[15px] text-[.8rem] font-bold leading-none text-white no-underline max-[880px]:hidden"
-        href="mailto:admin@pincodeit.com?subject=GreyLabel%20Enquiry"
-      >Get Started ↗</a>
-    </div>
-  </header>;
+        <button
+          className="kg-global-menu ml-auto hidden size-11 min-h-11 min-w-11 items-center justify-center rounded-xl border border-slate-200/80 bg-white/70 text-slate-900 shadow-sm max-[880px]:inline-flex"
+          type="button"
+          aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
+          aria-expanded={mobileOpen}
+          aria-controls="kg-primary-navigation"
+          onClick={() => {
+            setMobileOpen((value) => !value);
+            setExpanded(null);
+          }}
+        >
+          {mobileOpen ? (
+            <svg viewBox="0 0 24 24" aria-hidden="true" className="size-5" fill="none">
+              <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" aria-hidden="true" className="size-5" fill="none">
+              <path d="M5 7h14M5 12h14M5 17h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          )}
+        </button>
+
+        <nav
+          id="kg-primary-navigation"
+          className={[
+            "ml-auto flex flex-1 items-center justify-end gap-1",
+            "max-[880px]:absolute max-[880px]:left-0 max-[880px]:right-0 max-[880px]:top-[calc(100%+10px)] max-[880px]:max-h-[calc(100dvh-105px)] max-[880px]:flex-col max-[880px]:items-stretch max-[880px]:gap-0 max-[880px]:overflow-y-auto max-[880px]:rounded-[20px] max-[880px]:border max-[880px]:border-white/80 max-[880px]:bg-white/88 max-[880px]:p-3 max-[880px]:shadow-[0_24px_70px_rgba(44,19,69,.2)] max-[880px]:backdrop-blur-2xl",
+            mobileOpen ? "max-[880px]:flex" : "max-[880px]:hidden",
+          ].join(" ")}
+          aria-label="Primary navigation"
+        >
+          <Link
+            href="/"
+            aria-current={active("/") ? "page" : undefined}
+            onClick={close}
+            className={`${navItem} max-[880px]:w-full max-[880px]:justify-between ${active("/") ? "bg-violet-50 text-violet-800" : ""}`}
+          >
+            Home
+          </Link>
+
+          <MenuGroup
+            label="Solutions"
+            id="kg-solutions-menu"
+            items={solutions}
+            open={expanded === "solutions"}
+            setOpen={(open) => setExpanded(open ? "solutions" : null)}
+            onNavigate={close}
+          />
+
+          <MenuGroup
+            label="Guides"
+            id="kg-guides-menu"
+            items={guides}
+            open={expanded === "guides"}
+            setOpen={(open) => setExpanded(open ? "guides" : null)}
+            onNavigate={close}
+          />
+
+          <Link
+            href="/about"
+            aria-current={active("/about") ? "page" : undefined}
+            onClick={close}
+            className={`${navItem} max-[880px]:w-full max-[880px]:justify-between ${active("/about") ? "bg-violet-50 text-violet-800" : ""}`}
+          >
+            About
+          </Link>
+        </nav>
+
+        <a
+          className="ml-2 inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-700 to-fuchsia-600 px-4 text-[.8rem] font-bold text-white no-underline shadow-[0_10px_28px_rgba(124,58,237,.25)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(124,58,237,.32)] max-[880px]:hidden"
+          href="mailto:admin@pincodeit.com?subject=GreyLabel%20Enquiry"
+        >
+          Get Started
+          <svg viewBox="0 0 20 20" aria-hidden="true" className="size-4" fill="none">
+            <path d="M6 14 14 6m0 0H8m6 0v6" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </a>
+      </div>
+    </header>
+  );
 }
 
 export function SharedSiteFooter() {
-  return <footer className="bg-[#0d0312] pb-6 pt-[60px] text-white max-[720px]:pt-[46px]">
-    <div className="mx-auto w-[min(1180px,calc(100%_-_40px))] max-[720px]:w-[calc(100%_-_32px)]">
-      <div className="grid grid-cols-[1.4fr_1fr_1fr] gap-[38px] max-[720px]:grid-cols-1 max-[720px]:gap-7">
-        <div>
-          <Brand />
-          <p className="mt-[18px] max-w-[370px] text-[.85rem] leading-[1.7] text-[#c8b3d3]">
-            MT4 & MT5 grey label solutions, CRM, PAMM/MAM plugins, liquidity connectivity and broker websites.
-          </p>
+  return (
+    <footer className="border-t border-white/10 bg-[#0d0312] pb-7 pt-14 text-white">
+      <div className="mx-auto w-[min(1180px,calc(100%_-_32px))]">
+        <div className="grid grid-cols-[1.35fr_1fr_1fr] gap-10 max-[720px]:grid-cols-1 max-[720px]:gap-7">
+          <div>
+            <Link href="/" className="inline-block text-white" aria-label="GreyLabel Technology home">
+              <BrandLogo className="h-12 w-[205px]" />
+            </Link>
+            <p className="mt-5 max-w-[390px] text-sm leading-7 text-violet-100/70">
+              MT4 & MT5 grey label solutions, CRM, PAMM/MAM plugins, liquidity connectivity and broker websites.
+            </p>
+          </div>
+
+          <div>
+            <strong className="mb-4 block text-sm font-extrabold">Solutions</strong>
+            <div className="grid gap-2.5">
+              {solutions.slice(0, 4).map(([name, slug]) => (
+                <Link
+                  className="w-fit text-sm font-medium text-violet-100/70 no-underline transition hover:text-white"
+                  href={`/${slug}`}
+                  key={slug}
+                >
+                  {name}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <strong className="mb-4 block text-sm font-extrabold">Explore</strong>
+            <div className="grid gap-2.5">
+              {guides.map(([name, slug]) => (
+                <Link
+                  className="w-fit text-sm font-medium text-violet-100/70 no-underline transition hover:text-white"
+                  href={`/${slug}`}
+                  key={slug}
+                >
+                  {name}
+                </Link>
+              ))}
+              <Link className="w-fit text-sm font-medium text-violet-100/70 no-underline transition hover:text-white" href="/about">
+                About & Why Choose Us
+              </Link>
+            </div>
+          </div>
         </div>
-        <div>
-          <strong className="mb-4 block text-[.88rem] font-extrabold">Solutions</strong>
-          {solutions.slice(0,4).map(([name,slug])=><Link className="mb-[11px] block w-fit text-[.82rem] font-semibold leading-[1.4] text-[#d8c4e2] no-underline hover:text-white hover:underline" href={"/"+slug} key={slug}>{name}</Link>)}
-        </div>
-        <div>
-          <strong className="mb-4 block text-[.88rem] font-extrabold">Explore</strong>
-          {guides.map(([name,slug])=><Link className="mb-[11px] block w-fit text-[.82rem] font-semibold leading-[1.4] text-[#d8c4e2] no-underline hover:text-white hover:underline" href={"/"+slug} key={slug}>{name}</Link>)}
-          <Link className="mb-[11px] block w-fit text-[.82rem] font-semibold leading-[1.4] text-[#d8c4e2] no-underline hover:text-white hover:underline" href="/about">About & Why Choose Us</Link>
+
+        <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-5 text-xs leading-5 text-violet-100/55">
+          <span>© 2026 GreyLabel Technology. Technology services only — not investment advice.</span>
+          <span>Built by PINCODE IT</span>
         </div>
       </div>
-      <div className="mt-[46px] border-t border-white/10 pt-5 text-[.74rem] leading-[1.4] text-[#a991b5]">
-        © 2026 GreyLabel Technology. Technology services only — not investment advice.
-      </div>
-    </div>
-  </footer>;
+    </footer>
+  );
 }

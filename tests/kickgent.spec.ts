@@ -71,7 +71,56 @@ for (const width of responsiveWidths) {
       await expect(navigation).toBeVisible();
     }
 
+    const heroFloats = page.locator("[data-hero-float]");
+    const floatCount = await heroFloats.count();
+    for (let index = 0; index < floatCount; index += 1) {
+      const overflow = await heroFloats.nth(index).evaluate((element) => element.scrollWidth - element.clientWidth);
+      expect(overflow, `hero floating card overflow at ${width}px`).toBeLessThanOrEqual(1);
+    }
+
     const image = await page.screenshot({ fullPage: true });
     await testInfo.attach(`responsive-${width}.png`, { body: image, contentType: "image/png" });
   });
 }
+
+
+test("desktop navigation dropdown opens on hover", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Desktop hover behavior runs once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/");
+  const solutions = page.getByRole("button", { name: "Solutions" });
+  await solutions.hover();
+  await expect(solutions).toHaveAttribute("aria-expanded", "true");
+  await expect(page.locator("#kg-solutions-menu")).toBeVisible();
+});
+
+test("homepage branding, portraits, carousel and glass overlays render", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Homepage enhancement checks run once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/");
+
+  await expect(page.locator('svg[aria-label="GreyLabel Technology"]')).toHaveCount(2);
+
+  const portraits = page.locator('img[alt*="Portrait of a"]');
+  await expect(portraits).toHaveCount(4);
+  for (let index = 0; index < 4; index += 1) {
+    await expect(portraits.nth(index)).toHaveAttribute("src", /images\.unsplash\.com/);
+  }
+
+  const slider = page.getByRole("region", { name: "GreyLabel solution carousel" });
+  await expect(slider).toBeVisible();
+  const before = await slider.evaluate((element) => element.scrollLeft);
+  await page.getByRole("button", { name: "Next solutions" }).click();
+  await expect.poll(() => slider.evaluate((element) => element.scrollLeft)).toBeGreaterThan(before);
+
+  const platformOverlay = page.locator("#solutions article").first().locator("div").last();
+  await expect(platformOverlay).toHaveCSS("backdrop-filter", /blur/);
+});
+
+test("legacy inner-page image overlays receive the global glass treatment", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Global overlay check runs once in Chromium");
+  await page.goto("/scale-forex-brokerage");
+  const overlay = page.locator(".art-bubble").first();
+  await expect(overlay).toBeVisible();
+  await expect(overlay).toHaveCSS("backdrop-filter", /blur/);
+});
