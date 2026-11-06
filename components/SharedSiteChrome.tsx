@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, type FocusEvent } from "react";
+import { useEffect, useRef, useState, type FocusEvent } from "react";
 import { usePathname } from "next/navigation";
 import { BrandLogo } from "./BrandLogo";
 
@@ -54,6 +54,22 @@ function MenuGroup({
   onNavigate: () => void;
 }) {
   const desktop = () => typeof window !== "undefined" && window.innerWidth > 880;
+  const closeTimer = useRef<number | null>(null);
+
+  const cancelClose = () => {
+    if (closeTimer.current !== null) {
+      window.clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  };
+
+  const scheduleClose = () => {
+    if (!desktop()) return;
+    cancelClose();
+    closeTimer.current = window.setTimeout(() => setOpen(false), 180);
+  };
+
+  useEffect(() => () => cancelClose(), []);
 
   const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
     if (desktop() && !event.currentTarget.contains(event.relatedTarget as Node | null)) {
@@ -64,8 +80,12 @@ function MenuGroup({
   return (
     <div
       className="relative w-auto max-[880px]:w-full"
-      onMouseEnter={() => desktop() && setOpen(true)}
-      onMouseLeave={() => desktop() && setOpen(false)}
+      onMouseEnter={() => {
+        if (!desktop()) return;
+        cancelClose();
+        setOpen(true);
+      }}
+      onMouseLeave={scheduleClose}
       onFocusCapture={() => desktop() && setOpen(true)}
       onBlur={handleBlur}
     >
@@ -85,7 +105,7 @@ function MenuGroup({
       <div
         id={id}
         className={[
-          "absolute left-1/2 top-[calc(100%+10px)] z-20 grid min-w-[270px] -translate-x-1/2 gap-1 rounded-2xl border border-white/80 bg-white/78 p-2.5 opacity-0 shadow-[0_24px_70px_rgba(44,19,69,.18)] backdrop-blur-2xl transition duration-200",
+          "absolute left-1/2 top-full z-20 grid min-w-[270px] -translate-x-1/2 gap-1 rounded-2xl border border-white/80 bg-white/82 p-2.5 opacity-0 shadow-[0_24px_70px_rgba(44,19,69,.18)] backdrop-blur-2xl transition duration-200",
           "invisible pointer-events-none",
           "max-[880px]:static max-[880px]:mt-1 max-[880px]:min-w-0 max-[880px]:translate-x-0 max-[880px]:border-slate-200/70 max-[880px]:bg-white/65 max-[880px]:shadow-none",
           open ? "visible pointer-events-auto opacity-100" : "max-[880px]:hidden",
@@ -205,7 +225,8 @@ export function SharedSiteHeader() {
         </nav>
 
         <a
-          className="ml-2 inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-700 to-fuchsia-600 px-4 text-[.8rem] font-bold text-white no-underline shadow-[0_10px_28px_rgba(124,58,237,.25)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(124,58,237,.32)] max-[880px]:hidden"
+          data-get-started
+          className="ml-2 inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl border border-[#d8c6ea] bg-[#f0e7fb] px-4 text-[.8rem] font-extrabold text-[#4a1f5f] no-underline shadow-[0_10px_28px_rgba(74,31,95,.12)] transition hover:-translate-y-0.5 hover:border-[#c8ace4] hover:bg-white hover:shadow-[0_14px_34px_rgba(74,31,95,.16)] max-[880px]:hidden"
           href="mailto:admin@pincodeit.com?subject=GreyLabel%20Enquiry"
         >
           Get Started

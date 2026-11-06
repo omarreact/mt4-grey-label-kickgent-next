@@ -77,11 +77,85 @@ export function KickgentExperience({ page }: Props) {
       pageHero.prepend(scrim);
       injectedNodes.push(scrim);
 
-      pageHero.querySelectorAll<HTMLElement>("h1,.lead-paragraph,.breadcrumbs,.overline")
-        .forEach((element) => element.classList.add("!text-white", "drop-shadow-[0_3px_18px_rgba(15,23,42,.48)]"));
+      pageHero.classList.add(
+        "!min-h-0",
+        "!pt-[122px]",
+        "!pb-10",
+        "sm:!pt-[136px]",
+        "sm:!pb-12"
+      );
 
-      pageHero.querySelectorAll<HTMLElement>(".hero-art,.orbit-core,.art-bubble")
-        .forEach((element) => element.classList.add(...glassOverlayClasses));
+      const heroGrid = pageHero.querySelector<HTMLElement>(".hero-grid");
+      heroGrid?.classList.add("!grid-cols-1", "!gap-0", "!max-w-[980px]");
+
+      const heroCopy = pageHero.querySelector<HTMLElement>(".hero-copy");
+      heroCopy?.classList.add("!flex", "!max-w-[900px]", "!flex-col", "!items-start");
+
+      const overline = pageHero.querySelector<HTMLElement>(".overline");
+      const heroActions = pageHero.querySelector<HTMLElement>(".hero-actions");
+      const heroArt = pageHero.querySelector<HTMLElement>(".hero-art");
+      overline?.classList.add("!hidden");
+      heroActions?.classList.add("!hidden");
+      heroArt?.classList.add("!hidden");
+
+      const title = pageHero.querySelector<HTMLElement>("h1");
+      title?.classList.add(
+        "!order-2",
+        "!m-0",
+        "!max-w-[900px]",
+        "!text-white",
+        "!text-[clamp(2.35rem,5vw,4.55rem)]",
+        "!leading-[1.02]",
+        "drop-shadow-[0_3px_18px_rgba(15,23,42,.5)]"
+      );
+
+      const subtitle = pageHero.querySelector<HTMLElement>(".lead-paragraph");
+      subtitle?.classList.add(
+        "!order-3",
+        "!mt-4",
+        "!mb-0",
+        "!max-w-[760px]",
+        "!text-base",
+        "!leading-7",
+        "!text-white/86",
+        "sm:!text-lg",
+        "drop-shadow-[0_3px_18px_rgba(15,23,42,.45)]"
+      );
+
+      const breadcrumbs = pageHero.querySelector<HTMLElement>(".breadcrumbs");
+      if (breadcrumbs) {
+        breadcrumbs.classList.add(
+          "!order-1",
+          "!mb-5",
+          "!mt-0",
+          "!inline-flex",
+          "!w-fit",
+          "!items-center",
+          "!gap-2",
+          "!rounded-full",
+          "!border",
+          "!border-white/25",
+          "!bg-white/12",
+          "!px-3.5",
+          "!py-2",
+          "!text-[.7rem]",
+          "!font-extrabold",
+          "!uppercase",
+          "!tracking-[.1em]",
+          "!text-white",
+          "!shadow-[0_12px_34px_rgba(15,23,42,.18)]",
+          "!backdrop-blur-xl"
+        );
+        breadcrumbs.querySelector<HTMLElement>("a")?.classList.add("!text-white/78", "hover:!text-white");
+        const parts = breadcrumbs.querySelectorAll<HTMLElement>("span");
+        if (parts[0]) {
+          parts[0].textContent = "→";
+          parts[0].classList.add("!text-white/45");
+        }
+        if (parts[1]) {
+          parts[1].classList.add("!rounded-full", "!bg-white/14", "!px-2.5", "!py-1", "!text-white");
+        }
+      }
     }
 
     root.querySelectorAll<HTMLElement>(".bottom-cta .cta-layout")

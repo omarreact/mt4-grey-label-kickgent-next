@@ -84,15 +84,24 @@ for (const width of responsiveWidths) {
 }
 
 
-test("desktop navigation dropdown opens on hover", async ({ page }, testInfo) => {
+test("desktop navigation submenu stays open and can be clicked", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Desktop hover behavior runs once in Chromium");
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/");
+
   const navigation = page.locator("#kg-primary-navigation");
   const solutions = navigation.getByRole("button", { name: "Solutions", exact: true });
   await solutions.hover();
   await expect(solutions).toHaveAttribute("aria-expanded", "true");
-  await expect(page.locator("#kg-solutions-menu")).toBeVisible();
+
+  const menu = page.locator("#kg-solutions-menu");
+  await expect(menu).toBeVisible();
+
+  const mt4 = menu.getByRole("link", { name: "MT4 Grey Label", exact: true });
+  await mt4.hover();
+  await expect(menu).toBeVisible();
+  await mt4.click();
+  await expect(page).toHaveURL(/\/mt4-grey-label\/?$/);
 });
 
 test("homepage branding, portraits, carousel and glass overlays render", async ({ page }, testInfo) => {
@@ -197,4 +206,36 @@ test("inner pages keep layout and receive image-backed glass visual system", asy
 
   const related = page.locator(".related-card").first();
   await expect(related).toHaveCSS("backdrop-filter", /blur/);
+});
+
+
+test("header CTA uses the revised light palette", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Header palette check runs once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/");
+
+  const cta = page.locator("[data-get-started]");
+  await expect(cta).toHaveCSS("background-color", "rgb(240, 231, 251)");
+  await expect(cta).toHaveCSS("color", "rgb(74, 31, 95)");
+});
+
+test("inner page banner is compact and only shows route title and subtitle", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Inner-page hero structure check runs once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/mt4-grey-label");
+
+  const hero = page.locator(".page-hero");
+  const box = await hero.boundingBox();
+  expect(box).not.toBeNull();
+  expect(box!.height).toBeLessThan(520);
+
+  await expect(hero.locator(".breadcrumbs")).toBeVisible();
+  await expect(hero.locator("h1")).toBeVisible();
+  await expect(hero.locator(".lead-paragraph")).toBeVisible();
+  await expect(hero.locator(".overline")).toBeHidden();
+  await expect(hero.locator(".hero-actions")).toBeHidden();
+  await expect(hero.locator(".hero-art")).toBeHidden();
+
+  const crumbSpans = hero.locator(".breadcrumbs span");
+  await expect(crumbSpans.nth(0)).toHaveText("→");
 });
