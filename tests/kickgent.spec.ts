@@ -42,3 +42,36 @@ test("mobile global navigation and submenu are usable", async ({ page }, testInf
   await expect(solutions).toHaveAttribute("aria-expanded", "true");
   await expect(page.locator("#kg-solutions-menu")).toBeVisible();
 });
+
+
+const responsiveWidths = [320, 375, 390, 430, 768, 1024, 1280, 1440, 1920];
+
+for (const width of responsiveWidths) {
+  test(`responsive home layout at ${width}px`, async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== "chromium", "Viewport matrix runs once in desktop Chromium project");
+    await page.setViewportSize({ width, height: Math.max(800, Math.round(width * 0.75)) });
+    await page.goto("/");
+    await expect(page.locator("h1")).toBeVisible();
+    await expect(page.locator("footer")).toBeVisible();
+
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow, `unexpected horizontal overflow at ${width}px`).toBeLessThanOrEqual(1);
+
+    const toggle = page.locator(".kg-global-menu");
+    const navigation = page.locator("#kg-primary-navigation");
+    if (width <= 880) {
+      await expect(toggle).toBeVisible();
+      await expect(toggle).toHaveCSS("min-height", "44px");
+      await toggle.click();
+      await expect(navigation).toBeVisible();
+      await page.keyboard.press("Escape");
+      await expect(toggle).toHaveAttribute("aria-expanded", "false");
+    } else {
+      await expect(toggle).toBeHidden();
+      await expect(navigation).toBeVisible();
+    }
+
+    const image = await page.screenshot({ fullPage: true });
+    await testInfo.attach(`responsive-${width}.png`, { body: image, contentType: "image/png" });
+  });
+}
