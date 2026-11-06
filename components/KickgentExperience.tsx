@@ -7,8 +7,8 @@ const guardrailStyles = `
 :where(a, button, summary, input, select, textarea):focus-visible { outline:3px solid #e4bdff !important; outline-offset:4px; }
 
 .kg-page-content .site-header,.kg-page-content .nav,.kg-page-content .site-footer,.kg-page-content .footer,.kg-page-content .skip,.kg-page-content .skip-to-content{display:none !important}
-@media (pointer:coarse){.tab,.tool-nav button,.faq-list summary{min-height:44px}}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important;transition-duration:.01ms !important}}
+@media (pointer: coarse){.tab,.tool-nav button,.faq-list summary{min-height:44px}}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important;transition-duration:.01ms !important}}
 `;
 
 type Props = { page: KickgentPage };
