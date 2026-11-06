@@ -32,12 +32,12 @@ const config = {
   },
   urls: {
     nextjs: "https://mt4-grey-label-kickgent-next.vercel.app/",
-    html: null as string | null,
+    html: "https://omarreact.github.io/mt4-grey-label-kickgent-next/" as string | null,
     wordpress: null as string | null,
   },
   status: {
     nextjs: "CONFIGURED" as PinThemeEnvironmentStatus,
-    html: "NOT CONFIGURED" as PinThemeEnvironmentStatus,
+    html: "DEPLOYED" as PinThemeEnvironmentStatus,
     wordpress: "NOT CONFIGURED" as PinThemeEnvironmentStatus,
   },
   deployments: {

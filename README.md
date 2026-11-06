@@ -16,8 +16,10 @@ This repository is the initial proof of concept for **PinTheme by PINCODE IT**. 
 | View | Purpose | URL/status |
 | --- | --- | --- |
 | Next.js | Development/reference | `https://mt4-grey-label-kickgent-next.vercel.app/` — configured; verify separately |
-| HTML | Standalone static output | GitHub Pages workflow included; URL is not marked verified until deployment succeeds |
+| HTML | Standalone static output | `https://omarreact.github.io/mt4-grey-label-kickgent-next/` — deployed through GitHub Pages |
 | WordPress | Production CMS | Project-configurable; no production/staging URL is hardcoded |
+
+The HTML view is marked **DEPLOYED**, not **VERIFIED**, until an independent frontend request confirms the published Pages URL outside the deployment runner.
 
 ## Routes
 
@@ -46,7 +48,7 @@ Automated Media Library mirroring, private GitHub App/OAuth authentication, rele
 ## Commands
 
 ```bash
-npm install
+npm ci
 npm run audit:design
 npm run validate
 npm run typecheck

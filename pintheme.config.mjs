@@ -24,12 +24,12 @@ export default {
   },
   urls: {
     nextjs: "https://mt4-grey-label-kickgent-next.vercel.app/",
-    html: null,
+    html: "https://omarreact.github.io/mt4-grey-label-kickgent-next/",
     wordpress: null,
   },
   status: {
     nextjs: "CONFIGURED",
-    html: "NOT CONFIGURED",
+    html: "DEPLOYED",
     wordpress: "NOT CONFIGURED",
   },
   deployments: {
