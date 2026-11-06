@@ -17,6 +17,7 @@ All pages are served by Next.js components. There is no public `index.html` entr
 - `CLAUDE.md` defines the mandatory implementation and quality rules.
 - `npm run audit:design` checks the design-system guardrails.
 - `npm run test:ui` runs Chromium desktop/mobile route, interaction and screenshot checks.
+- `.mcp.json` configures the official Microsoft Playwright MCP server, pinned to `@playwright/mcp@0.0.84`.
 - GitHub Actions uploads the Playwright report and screenshots for every pull request and `main` update.
 
 ## Commands
