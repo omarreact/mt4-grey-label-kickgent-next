@@ -35,10 +35,10 @@
   "source": {
     "repository": "omarreact/mt4-grey-label-kickgent-next",
     "branch": "main",
-    "commit": "f611d43dd31c95993b50a26060ea69259e6d95a2"
+    "commit": "64712f6c26c006125993cce60b47859b917ff317"
   },
   "build": {
-    "generatedAt": "2026-11-06T20:56:21.907Z",
+    "generatedAt": "2026-11-06T20:58:51.164Z",
     "pageCount": 11,
     "htmlBasePath": "/mt4-grey-label-kickgent-next"
   },
@@ -64,11 +64,11 @@
   "htmlExport": true,
   "repository": "omarreact/mt4-grey-label-kickgent-next",
   "branch": "main",
-  "sourceCommit": "f611d43dd31c95993b50a26060ea69259e6d95a2",
-  "generatedAt": "2026-11-06T20:56:21.908Z",
+  "sourceCommit": "64712f6c26c006125993cce60b47859b917ff317",
+  "generatedAt": "2026-11-06T20:58:51.165Z",
   "pageCount": 11,
   "contentFeed": "wordpress/greylabel-technology/data/greylabel-technology-content.json",
-  "contentFeedSha256": "f406516d785ffd3fccd29275fb7ac2391beb6df309b30d2d945476dbfe119abc",
+  "contentFeedSha256": "28c20303661788ca0a62ed2fef1f200e96a84ae9ec4a06afa8a0d2157642c497",
   "releaseAssets": {
     "theme": "greylabel-technology-1.0.0.zip",
     "plugin": "pintheme-manager-1.0.0.zip",
