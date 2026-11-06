@@ -12,6 +12,7 @@ on:
       - 'next.config.ts'
       - 'postcss.config.mjs'
       - 'package.json'
+      - 'package-lock.json'
       - 'scripts/export-html.mjs'
       - 'scripts/validate-html-export.mjs'
       - '.github/workflows/pages.yml'
@@ -36,7 +37,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-      - run: npm install
+          cache: npm
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
       - run: npm run export:html
       - run: touch out/.nojekyll
 

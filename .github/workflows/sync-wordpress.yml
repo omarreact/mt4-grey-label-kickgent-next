@@ -17,6 +17,7 @@ on:
       - 'next.config.ts'
       - 'postcss.config.mjs'
       - 'package.json'
+      - 'package-lock.json'
       - '.github/workflows/sync-wordpress.yml'
   workflow_dispatch:
 
@@ -38,12 +39,20 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
+          cache: npm
 
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
 
-      - run: npm install
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
       - run: npm run check
 
       - name: Validate WordPress PHP
@@ -70,8 +79,8 @@ jobs:
           path: artifacts/
           retention-days: 30
 
-      - name: Synchronize generated import metadata and compiled CSS
+      - name: Synchronize lockfile, generated metadata and compiled CSS
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.actor != 'github-actions[bot]'
         run: |
-          git add pintheme.manifest.json website.xml wordpress/greylabel-technology/data wordpress/greylabel-technology/assets/css/theme.css wordpress/greylabel-technology/assets/css/source-parity.css
+          git add package-lock.json pintheme.manifest.json website.xml wordpress/greylabel-technology/data wordpress/greylabel-technology/assets/css/theme.css wordpress/greylabel-technology/assets/css/source-parity.css
           git diff --cached --quiet || (git -c user.name='github-actions[bot]' -c user.email='41898282+omarreact@users.noreply.github.com' commit -m 'chore(pintheme): synchronize GreyLabel distributions' && git push origin HEAD:main)

@@ -16,10 +16,17 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
+          cache: npm
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
-      - run: npm install
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
       - run: npm run check
       - name: Validate WordPress PHP
         run: find wordpress/greylabel-technology wordpress/pintheme-manager -name '*.php' -print0 | xargs -0 -n1 php -l
