@@ -1,0 +1,3 @@
+<?php get_header(); ?>
+<main id="main" class="pintheme-content"><div class="pintheme-shell"><?php while (have_posts()): the_post(); ?><article <?php post_class(); ?>><h1><?php the_title(); ?></h1><?php the_post_thumbnail('large'); ?><?php the_content(); ?></article><?php endwhile; ?></div></main>
+<?php get_footer(); ?>

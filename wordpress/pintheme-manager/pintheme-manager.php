@@ -174,9 +174,17 @@ add_action('admin_init', 'pintheme_manager_register_settings');
 function pintheme_manager_menu() {
     add_menu_page('PinTheme Manager', 'PinTheme Manager', 'manage_options', 'pintheme-manager', 'pintheme_manager_dashboard', 'dashicons-admin-appearance', 58);
     add_submenu_page('pintheme-manager', 'Dashboard', 'Dashboard', 'manage_options', 'pintheme-manager', 'pintheme_manager_dashboard');
+    add_submenu_page('pintheme-manager', 'Project Views', 'Project Views', 'manage_options', 'pintheme-project-views', 'pintheme_manager_project_views_page');
     add_submenu_page('pintheme-manager', 'GitHub Connection', 'GitHub Connection', 'manage_options', 'pintheme-github', 'pintheme_manager_connection_page');
+    add_submenu_page('pintheme-manager', 'Repository Browser', 'Repository Browser', 'manage_options', 'pintheme-repository', 'pintheme_manager_repository_page');
     add_submenu_page('pintheme-manager', 'Import Website', 'Import Website', 'manage_options', 'pintheme-import', 'pintheme_manager_import_page');
-    add_submenu_page('pintheme-manager', 'Updates & Rollback', 'Updates & Rollback', 'manage_options', 'pintheme-updates', 'pintheme_manager_updates_page');
+    add_submenu_page('pintheme-manager', 'Theme Settings', 'Theme Settings', 'manage_options', 'pintheme-theme-settings', 'pintheme_manager_theme_settings_page');
+    add_submenu_page('pintheme-manager', 'Global Components', 'Global Components', 'manage_options', 'pintheme-global-components', 'pintheme_manager_global_components_page');
+    add_submenu_page('pintheme-manager', 'Media', 'Media', 'manage_options', 'pintheme-media', 'pintheme_manager_media_page');
+    add_submenu_page('pintheme-manager', 'Updates', 'Updates', 'manage_options', 'pintheme-updates', 'pintheme_manager_updates_page');
+    add_submenu_page('pintheme-manager', 'Version History', 'Version History', 'manage_options', 'pintheme-version-history', 'pintheme_manager_version_history_page');
+    add_submenu_page('pintheme-manager', 'Code Viewer', 'Code Viewer', 'manage_options', 'pintheme-code-viewer', 'pintheme_manager_code_viewer_page');
+    add_submenu_page('pintheme-manager', 'Backup & Restore', 'Backup & Restore', 'manage_options', 'pintheme-backup', 'pintheme_manager_backup_page');
     add_submenu_page('pintheme-manager', 'System Status', 'System Status', 'manage_options', 'pintheme-status', 'pintheme_manager_status_page');
 }
 add_action('admin_menu', 'pintheme_manager_menu');
@@ -247,7 +255,197 @@ function pintheme_manager_status_page() {
     if (!current_user_can('manage_options')) return;
     $state = pintheme_manager_state();
     $theme = wp_get_theme();
-    echo '<div class="wrap"><h1>System Status</h1><table class="widefat striped" style="max-width:900px"><tbody>';
-    foreach ([['WordPress', get_bloginfo('version')], ['PHP', PHP_VERSION], ['Active theme', $theme->get('Name') . ' ' . $theme->get('Version')], ['HTTPS', is_ssl() ? 'Yes' : 'No'], ['GitHub package', is_wp_error($state) ? $state->get_error_message() : 'Validated'], ['Checksum', is_wp_error($state) ? 'Unavailable' : 'SHA-256 verified']] as $row) echo '<tr><th>' . esc_html($row[0]) . '</th><td>' . esc_html($row[1]) . '</td></tr>';
+    $manifest = is_wp_error($state) ? [] : $state[0];
+    $urls = (array) ($manifest['urls'] ?? []);
+    $source = (array) ($manifest['source'] ?? []);
+    $theme_dir = get_stylesheet_directory();
+
+    $rows = [
+        ['WordPress version', get_bloginfo('version')],
+        ['PHP version', PHP_VERSION],
+        ['Active theme', $theme->get('Name')],
+        ['Theme version', $theme->get('Version')],
+        ['PinTheme Manager version', PINTHEME_MANAGER_VERSION],
+        ['GitHub status', is_wp_error($state) ? $state->get_error_message() : 'Manifest + content checksum validated'],
+        ['Repository', $source['repository'] ?? ($manifest['repository'] ?? pintheme_manager_repo())],
+        ['Branch', $source['branch'] ?? ($manifest['branch'] ?? pintheme_manager_branch())],
+        ['Current release', $manifest['themeVersion'] ?? 'Not available'],
+        ['Source commit', $source['commit'] ?? ($manifest['sourceCommit'] ?? 'Not available')],
+        ['Next.js URL', $urls['nextjs'] ?? 'NOT CONFIGURED'],
+        ['HTML URL', $urls['html'] ?? 'NOT CONFIGURED'],
+        ['WordPress URL', $urls['wordpress'] ?? home_url('/')],
+        ['Theme directory writable', is_writable($theme_dir) ? 'Yes' : 'No'],
+        ['HTTPS', is_ssl() ? 'Yes' : 'No'],
+    ];
+
+    echo '<div class="wrap"><h1>System Status</h1><table class="widefat striped" style="max-width:1000px"><tbody>';
+    foreach ($rows as $row) echo '<tr><th>' . esc_html($row[0]) . '</th><td>' . esc_html((string) $row[1]) . '</td></tr>';
+    echo '</tbody></table>';
+
+    if (!empty($manifest['capabilities'])) {
+        echo '<h2>Compatibility warnings</h2><ul>';
+        foreach ((array) $manifest['capabilities'] as $name => $enabled) {
+            if (!$enabled) echo '<li><code>' . esc_html($name) . '</code> is not yet implemented for this proof of concept.</li>';
+        }
+        echo '</ul>';
+    }
+    echo '</div>';
+}
+function pintheme_manager_project_views_page() {
+    if (!current_user_can('manage_options')) return;
+    $state = pintheme_manager_state();
+    echo '<div class="wrap"><h1>Project Views</h1><p>These links come from the validated PinTheme manifest. Deployment and verification are intentionally separate states.</p>';
+    if (is_wp_error($state)) {
+        pintheme_manager_notice($state->get_error_message(), true);
+        echo '</div>';
+        return;
+    }
+    $manifest = $state[0];
+    $urls = (array) ($manifest['urls'] ?? []);
+    $statuses = (array) ($manifest['status'] ?? []);
+    $views = [
+        'NEXT.JS VIEW' => ['Development / Reference', $urls['nextjs'] ?? '', $statuses['nextjs'] ?? 'NOT CONFIGURED'],
+        'HTML VIEW' => ['Static Template', $urls['html'] ?? '', $statuses['html'] ?? 'NOT CONFIGURED'],
+        'WORDPRESS VIEW' => ['Production / Staging', $urls['wordpress'] ?? home_url('/'), $statuses['wordpress'] ?? 'NOT CONFIGURED'],
+    ];
+    echo '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;max-width:1100px">';
+    foreach ($views as $label => $view) {
+        [$purpose, $url, $status] = $view;
+        echo '<section style="padding:18px;border:1px solid #dcdcde;border-radius:10px;background:#fff"><h2 style="margin-top:0">' . esc_html($label) . '</h2><p>' . esc_html($purpose) . '</p><p><strong>Status:</strong> ' . esc_html($status) . '</p>';
+        if ($url) {
+            echo '<p style="word-break:break-all"><code>' . esc_html($url) . '</code></p><p><a class="button button-primary" target="_blank" rel="noopener noreferrer" href="' . esc_url($url) . '">Open view</a></p>';
+        } else {
+            echo '<p><em>URL not configured.</em></p>';
+        }
+        echo '</section>';
+    }
+    echo '</div><p><strong>Source commit:</strong> <code>' . esc_html($manifest['sourceCommit'] ?? ($manifest['source']['commit'] ?? 'unknown')) . '</code></p></div>';
+}
+
+function pintheme_manager_repository_page() {
+    if (!current_user_can('manage_options')) return;
+    $state = pintheme_manager_state();
+    echo '<div class="wrap"><h1>Repository Browser</h1>';
+    if (is_wp_error($state)) {
+        pintheme_manager_notice($state->get_error_message(), true);
+        echo '</div>';
+        return;
+    }
+    $manifest = $state[0];
+    $source = (array) ($manifest['source'] ?? []);
+    $capabilities = (array) ($manifest['capabilities'] ?? []);
+    echo '<table class="widefat striped" style="max-width:960px"><tbody>';
+    foreach ([
+        ['Repository', $source['repository'] ?? ($manifest['repository'] ?? '')],
+        ['Branch', $source['branch'] ?? ($manifest['branch'] ?? '')],
+        ['Commit', $source['commit'] ?? ($manifest['sourceCommit'] ?? '')],
+        ['Theme', $manifest['site']['name'] ?? ($manifest['themeName'] ?? '')],
+        ['Theme slug', $manifest['site']['slug'] ?? ($manifest['themeSlug'] ?? '')],
+        ['Schema', $manifest['schemaVersion'] ?? ''],
+    ] as $row) echo '<tr><th>' . esc_html($row[0]) . '</th><td><code>' . esc_html($row[1]) . '</code></td></tr>';
+    echo '</tbody></table><h2>Declared capabilities</h2><ul>';
+    foreach ($capabilities as $name => $enabled) echo '<li><code>' . esc_html($name) . '</code>: <strong>' . ($enabled ? 'SUPPORTED' : 'NOT YET SUPPORTED') . '</strong></li>';
+    echo '</ul><p>This browser intentionally exposes validated metadata only; arbitrary remote file execution is not allowed.</p></div>';
+}
+
+function pintheme_manager_theme_settings_page() {
+    if (!current_user_can('manage_options')) return;
+    if (function_exists('pintheme_greylabel_settings_page')) {
+        pintheme_greylabel_settings_page();
+        return;
+    }
+    echo '<div class="wrap"><h1>Theme Settings</h1><p>The active theme does not expose a compatible PinTheme settings module.</p></div>';
+}
+
+function pintheme_manager_global_components_page() {
+    if (!current_user_can('manage_options')) return;
+    echo '<div class="wrap"><h1>Global Components</h1><p>Header, navigation and footer are global theme components. WordPress owns menu content; the theme owns component structure and defaults.</p><p><a class="button button-primary" href="' . esc_url(admin_url('nav-menus.php')) . '">Manage menus</a> <a class="button" href="' . esc_url(admin_url('customize.php')) . '">Manage logo & site identity</a> <a class="button" href="' . esc_url(admin_url('admin.php?page=pintheme-theme-settings')) . '">Global styles</a></p></div>';
+}
+
+function pintheme_manager_media_page() {
+    if (!current_user_can('manage_options')) return;
+    $state = pintheme_manager_state();
+    $supported = false;
+    if (!is_wp_error($state)) $supported = !empty($state[0]['capabilities']['mediaImport']);
+    echo '<div class="wrap"><h1>Media</h1><p><strong>Media Library:</strong> WordPress remains the production owner of media records.</p>';
+    if ($supported) {
+        echo '<p>Manifest declares media import support.</p>';
+    } else {
+        echo '<div class="notice notice-warning inline"><p>Automated development-asset → WordPress Media Library import is not implemented in this proof of concept. Existing media is never deleted.</p></div>';
+    }
+    echo '<p><a class="button" href="' . esc_url(admin_url('upload.php')) . '">Open Media Library</a></p></div>';
+}
+
+function pintheme_manager_version_history_page() {
+    if (!current_user_can('manage_options')) return;
+    $history = (array) get_option('pintheme_backups', []);
+    echo '<div class="wrap"><h1>Version History</h1><p><strong>Installed version:</strong> ' . esc_html(get_option('pintheme_installed_version', 'Not imported yet')) . '</p><p><strong>Installed source commit:</strong> <code>' . esc_html(get_option('pintheme_installed_commit', 'Not imported yet')) . '</code></p>';
+    if (!$history) {
+        echo '<p>No content snapshots are stored yet.</p></div>';
+        return;
+    }
+    echo '<table class="widefat striped" style="max-width:960px"><thead><tr><th>Snapshot</th><th>Pages</th><th>Front page</th></tr></thead><tbody>';
+    foreach ($history as $snapshot) {
+        echo '<tr><td>' . esc_html($snapshot['createdAt'] ?? '') . '</td><td>' . absint(count($snapshot['pages'] ?? [])) . '</td><td>' . absint($snapshot['page_on_front'] ?? 0) . '</td></tr>';
+    }
     echo '</tbody></table></div>';
+}
+
+function pintheme_manager_code_viewer_page() {
+    if (!current_user_can('manage_options')) return;
+    $root = realpath(get_stylesheet_directory());
+    echo '<div class="wrap"><h1>Code Viewer</h1><p>Read-only view of allowlisted files in the active theme. Editing is intentionally disabled.</p>';
+    if (!$root) {
+        echo '<p>Active theme directory is unavailable.</p></div>';
+        return;
+    }
+
+    $allowed = ['php','css','js','json','txt','md'];
+    $requested = isset($_GET['file']) ? sanitize_text_field(wp_unslash($_GET['file'])) : 'style.css';
+    $requested = ltrim(str_replace('\\', '/', $requested), '/');
+    $candidate = realpath($root . DIRECTORY_SEPARATOR . $requested);
+    $valid = $candidate && str_starts_with($candidate, $root . DIRECTORY_SEPARATOR) && in_array(strtolower(pathinfo($candidate, PATHINFO_EXTENSION)), $allowed, true);
+
+    echo '<div style="display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:20px;max-width:1200px"><div><h2>Files</h2><div style="max-height:620px;overflow:auto;background:#fff;border:1px solid #dcdcde;padding:10px">';
+    $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root, FilesystemIterator::SKIP_DOTS));
+    $shown = 0;
+    foreach ($iterator as $fileInfo) {
+        if (!$fileInfo->isFile()) continue;
+        $ext = strtolower($fileInfo->getExtension());
+        if (!in_array($ext, $allowed, true)) continue;
+        $relative = ltrim(str_replace('\\', '/', substr($fileInfo->getPathname(), strlen($root))), '/');
+        $url = add_query_arg(['page'=>'pintheme-code-viewer','file'=>$relative], admin_url('admin.php'));
+        echo '<div><a href="' . esc_url($url) . '"><code>' . esc_html($relative) . '</code></a></div>';
+        if (++$shown >= 250) break;
+    }
+    echo '</div></div><div><h2>' . esc_html($valid ? $requested : 'Unavailable') . '</h2>';
+    if (!$valid || !is_readable($candidate)) {
+        echo '<div class="notice notice-error inline"><p>File is unavailable or not allowlisted.</p></div>';
+    } else {
+        $code = file_get_contents($candidate);
+        if ($code === false || strlen($code) > 2 * MB_IN_BYTES) {
+            echo '<div class="notice notice-error inline"><p>File cannot be displayed safely.</p></div>';
+        } else {
+            echo '<pre style="max-height:680px;overflow:auto;padding:16px;background:#0d1117;color:#e6edf3;border-radius:8px;white-space:pre"><code>' . esc_html($code) . '</code></pre>';
+        }
+    }
+    echo '</div></div></div>';
+}
+
+function pintheme_manager_backup_page() {
+    if (!current_user_can('manage_options')) return;
+    if (isset($_POST['pintheme_rollback'])) {
+        check_admin_referer('pintheme_rollback');
+        $result = pintheme_manager_restore_latest();
+        pintheme_manager_notice(is_wp_error($result) ? $result->get_error_message() : 'Latest PinTheme content snapshot restored.', is_wp_error($result));
+    }
+    $history = (array) get_option('pintheme_backups', []);
+    echo '<div class="wrap"><h1>Backup & Restore</h1><p>Content snapshots are created before every PinTheme content import and retained up to five versions.</p><p>Available snapshots: <strong>' . absint(count($history)) . '</strong></p>';
+    if ($history) {
+        echo '<form method="post">';
+        wp_nonce_field('pintheme_rollback');
+        submit_button('Restore latest content snapshot', 'secondary', 'pintheme_rollback');
+        echo '</form>';
+    }
+    echo '<div class="notice notice-info inline"><p>Full database/media backup and theme-package rollback require a WordPress staging/backup integration and are not claimed complete here.</p></div></div>';
 }

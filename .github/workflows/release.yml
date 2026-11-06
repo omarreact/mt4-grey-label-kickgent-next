@@ -1,0 +1,41 @@
+name: Create PinTheme release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+      - run: npm install
+      - run: npm run check
+      - name: Validate WordPress PHP
+        run: find wordpress/greylabel-technology wordpress/pintheme-manager -name '*.php' -print0 | xargs -0 -n1 php -l
+      - run: npm run generate:wordpress
+      - name: Package release
+        run: |
+          mkdir -p artifacts
+          cd dist
+          zip -qr ../artifacts/greylabel-technology-1.0.0.zip greylabel-technology
+          zip -qr ../artifacts/pintheme-manager-1.0.0.zip pintheme-manager
+          cd ../out
+          zip -qr ../artifacts/greylabel-technology-html-1.0.0.zip .
+          cd ..
+          cp pintheme.manifest.json artifacts/pintheme.manifest.json
+          cp wordpress/greylabel-technology/data/greylabel-technology-content.json artifacts/greylabel-technology-content.json
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${GITHUB_REF_NAME}" artifacts/* --generate-notes --verify-tag

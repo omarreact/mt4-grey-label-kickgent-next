@@ -1,5 +1,5 @@
 {
-  "name": "kickgent-next-wordpress-generator",
+  "name": "greylabel-technology-pintheme",
   "version": "1.0.0",
   "private": true,
   "engines": {"node": ">=20.9"},
@@ -7,17 +7,19 @@
     "dev": "next dev",
     "build": "next build",
     "lint": "npx tsc --noEmit",
+    "typecheck": "npx tsc --noEmit",
     "validate": "node scripts/validate-theme.mjs",
     "audit:design": "node scripts/design-lint.mjs",
     "test:ui": "playwright test",
+    "build:css": "npx @tailwindcss/cli -i styles/pintheme-tailwind.css -o wordpress/greylabel-technology/assets/css/theme.css --minify",
     "build:pintheme": "node scripts/build-pintheme.mjs",
     "build:wordpress-sync": "node scripts/build-wordpress-sync.mjs",
     "validate:html": "node scripts/validate-html-export.mjs",
     "validate:pintheme": "node scripts/validate-pintheme.mjs",
     "verify:wordpress-sync": "node scripts/verify-wordpress-sync.mjs",
-    "generate:wordpress": "npm run build:pintheme && npm run validate:pintheme && node scripts/generate-wordpress-theme.mjs",
-    "export:html": "npm run build && npm run validate:html",
-    "check": "npm run audit:design && npm run validate && npx tsc --noEmit && npm run build:pintheme && npm run build && npm run validate:html && npm run validate:pintheme"
+    "generate:wordpress": "npm run build:pintheme && npm run build:css && npm run validate:pintheme && node scripts/generate-wordpress-theme.mjs",
+    "export:html": "node scripts/export-html.mjs",
+    "check": "npm run audit:design && npm run validate && npm run typecheck && npm run build:pintheme && npm run build:css && npm run build && npm run validate:html && npm run validate:pintheme"
   },
   "dependencies": {
     "next": "^15.4.9",
@@ -26,9 +28,12 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.65.0",
+    "@tailwindcss/cli": "^4.1.17",
+    "@tailwindcss/postcss": "^4.1.17",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3"
   }
 }

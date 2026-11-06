@@ -1,11 +1,10 @@
-# WordPress sync deployment
+# WordPress outputs
 
-Next.js main is canonical. A source update regenerates the WordPress feed, WXR and theme/plugin ZIP artifact.
+The production PinTheme output is:
 
-1. Download the kickgent-wordpress-sync-package GitHub Actions artifact.
-2. Install the theme and plugin ZIPs in WordPress.
-3. Open Tools > Kickgent GitHub Sync, review the available commit, then import it.
+- Theme: `wordpress/greylabel-technology/`
+- Companion plugin: `wordpress/pintheme-manager/`
 
-The importer updates pages by slug and sets home as the front page. It verifies the Git blob SHA. WordPress edits to synced pages are replaced by the next import.
+The generated theme is named **GreyLabel Technology** and is designed to run independently on standard WordPress/PHP hosting without Node.js or a Tailwind compiler.
 
-This is source synchronization. Imported page bodies use Custom HTML blocks for parity; per-section drag-and-drop Gutenberg editing requires a later native-block migration.
+The older `kickgent-fse/`, `kickgent-github-sync/`, and `kickgent-pintheme/` directories are retained only as historical references while migration work is reviewed. They are not packaged by the current PinTheme workflows.

@@ -1,4 +1,5 @@
 name: Build PinTheme distributions
+
 on:
   push:
     branches: [main]
@@ -8,49 +9,69 @@ on:
       - 'content/**'
       - 'pintheme/**'
       - 'pintheme.config.mjs'
+      - 'pintheme.config.ts'
+      - 'styles/**'
       - 'scripts/**'
-      - 'wordpress/kickgent-pintheme/**'
+      - 'wordpress/greylabel-technology/**'
       - 'wordpress/pintheme-manager/**'
       - 'next.config.ts'
+      - 'postcss.config.mjs'
       - 'package.json'
       - '.github/workflows/sync-wordpress.yml'
   workflow_dispatch:
-permissions: { contents: write }
-concurrency: { group: kickgent-pintheme-build, cancel-in-progress: false }
+
+permissions:
+  contents: write
+
+concurrency:
+  group: greylabel-pintheme-build
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-        with: { fetch-depth: 0 }
+        with:
+          fetch-depth: 0
+
       - uses: actions/setup-node@v4
-        with: { node-version: 20 }
+        with:
+          node-version: 24
+
       - uses: shivammathur/setup-php@v2
-        with: { php-version: '8.2' }
+        with:
+          php-version: '8.2'
+
       - run: npm install
       - run: npm run check
+
       - name: Validate WordPress PHP
-        run: find wordpress/kickgent-pintheme wordpress/pintheme-manager -name '*.php' -print0 | xargs -0 -n1 php -l
+        run: find wordpress/greylabel-technology wordpress/pintheme-manager -name '*.php' -print0 | xargs -0 -n1 php -l
+
       - run: npm run generate:wordpress
-      - name: Package release artifacts
+
+      - name: Package versioned release artifacts
         run: |
           mkdir -p artifacts
           cd dist
-          zip -qr ../artifacts/kickgent-pintheme-theme.zip kickgent-pintheme
-          zip -qr ../artifacts/pintheme-manager-plugin.zip pintheme-manager
+          zip -qr ../artifacts/greylabel-technology-1.0.0.zip greylabel-technology
+          zip -qr ../artifacts/pintheme-manager-1.0.0.zip pintheme-manager
           cd ../out
-          zip -qr ../artifacts/kickgent-pintheme-html.zip .
+          zip -qr ../artifacts/greylabel-technology-html-1.0.0.zip .
           cd ..
-          cp website.xml artifacts/kickgent-pages.xml
-          cp wordpress/kickgent-pintheme/data/kickgent-pages.json artifacts/kickgent-pages.json
+          cp website.xml artifacts/greylabel-technology-content.xml
+          cp wordpress/greylabel-technology/data/greylabel-technology-content.json artifacts/greylabel-technology-content.json
           cp pintheme.manifest.json artifacts/pintheme.manifest.json
+
       - uses: actions/upload-artifact@v4
         with:
-          name: kickgent-pintheme-distributions
+          name: greylabel-technology-pintheme-distributions
           path: artifacts/
           retention-days: 30
-      - name: Synchronize generated GitHub import metadata
+
+      - name: Synchronize generated import metadata and compiled CSS
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.actor != 'github-actions[bot]'
         run: |
-          git add pintheme.manifest.json website.xml wordpress/kickgent-pintheme/data wordpress/kickgent-pintheme/assets/source-parity.css
-          git diff --cached --quiet || (git -c user.name='github-actions[bot]' -c user.email='41898282+omarreact@users.noreply.github.com' commit -m 'chore(pintheme): synchronize generated distributions' && git push origin HEAD:main)
+          git add pintheme.manifest.json website.xml wordpress/greylabel-technology/data wordpress/greylabel-technology/assets/css/theme.css wordpress/greylabel-technology/assets/css/source-parity.css
+          git diff --cached --quiet || (git -c user.name='github-actions[bot]' -c user.email='41898282+omarreact@users.noreply.github.com' commit -m 'chore(pintheme): synchronize GreyLabel distributions' && git push origin HEAD:main)

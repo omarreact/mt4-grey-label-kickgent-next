@@ -1,24 +1,32 @@
-# PinTheme implementation status — Kickgent proof of concept
+# PinTheme implementation status — GreyLabel Technology
 
-## Implemented
+## Implemented in this repository
 
-- GitHub-first source model with `pintheme.config.mjs`.
-- Shared design-token and component-compatibility registries.
-- Next.js static export for all 11 approved routes.
-- Native classic WordPress theme with PHP templates, `theme.json`, custom logo, native menus, responsive hamburger/dropdowns, and global settings outside FSE.
-- Generated source-parity stylesheet and content feed from the canonical Next.js page source.
-- PinTheme manifest with SHA-256 content integrity verification.
-- PinTheme Manager with repository/branch configuration for public GitHub packages, import preview, safe content synchronization, local-edit conflict detection, menu bootstrap, update state, backup snapshots, and rollback.
-- CI validation for TypeScript, Next.js build/static export, PinTheme manifests, PHP syntax, and ZIP artifact packaging.
+- GitHub-first project configuration and manifest generation.
+- Correct project identity: GreyLabel Technology / `greylabel-technology`.
+- Shared Tailwind CSS entrypoints for Next.js and generated WordPress CSS, with CSS custom properties for WordPress-controlled design values.
+- Shared Next.js header/footer and grouped desktop/mobile navigation.
+- Eleven-route Next.js static export.
+- GitHub Pages deployment workflow with repository base-path support and export validation.
+- Native Classic/Hybrid WordPress theme with PHP templates, `theme.json`, custom logo, native menus, archives, search, responsive navigation, settings, and no Node.js production dependency.
+- PinTheme Manager dashboard, Project Views, public GitHub connection, validated manifest/content feed, safe content import, local-edit protection, menu bootstrap, content backups/rollback, version history, read-only code viewer, global-component links, and system status.
+- SHA-256 content-feed integrity validation.
+- CI for TypeScript, Next.js build/export, Tailwind compilation, PHP syntax, packaging, Playwright interaction tests, GitHub Pages, and opt-in tagged releases.
 
-## Intentionally partial / later phases
+## Transitional compatibility layer
 
-- Private GitHub repository authentication via GitHub App or OAuth.
-- Release API browsing and automatic theme ZIP installation.
-- Media Library mirroring and remote media conflict handling.
-- Full Theme Manager live responsive preview UI.
-- Advanced code viewer/editor and Git-aware draft editing.
-- Automated disposable WordPress staging environment and screenshot parity comparisons between Next.js/HTML/WordPress.
+The existing approved page designs predate Tailwind and still contain project-specific canonical CSS in `content/kickgent-pages.ts` and `app/site-pages.css`. PinTheme now uses Tailwind for the shared global chrome and WordPress production bundle while preserving that CSS as generated `source-parity.css` so the approved design is not silently redesigned. A full component-schema migration of every page section to Tailwind-native renderers remains unfinished.
+
+## Not yet complete
+
+- Private-repository GitHub App/OAuth authentication.
+- Release selection and automatic WordPress theme ZIP installation.
+- Development asset → WordPress Media Library import and reference rewriting.
+- Full theme-package/database rollback; current rollback covers PinTheme content snapshots.
+- Advanced writable code editor.
+- Disposable WordPress staging installation/activation QA.
+- Three-way screenshot visual-regression comparison against an installed WordPress domain.
 - Formal Lighthouse/Core Web Vitals gates.
+- Complete conversion of every legacy page section into the reusable component-schema library.
 
-These items remain separate because they require credentials, a WordPress staging runtime, or broader product infrastructure. The current implementation does not silently simulate them.
+These gaps are explicit in the manifest capability flags and should be treated as later phases rather than simulated functionality.

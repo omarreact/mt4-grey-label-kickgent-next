@@ -1,26 +1,50 @@
 {
   "schemaVersion": "1.0",
-  "project": "kickgent-greylabel",
+  "site": "greylabel-technology",
+  "source": "Tailwind CSS + CSS variable bridge",
   "colors": {
-    "background": "#0b0311",
-    "surface": "#1d0929",
-    "primary": "#9b4de8",
-    "primarySoft": "#d69aff",
-    "text": "#ffffff",
-    "muted": "#c8b3d3"
+    "primary": "#9448f7",
+    "secondary": "#24102f",
+    "accent": "#d69aff",
+    "background": "#100414",
+    "foreground": "#fcf8ff",
+    "surface": "#24102f",
+    "muted": "#c7b6d0"
   },
   "typography": {
-    "headingFont": "Inter, system-ui, sans-serif",
-    "bodyFont": "Inter, system-ui, sans-serif"
+    "heading": "Inter, system-ui, sans-serif",
+    "body": "Inter, system-ui, sans-serif"
+  },
+  "spacing": {
+    "section": "72px",
+    "containerPadding": "24px",
+    "mobile": "16px"
   },
   "layout": {
-    "containerWidth": "1180px",
-    "sectionSpacing": "72px",
-    "radius": "14px"
+    "container": "1180px",
+    "headerHeight": "76px"
   },
-  "breakpoints": {
-    "mobile": "430px",
-    "tablet": "768px",
-    "desktop": "1024px"
-  }
+  "radius": {
+    "card": "17px",
+    "button": "11px"
+  },
+  "shadows": {
+    "card": "0 15px 50px rgba(19,5,31,.25)"
+  },
+  "cssVariables": [
+    "--pt-primary",
+    "--pt-secondary",
+    "--pt-accent",
+    "--pt-bg",
+    "--pt-surface",
+    "--pt-text",
+    "--pt-muted",
+    "--pt-container",
+    "--pt-section",
+    "--pt-card-radius",
+    "--pt-button-radius",
+    "--pt-logo-width",
+    "--pt-logo-height",
+    "--pt-header-height"
+  ]
 }

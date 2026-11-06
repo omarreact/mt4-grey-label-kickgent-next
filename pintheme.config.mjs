@@ -1,22 +1,53 @@
 export default {
   schemaVersion: "1.0",
   generator: "pintheme",
+  site: {
+    name: "GreyLabel Technology",
+    shortName: "GreyLabel",
+    slug: "greylabel-technology",
+  },
+  author: { name: "PINCODE IT" },
   project: {
-    id: "kickgent-greylabel",
-    name: "Kickgent GreyLabel",
-    themeSlug: "kickgent-pintheme",
+    id: "greylabel-technology",
     themeVersion: "1.0.0",
+    managerVersion: "1.0.0",
+  },
+  framework: {
+    frontend: "nextjs",
+    language: "typescript",
+    styling: "tailwindcss",
   },
   source: {
     repository: "omarreact/mt4-grey-label-kickgent-next",
     branch: "main",
     pagesFile: "content/kickgent-pages.ts",
   },
+  urls: {
+    nextjs: "https://mt4-grey-label-kickgent-next.vercel.app/",
+    html: null,
+    wordpress: null,
+  },
+  status: {
+    nextjs: "CONFIGURED",
+    html: "NOT CONFIGURED",
+    wordpress: "NOT CONFIGURED",
+  },
+  deployments: {
+    htmlBasePath: "/mt4-grey-label-kickgent-next",
+  },
   outputs: {
+    nextjs: true,
+    html: true,
+    wordpress: true,
     htmlDirectory: "out",
-    wordpressThemeDirectory: "wordpress/kickgent-pintheme",
+    wordpressThemeDirectory: "wordpress/greylabel-technology",
     wordpressPluginDirectory: "wordpress/pintheme-manager",
     releaseDirectory: "dist",
+  },
+  requirements: {
+    wordpress: "6.5",
+    php: "8.1",
+    node: "20.9",
   },
   routes: [
     "/",

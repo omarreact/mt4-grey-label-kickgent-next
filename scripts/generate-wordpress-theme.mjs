@@ -6,10 +6,16 @@ const root = resolve(import.meta.dirname, "..");
 const dist = resolve(root, config.outputs.releaseDirectory);
 const theme = resolve(root, config.outputs.wordpressThemeDirectory);
 const plugin = resolve(root, config.outputs.wordpressPluginDirectory);
+
 if (!existsSync(theme) || !existsSync(plugin)) throw new Error("PinTheme WordPress packages are missing.");
+
 rmSync(dist, { recursive: true, force: true });
 mkdirSync(dist, { recursive: true });
-cpSync(theme, resolve(dist, config.project.themeSlug), { recursive: true });
+cpSync(theme, resolve(dist, config.site.slug), { recursive: true });
 cpSync(plugin, resolve(dist, "pintheme-manager"), { recursive: true });
-writeFileSync(resolve(dist, "BUILD.txt"), "Install kickgent-pintheme as the theme and pintheme-manager as the companion plugin. WordPress production does not require Next.js or Node.js.\n");
-console.log("Generated native WordPress PinTheme distribution.");
+
+writeFileSync(
+  resolve(dist, "BUILD.txt"),
+  `Install ${config.site.slug}-${config.project.themeVersion}.zip through WordPress Appearance → Themes, then install pintheme-manager-${config.project.managerVersion}.zip as a plugin. Production WordPress does not require Next.js, Node.js, npm, Vercel, or a Tailwind compiler.\n`
+);
+console.log(`Generated native WordPress distribution for ${config.site.name}.`);

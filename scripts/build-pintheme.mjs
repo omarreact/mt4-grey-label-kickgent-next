@@ -6,12 +6,13 @@ import config from "../pintheme.config.mjs";
 const root = resolve(import.meta.dirname, "..");
 const theme = resolve(root, config.outputs.wordpressThemeDirectory);
 const dataDir = resolve(theme, "data");
+const cssDir = resolve(theme, "assets/css");
 const raw = readFileSync(resolve(root, config.source.pagesFile), "utf8");
 const marker = "export const kickgentPages";
 const start = raw.indexOf(marker);
 const open = raw.indexOf("{", start);
 const end = raw.indexOf(";\n\nexport const pageSlugs", open);
-if (start < 0 || open < 0 || end < 0) throw new Error("Cannot read canonical Kickgent page data.");
+if (start < 0 || open < 0 || end < 0) throw new Error("Cannot read canonical GreyLabel page data.");
 
 const source = JSON.parse(raw.slice(open, end));
 const extractMain = (markup) => {
@@ -30,13 +31,16 @@ if (pages.length !== config.routes.length) {
 }
 
 const sourceCommit = process.env.GITHUB_SHA || "local";
+const feedFile = `${config.site.slug}-content.json`;
 const feed = {
   schemaVersion: "1.0",
   generator: "pintheme",
-  projectId: config.project.id,
-  repository: config.source.repository,
-  branch: config.source.branch,
-  sourceCommit,
+  site: config.site,
+  source: {
+    repository: config.source.repository,
+    branch: config.source.branch,
+    commit: sourceCommit,
+  },
   pages,
 };
 const feedText = `${JSON.stringify(feed, null, 2)}\n`;
@@ -45,8 +49,54 @@ const feedSha256 = createHash("sha256").update(feedText).digest("hex");
 const manifest = {
   schemaVersion: "1.0",
   generator: "pintheme",
-  themeName: config.project.name,
-  themeSlug: config.project.themeSlug,
+  site: config.site,
+  framework: {
+    nextjs: true,
+    react: true,
+    typescript: true,
+    tailwind: true,
+  },
+  urls: config.urls,
+  status: config.status,
+  wordpress: {
+    compatible: true,
+    themeName: config.site.name,
+    themeSlug: config.site.slug,
+    textDomain: config.site.slug,
+    requiresWordPress: config.requirements.wordpress,
+    requiresPHP: config.requirements.php,
+    productionRuntime: "php-wordpress",
+    requiresNodeInProduction: false,
+  },
+  source: {
+    repository: config.source.repository,
+    branch: config.source.branch,
+    commit: sourceCommit,
+  },
+  build: {
+    generatedAt: new Date().toISOString(),
+    pageCount: pages.length,
+    htmlBasePath: config.deployments.htmlBasePath,
+  },
+  capabilities: {
+    contentImport: true,
+    navigationImport: true,
+    localEditProtection: true,
+    contentRollback: true,
+    mediaImport: false,
+    privateGitHubAuth: false,
+    themeReleaseInstaller: false,
+  },
+  artifacts: {
+    theme: `${config.site.slug}-${config.project.themeVersion}.zip`,
+    html: `${config.site.slug}-html-${config.project.themeVersion}.zip`,
+    content: feedFile,
+    manager: `pintheme-manager-${config.project.managerVersion}.zip`,
+  },
+
+  /* Backward-compatible keys consumed by PinTheme Manager 1.0. */
+  themeName: config.site.name,
+  themeSlug: config.site.slug,
   themeVersion: config.project.themeVersion,
   wordpressCompatible: true,
   htmlExport: true,
@@ -55,14 +105,14 @@ const manifest = {
   sourceCommit,
   generatedAt: new Date().toISOString(),
   pageCount: pages.length,
-  contentFeed: `wordpress/${config.project.themeSlug}/data/kickgent-pages.json`,
+  contentFeed: `wordpress/${config.site.slug}/data/${feedFile}`,
   contentFeedSha256: feedSha256,
   releaseAssets: {
-    theme: `${config.project.themeSlug}-theme.zip`,
-    plugin: "pintheme-manager-plugin.zip",
-    html: `${config.project.themeSlug}-html.zip`,
-    content: "kickgent-pages.json"
-  }
+    theme: `${config.site.slug}-${config.project.themeVersion}.zip`,
+    plugin: `pintheme-manager-${config.project.managerVersion}.zip`,
+    html: `${config.site.slug}-html-${config.project.themeVersion}.zip`,
+    content: feedFile,
+  },
 };
 
 const esc = (value) => String(value)
@@ -71,20 +121,33 @@ const esc = (value) => String(value)
   .replaceAll(">", "&gt;")
   .replaceAll('"', "&quot;")
   .replaceAll("'", "&apos;");
+
 const items = pages.map((page, index) =>
   `<item><title>${esc(page.title)}</title><dc:creator>admin</dc:creator><wp:post_id>${100 + index}</wp:post_id><wp:post_name>${esc(page.slug)}</wp:post_name><wp:post_type>page</wp:post_type><wp:status>publish</wp:status><content:encoded><![CDATA[<!-- wp:html -->\n${page.content.replaceAll("]]>", "]]]]><![CDATA[>")}\n<!-- /wp:html -->]]></content:encoded></item>`
 ).join("\n");
-const wxr = `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:wp="http://wordpress.org/export/1.2/"><channel><title>Kickgent GreyLabel</title><link>https://mt4-grey-label-kickgent-next.vercel.app/</link><wp:wxr_version>1.2</wp:wxr_version>\n${items}\n</channel></rss>\n`;
+
+const wxr = `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:wp="http://wordpress.org/export/1.2/"><channel><title>${esc(config.site.name)}</title><link>${esc(config.urls.nextjs || "")}</link><wp:wxr_version>1.2</wp:wxr_version>\n${items}\n</channel></rss>\n`;
 
 mkdirSync(dataDir, { recursive: true });
-writeFileSync(resolve(dataDir, "kickgent-pages.json"), feedText);
+mkdirSync(cssDir, { recursive: true });
+writeFileSync(resolve(theme, "style.css"), `/*
+Theme Name: ${config.site.name}
+Theme URI: https://github.com/${config.source.repository}
+Author: ${config.author.name}
+Description: Custom WordPress theme for ${config.site.name} generated through PinTheme.
+Version: ${config.project.themeVersion}
+Requires at least: ${config.requirements.wordpress}
+Requires PHP: ${config.requirements.php}
+Text Domain: ${config.site.slug}
+*/
+`);
+writeFileSync(resolve(dataDir, feedFile), feedText);
 writeFileSync(resolve(dataDir, "manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`);
 writeFileSync(resolve(root, "pintheme.manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`);
 writeFileSync(resolve(root, "website.xml"), wxr);
 
 const sharedCss = readFileSync(resolve(root, "app/site-pages.css"), "utf8");
 const homeStyles = source.home?.styles || "";
-mkdirSync(resolve(theme, "assets"), { recursive: true });
-writeFileSync(resolve(theme, "assets/source-parity.css"), `/* Generated from the canonical Next.js design source. */\n${sharedCss}\n${homeStyles}\n`);
+writeFileSync(resolve(cssDir, "source-parity.css"), `/* Transitional compatibility CSS generated from the approved Next.js source. */\n${sharedCss}\n${homeStyles}\n`);
 
-console.log(`PinTheme generated ${pages.length} pages from ${config.source.pagesFile}.`);
+console.log(`PinTheme generated ${pages.length} GreyLabel pages and manifest for ${config.site.slug}.`);

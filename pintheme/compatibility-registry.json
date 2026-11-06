@@ -1,11 +1,18 @@
 {
   "schemaVersion": "1.0",
+  "project": "greylabel-technology",
+  "policy": "Unsupported behavior must be reported; never silently emit broken WordPress output.",
   "components": {
-    "globalHeader": {"next": "SharedSiteHeader", "html": "static export", "wordpress": "header.php", "status": "supported"},
-    "globalFooter": {"next": "SharedSiteFooter", "html": "static export", "wordpress": "footer.php", "status": "supported"},
-    "pageMarkup": {"next": "KickgentExperience/PageRenderer", "html": "static export", "wordpress": "post_content + source-parity.css", "status": "supported"},
-    "navigation": {"next": "React menu", "html": "semantic HTML + JS", "wordpress": "wp_nav_menu + theme.js", "status": "supported"},
-    "responsiveStyles": {"next": "site-pages.css", "html": "Next static export", "wordpress": "source-parity.css", "status": "supported"},
-    "clientAnimations": {"next": "KickgentExperience", "html": "exported JS", "wordpress": "theme.js / CSS where compatible", "status": "partial"}
+    "globalHeader": {"next":"SharedSiteHeader (Tailwind)","html":"static export","wordpress":"header.php + wp_nav_menu()","editable":["logo","menu","CTA","colors","dimensions"],"status":"supported"},
+    "globalFooter": {"next":"SharedSiteFooter (Tailwind)","html":"static export","wordpress":"footer.php + footer menu","editable":["logo","menu","contact","social","copyright"],"status":"supported"},
+    "navigation": {"next":"React state + shared data","html":"exported client JS","wordpress":"native menu + minimal JS","editable":["menu hierarchy"],"status":"supported"},
+    "pageMarkup": {"next":"KickgentExperience/PageRenderer","html":"static export","wordpress":"post_content + native templates","editable":["page content"],"status":"supported"},
+    "faqAccordion": {"next":"page runtime","html":"exported runtime","wordpress":"semantic details/summary content","status":"supported"},
+    "tabs": {"next":"page runtime","html":"exported runtime","wordpress":"generated markup + minimal JS where present","status":"partial"},
+    "hero": {"next":"canonical page markup","html":"static export","wordpress":"imported page content","status":"partial"},
+    "cards": {"next":"canonical page markup","html":"static export","wordpress":"imported page content","status":"partial"},
+    "forms": {"next":"native markup","html":"native markup","wordpress":"native/plugin integration required per form","status":"partial"},
+    "mediaImport": {"next":"project assets","html":"exported assets","wordpress":"Media Library importer","status":"not-implemented"},
+    "themeReleaseInstall": {"next":"n/a","html":"n/a","wordpress":"controlled release installer","status":"not-implemented"}
   }
 }
