@@ -27,12 +27,18 @@ test("homepage tabs and FAQ work", async ({ page }) => {
   await expect(faq).toHaveAttribute("open", "");
 });
 
-test("mobile navigation has a usable menu control", async ({ page }, testInfo) => {
+test("mobile global navigation and submenu are usable", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "mobile-chromium", "Mobile-only touch-target check");
   await page.goto("/");
-  const toggle = page.locator("#nav-toggle");
+  const toggle = page.locator(".kg-global-menu");
+  const navigation = page.locator("#kg-primary-navigation");
   await expect(toggle).toBeVisible();
   await expect(toggle).toHaveCSS("min-height", "44px");
   await toggle.click();
-  await expect(page.locator("#mobile-menu")).toHaveClass(/open/);
+  await expect(toggle).toHaveAttribute("aria-expanded", "true");
+  await expect(navigation).toHaveClass(/is-open/);
+  const solutions = navigation.getByRole("button", { name: "Solutions" });
+  await solutions.click();
+  await expect(solutions).toHaveAttribute("aria-expanded", "true");
+  await expect(page.locator("#kg-solutions-menu")).toBeVisible();
 });
