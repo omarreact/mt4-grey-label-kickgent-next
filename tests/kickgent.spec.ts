@@ -280,3 +280,56 @@ test("site-wide section motion is attached", async ({ page }, testInfo) => {
   const transition = await sections.nth(1).evaluate((element) => getComputedStyle(element).transitionDuration);
   expect(transition).not.toBe("0s");
 });
+
+const bannerViewports = [
+  { width: 1024, height: 768 },
+  { width: 1280, height: 720 },
+  { width: 1366, height: 768 },
+  { width: 1440, height: 900 },
+  { width: 1920, height: 1080 },
+];
+
+for (const viewport of bannerViewports) {
+  test(`banner composition stays contained at ${viewport.width}x${viewport.height}`, async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== "chromium", "Desktop banner geometry runs once in Chromium");
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+
+    const hero = page.locator("[data-hero-banner]");
+    const left = page.locator("[data-hero-left]");
+    const right = page.locator("[data-hero-right]");
+
+    const [heroBox, leftBox, rightBox] = await Promise.all([
+      hero.boundingBox(),
+      left.boundingBox(),
+      right.boundingBox(),
+    ]);
+
+    expect(heroBox).not.toBeNull();
+    expect(leftBox).not.toBeNull();
+    expect(rightBox).not.toBeNull();
+
+    expect(leftBox!.x).toBeGreaterThanOrEqual(heroBox!.x);
+    expect(rightBox!.x + rightBox!.width).toBeLessThanOrEqual(heroBox!.x + heroBox!.width + 1);
+    expect(leftBox!.y).toBeGreaterThanOrEqual(heroBox!.y);
+    expect(rightBox!.y).toBeGreaterThanOrEqual(heroBox!.y);
+    expect(leftBox!.y + leftBox!.height).toBeLessThanOrEqual(heroBox!.y + heroBox!.height + 1);
+    expect(rightBox!.y + rightBox!.height).toBeLessThanOrEqual(heroBox!.y + heroBox!.height + 1);
+
+    const horizontalOverlap = Math.min(leftBox!.x + leftBox!.width, rightBox!.x + rightBox!.width) - Math.max(leftBox!.x, rightBox!.x);
+    expect(horizontalOverlap).toBeLessThanOrEqual(0);
+
+    const visualBox = rightBox!;
+    const floats = page.locator("[data-hero-right] [data-hero-float]");
+    const count = await floats.count();
+    expect(count).toBe(3);
+    for (let index = 0; index < count; index += 1) {
+      const box = await floats.nth(index).boundingBox();
+      expect(box).not.toBeNull();
+      expect(box!.x).toBeGreaterThanOrEqual(visualBox.x - 1);
+      expect(box!.y).toBeGreaterThanOrEqual(visualBox.y - 1);
+      expect(box!.x + box!.width).toBeLessThanOrEqual(visualBox.x + visualBox.width + 1);
+      expect(box!.y + box!.height).toBeLessThanOrEqual(visualBox.y + visualBox.height + 1);
+    }
+  });
+}
