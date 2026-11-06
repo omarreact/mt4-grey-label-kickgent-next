@@ -294,32 +294,77 @@ function pintheme_manager_status_page() {
 function pintheme_manager_project_views_page() {
     if (!current_user_can('manage_options')) return;
     $state = pintheme_manager_state();
-    echo '<div class="wrap"><h1>Project Views</h1><p>These links come from the validated PinTheme manifest. Deployment and verification are intentionally separate states.</p>';
+    echo '<div class="wrap"><h1>Project Views</h1><p>Deployment and verification are separate states. Unknown telemetry is shown explicitly rather than inferred.</p>';
     if (is_wp_error($state)) {
         pintheme_manager_notice($state->get_error_message(), true);
         echo '</div>';
         return;
     }
+
     $manifest = $state[0];
     $urls = (array) ($manifest['urls'] ?? []);
     $statuses = (array) ($manifest['status'] ?? []);
+    $build = (array) ($manifest['build'] ?? []);
+    $source = (array) ($manifest['source'] ?? []);
+    $version = (string) ($manifest['themeVersion'] ?? 'Not recorded');
+    $commit = (string) ($source['commit'] ?? ($manifest['sourceCommit'] ?? 'Not recorded'));
+    $generated = (string) ($build['generatedAt'] ?? ($manifest['generatedAt'] ?? 'Not recorded'));
+
     $views = [
-        'NEXT.JS VIEW' => ['Development / Reference', $urls['nextjs'] ?? '', $statuses['nextjs'] ?? 'NOT CONFIGURED'],
-        'HTML VIEW' => ['Static Template', $urls['html'] ?? '', $statuses['html'] ?? 'NOT CONFIGURED'],
-        'WORDPRESS VIEW' => ['Production / Staging', $urls['wordpress'] ?? home_url('/'), $statuses['wordpress'] ?? 'NOT CONFIGURED'],
+        'NEXT.JS VIEW' => [
+            'purpose' => 'Development / Reference',
+            'url' => $urls['nextjs'] ?? '',
+            'status' => $statuses['nextjs'] ?? 'NOT CONFIGURED',
+            'build_state' => 'Source configured',
+            'last_deployment' => 'External Vercel Git deployment — not recorded by this WordPress instance',
+            'last_verification' => 'Not recorded in manifest',
+        ],
+        'HTML VIEW' => [
+            'purpose' => 'Static Template',
+            'url' => $urls['html'] ?? '',
+            'status' => $statuses['html'] ?? 'NOT CONFIGURED',
+            'build_state' => !empty($manifest['htmlExport']) ? 'Static export compatible' : 'Not compatible',
+            'last_deployment' => empty($urls['html']) ? 'NOT DEPLOYED' : 'Deployment timestamp not recorded',
+            'last_verification' => empty($urls['html']) ? 'NOT VERIFIED' : 'Verification timestamp not recorded',
+        ],
+        'WORDPRESS VIEW' => [
+            'purpose' => 'Production / Staging',
+            'url' => $urls['wordpress'] ?? '',
+            'status' => $statuses['wordpress'] ?? 'NOT CONFIGURED',
+            'build_state' => !empty($manifest['wordpressCompatible']) ? 'Native theme package compatible' : 'Not compatible',
+            'last_deployment' => empty($urls['wordpress']) ? 'NOT INSTALLED' : 'Installation timestamp not recorded',
+            'last_verification' => empty($urls['wordpress']) ? 'NOT VERIFIED' : 'Verification timestamp not recorded',
+        ],
     ];
-    echo '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;max-width:1100px">';
+
+    echo '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px;max-width:1200px">';
     foreach ($views as $label => $view) {
-        [$purpose, $url, $status] = $view;
-        echo '<section style="padding:18px;border:1px solid #dcdcde;border-radius:10px;background:#fff"><h2 style="margin-top:0">' . esc_html($label) . '</h2><p>' . esc_html($purpose) . '</p><p><strong>Status:</strong> ' . esc_html($status) . '</p>';
-        if ($url) {
-            echo '<p style="word-break:break-all"><code>' . esc_html($url) . '</code></p><p><a class="button button-primary" target="_blank" rel="noopener noreferrer" href="' . esc_url($url) . '">Open view</a></p>';
+        echo '<section style="padding:18px;border:1px solid #dcdcde;border-radius:10px;background:#fff">';
+        echo '<h2 style="margin-top:0">' . esc_html($label) . '</h2>';
+        echo '<p>' . esc_html($view['purpose']) . '</p>';
+        echo '<table class="widefat striped"><tbody>';
+        foreach ([
+            ['Status', $view['status']],
+            ['Version', $version],
+            ['Commit', $commit],
+            ['Build state', $view['build_state']],
+            ['Last package build', $generated],
+            ['Last deployment', $view['last_deployment']],
+            ['Last verification', $view['last_verification']],
+        ] as $row) {
+            echo '<tr><th style="width:42%">' . esc_html($row[0]) . '</th><td>' . esc_html($row[1]) . '</td></tr>';
+        }
+        echo '</tbody></table>';
+
+        if (!empty($view['url'])) {
+            echo '<p style="word-break:break-all"><code>' . esc_html($view['url']) . '</code></p>';
+            echo '<p><a class="button button-primary" target="_blank" rel="noopener noreferrer" href="' . esc_url($view['url']) . '">Open view</a></p>';
         } else {
             echo '<p><em>URL not configured.</em></p>';
         }
         echo '</section>';
     }
-    echo '</div><p><strong>Source commit:</strong> <code>' . esc_html($manifest['sourceCommit'] ?? ($manifest['source']['commit'] ?? 'unknown')) . '</code></p></div>';
+    echo '</div></div>';
 }
 
 function pintheme_manager_repository_page() {
