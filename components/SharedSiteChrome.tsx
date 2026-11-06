@@ -147,6 +147,18 @@ export function SharedSiteHeader() {
     return () => window.removeEventListener("keydown", escape);
   }, []);
 
+  useEffect(() => {
+    const main = document.getElementById("main-content");
+    if (!main) return;
+
+    const desktopDropdownOpen = expanded !== null && window.innerWidth > 880;
+    main.style.pointerEvents = desktopDropdownOpen ? "none" : "";
+
+    return () => {
+      main.style.pointerEvents = "";
+    };
+  }, [expanded]);
+
   const active = (href: string) => path === href;
 
   return (
