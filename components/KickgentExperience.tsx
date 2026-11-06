@@ -4,39 +4,17 @@ import { useEffect, useRef } from "react";
 import type { KickgentPage } from "@/content/kickgent-pages";
 
 const guardrailStyles = `
-/* Design-system and accessibility guardrails: loaded after each page's approved styles. */
-:where(a, button, summary, input, select, textarea):focus-visible {
-  outline: 3px solid #e4bdff !important;
-  outline-offset: 4px;
-}
-@media (pointer: coarse) {
-  .menu, .menu-toggle, .nav-close, .header-cta, .pill-button, .btn, .tab, .tool-nav button, .faq-list summary {
-    min-height: 44px;
-  }
-  .menu, .menu-toggle, .nav-close {
-    min-width: 44px;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
-  }
-}
+:where(a, button, summary, input, select, textarea):focus-visible { outline:3px solid #e4bdff !important; outline-offset:4px; }
+.kg-skip-link{position:fixed;z-index:1000;top:8px;left:8px;transform:translateY(-160%);padding:10px 13px;border-radius:8px;background:#fff;color:#16051f;font:700 .8rem/1 Inter,system-ui,sans-serif}.kg-skip-link:focus{transform:none}
+.kg-page-content > .site-header,.kg-page-content > .nav,.kg-page-content > .site-footer,.kg-page-content > .footer,.kg-page-content > .skip,.kg-page-content > .skip-to-content{display:none !important}
+@media (pointer:coarse){.tab,.tool-nav button,.faq-list summary{min-height:44px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important;transition-duration:.01ms !important}}
 `;
 
 type Props = { page: KickgentPage };
 
-/**
- * The approved document structure is delivered through this Next client
- * component. App Router owns every route; runtime scripts are mounted only
- * after the page markup is present, preserving navigation, tab and FAQ UX.
- */
 export function KickgentExperience({ page }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
@@ -51,11 +29,9 @@ export function KickgentExperience({ page }: Props) {
     return () => injected.forEach((script) => script.remove());
   }, [page.slug, page.scripts]);
 
-  return (
-    <>
-      {page.styles ? <style dangerouslySetInnerHTML={{ __html: page.styles }} /> : null}
-      <style dangerouslySetInnerHTML={{ __html: guardrailStyles }} />
-      <div ref={rootRef} dangerouslySetInnerHTML={{ __html: page.markup }} />
-    </>
-  );
+  return <>
+    {page.styles ? <style dangerouslySetInnerHTML={{ __html: page.styles }} /> : null}
+    <style dangerouslySetInnerHTML={{ __html: guardrailStyles }} />
+    <div id="kg-page-content" className="kg-page-content" ref={rootRef} dangerouslySetInnerHTML={{ __html: page.markup }} />
+  </>;
 }
