@@ -52,7 +52,7 @@ for (const width of responsiveWidths) {
     await page.setViewportSize({ width, height: Math.max(800, Math.round(width * 0.75)) });
     await page.goto("/");
     await expect(page.locator("h1")).toBeVisible();
-    await expect(page.locator("footer")).toBeVisible();
+    await expect(page.getByRole("contentinfo")).toBeVisible();
 
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, `unexpected horizontal overflow at ${width}px`).toBeLessThanOrEqual(1);
