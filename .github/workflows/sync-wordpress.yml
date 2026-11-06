@@ -2,7 +2,7 @@ name: Synchronize WordPress import package
 on:
   push:
     branches: [main]
-    paths: ['app/**','components/**','content/**','scripts/build-wordpress-sync.mjs','scripts/generate-wordpress-theme.mjs','wordpress/kickgent-github-sync/**','.github/workflows/sync-wordpress.yml']
+    paths: ['app/**','components/**','content/**','scripts/build-wordpress-sync.mjs','scripts/generate-wordpress-theme.mjs','wordpress/kickgent-fse/**','wordpress/kickgent-github-sync/**','.github/workflows/sync-wordpress.yml']
   workflow_dispatch:
 permissions: { contents: write }
 concurrency: { group: kickgent-wordpress-sync, cancel-in-progress: false }

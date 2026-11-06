@@ -1,11 +1,11 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "source": "Next.js App Router",
   "repository": "omarreact/mt4-grey-label-kickgent-next",
   "branch": "main",
-  "sourceCommit": "28b6016f5953871155d9c40a4da398fbf748c884",
-  "generatedAt": "2026-11-06T00:00:00.000Z",
+  "sourceCommit": "50d6f49dc55a2245f2232ae28647173c8cadc392",
+  "generatedAt": "2026-11-06T18:37:44.407Z",
   "pageCount": 11,
   "feed": "kickgent-pages.json",
-  "feedGitBlobSha": "8dc74e96631765d104526a9ce5de3a57650d51b3"
+  "feedGitBlobSha": "ba0154fe902a05acb1e290b0708759182dd379e9"
 }
