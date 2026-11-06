@@ -1,0 +1,6 @@
+---
+description: Universal Kickgent design, engineering and QA rules
+alwaysApply: true
+---
+
+Read and follow the complete rules in `AI-GUIDELINES.md` and `DESIGN.md` before changing this project. They apply to every route, the WordPress FSE theme, accessibility and visual QA.

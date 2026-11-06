@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "canonicalInstructions": "AI-GUIDELINES.md",
+  "designSystem": "DESIGN.md",
+  "qualityGates": ["npm run audit:design", "npm run check", "npm run test:ui"],
+  "adapters": {
+    "codex_openai": "AGENTS.md",
+    "claude": "CLAUDE.md",
+    "gemini": "GEMINI.md",
+    "github_copilot": ".github/copilot-instructions.md",
+    "cursor": ".cursor/rules/kickgent-design.mdc"
+  }
+}
