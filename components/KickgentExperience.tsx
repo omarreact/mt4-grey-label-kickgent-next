@@ -19,6 +19,19 @@ const glassOverlayClasses = [
   "supports-[backdrop-filter]:!bg-white/8",
 ] as const;
 
+const innerPageBackgrounds: Record<string, string> = {
+  about: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=2200&q=84",
+  "mt4-grey-label": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=2200&q=84",
+  "mt5-grey-label": "https://images.unsplash.com/photo-1642790106117-e829e14a795f?auto=format&fit=crop&w=2200&q=84",
+  "turnkey-grey-label": "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=2200&q=84",
+  "forex-broker-crm": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=2200&q=84",
+  "forex-broker-website": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=2200&q=84",
+  "forex-liquidity-bridge": "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=2200&q=84",
+  "pamm-mam": "https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=2200&q=84",
+  "how-to-start-forex-brokerage": "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=2200&q=84",
+  "scale-forex-brokerage": "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=2200&q=84",
+};
+
 type Props = { page: KickgentPage };
 
 export function KickgentExperience({ page }: Props) {
@@ -38,11 +51,46 @@ export function KickgentExperience({ page }: Props) {
     });
 
     const overlayTargets = root.querySelectorAll<HTMLElement>(
-      ".art-bubble,.float,.runtime,.sidebar-help,.hero-ui .progress,.hero-ui .files"
+      ".art-bubble,.float,.runtime,.sidebar-help,.hero-ui .progress,.hero-ui .files,.related-card"
     );
     overlayTargets.forEach((element) => element.classList.add(...glassOverlayClasses));
 
-    return () => injected.forEach((script) => script.remove());
+    const pageHero = root.querySelector<HTMLElement>(".page-hero");
+    const background = innerPageBackgrounds[page.slug];
+    const injectedNodes: HTMLElement[] = [];
+
+    if (pageHero && background) {
+      pageHero.classList.add("!relative", "!isolate", "!overflow-hidden", "!bg-transparent", "!bg-none", "!text-white");
+
+      const image = document.createElement("img");
+      image.src = background;
+      image.alt = "";
+      image.setAttribute("aria-hidden", "true");
+      image.dataset.pinthemeInnerHero = page.slug;
+      image.className = "pointer-events-none absolute inset-0 -z-30 h-full w-full object-cover object-center";
+      pageHero.prepend(image);
+      injectedNodes.push(image);
+
+      const scrim = document.createElement("div");
+      scrim.setAttribute("aria-hidden", "true");
+      scrim.className = "pointer-events-none absolute inset-0 -z-20 bg-slate-950/48 backdrop-blur-[1.5px]";
+      pageHero.prepend(scrim);
+      injectedNodes.push(scrim);
+
+      pageHero.querySelectorAll<HTMLElement>("h1,.lead-paragraph,.breadcrumbs,.overline")
+        .forEach((element) => element.classList.add("!text-white", "drop-shadow-[0_3px_18px_rgba(15,23,42,.48)]"));
+
+      pageHero.querySelectorAll<HTMLElement>(".hero-art,.orbit-core,.art-bubble")
+        .forEach((element) => element.classList.add(...glassOverlayClasses));
+    }
+
+    root.querySelectorAll<HTMLElement>(".bottom-cta .cta-layout")
+      .forEach((element) => element.classList.add(...glassOverlayClasses));
+
+    return () => {
+      injected.forEach((script) => script.remove());
+      injectedNodes.forEach((node) => node.remove());
+    };
   }, [page.slug, page.scripts]);
 
   return (

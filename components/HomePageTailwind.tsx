@@ -1,7 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+const heroSlides = [
+  {
+    image: "https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=2200&q=88",
+    label: "Brokerage operations",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=2200&q=88",
+    label: "Connected technology team",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=2200&q=88",
+    label: "Brokerage growth collaboration",
+  },
+] as const;
 
 const partnerPortraits = [
   {
@@ -156,7 +171,15 @@ function CheckIcon() {
 
 export function HomePageTailwind() {
   const [journeyIndex, setJourneyIndex] = useState(0);
+  const [heroSlide, setHeroSlide] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setHeroSlide((current) => (current + 1) % heroSlides.length);
+    }, 6500);
+    return () => window.clearInterval(timer);
+  }, []);
 
   const scrollSolutions = (direction: number) => {
     const slider = sliderRef.current;
@@ -176,17 +199,21 @@ export function HomePageTailwind() {
         data-hero-banner
         className="relative isolate min-h-[930px] overflow-hidden px-4 pb-0 pt-[150px] text-white sm:px-6 sm:pt-[170px] lg:pt-[190px]"
       >
-        <img
-          src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=2200&q=88"
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 -z-30 h-full w-full object-cover object-center"
-        />
-        <div className="absolute inset-0 -z-20 backdrop-blur-[1.5px]" />
+        <div className="absolute inset-0 -z-30" aria-hidden="true">
+          {heroSlides.map((slide, index) => (
+            <img
+              key={slide.image}
+              src={slide.image}
+              alt=""
+              className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-1000 ${index === heroSlide ? "opacity-100" : "opacity-0"}`}
+            />
+          ))}
+        </div>
+        <div className="absolute inset-0 -z-20 bg-slate-950/38 backdrop-blur-[1.5px]" />
         <div className="absolute inset-x-[8%] top-[145px] -z-10 hidden h-[700px] rounded-[50%] border border-white/25 md:block" />
 
         <div className="mx-auto max-w-[1180px] text-center">
-          <div className="mx-auto max-w-[820px]">
+          <div className="mx-auto max-w-[820px] rounded-[32px] border border-white/20 bg-slate-950/22 px-4 py-6 shadow-[0_24px_70px_rgba(15,23,42,.2)] backdrop-blur-md sm:px-7 sm:py-8">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/14 px-3.5 py-2 text-xs font-bold tracking-[.12em] text-white shadow-[0_10px_30px_rgba(15,23,42,.18)] backdrop-blur-2xl">
               <span className="grid size-5 place-items-center rounded-full border border-white/40 bg-white/20">✦</span>
               MT4 & MT5 BROKERAGE TECHNOLOGY
@@ -214,6 +241,20 @@ export function HomePageTailwind() {
               >
                 See how it works <ArrowIcon />
               </a>
+            </div>
+
+            <div className="mt-5 flex items-center justify-center gap-2" role="tablist" aria-label="Banner slides">
+              {heroSlides.map((slide, index) => (
+                <button
+                  key={slide.label}
+                  type="button"
+                  role="tab"
+                  aria-label={`Show ${slide.label} banner`}
+                  aria-selected={heroSlide === index}
+                  onClick={() => setHeroSlide(index)}
+                  className={`h-2.5 rounded-full border border-white/50 backdrop-blur-xl transition-all ${heroSlide === index ? "w-8 bg-white" : "w-2.5 bg-white/35 hover:bg-white/60"}`}
+                />
+              ))}
             </div>
           </div>
 
@@ -330,21 +371,21 @@ export function HomePageTailwind() {
         </div>
       </section>
 
-      <section id="solutions" className="bg-[#100414] px-4 py-20 sm:px-6 sm:py-28">
+      <section id="solutions" className="bg-[#f7f3fb] px-4 py-20 text-slate-950 sm:px-6 sm:py-28">
         <div className="mx-auto max-w-[1180px]">
           <div className="mx-auto max-w-[760px] text-center">
-            <span className="text-xs font-extrabold tracking-[.18em] text-fuchsia-200">MORE THAN A PLATFORM</span>
+            <span className="text-xs font-extrabold tracking-[.18em] text-violet-700">MORE THAN A PLATFORM</span>
             <h2 className="mt-4 text-balance text-[clamp(2.7rem,5.4vw,5rem)] font-semibold leading-[1] tracking-[-.06em]">
               More systems than most founders expect
             </h2>
-            <p className="mx-auto mt-5 max-w-[680px] text-base leading-8 text-violet-100/65">
+            <p className="mx-auto mt-5 max-w-[680px] text-base leading-8 text-slate-600">
               The trading platform is only one layer. A working brokerage needs client operations, managed accounts, execution connectivity and a client-facing experience around it.
             </p>
           </div>
 
           <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
             {platformCards.map((card) => (
-              <article key={card.title} className="group relative min-h-[360px] overflow-hidden rounded-[24px] border border-white/10 bg-violet-950 shadow-[0_20px_50px_rgba(8,2,14,.24)]">
+              <article key={card.title} className="group relative min-h-[360px] overflow-hidden rounded-[24px] border border-slate-200 bg-violet-950 text-white shadow-[0_20px_50px_rgba(44,28,64,.12)]">
                 <img
                   src={card.image}
                   alt=""
@@ -366,7 +407,14 @@ export function HomePageTailwind() {
         </div>
       </section>
 
-      <section className="bg-[linear-gradient(180deg,#16071f_0%,#260a39_55%,#100414_100%)] px-4 py-20 sm:px-6 sm:py-28">
+      <section data-active-journey className="relative isolate overflow-hidden px-4 py-20 sm:px-6 sm:py-28">
+        <img
+          src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=2200&q=86"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 -z-30 h-full w-full object-cover object-center"
+        />
+        <div className="absolute inset-0 -z-20 bg-slate-950/48 backdrop-blur-[1.5px]" />
         <div className="mx-auto max-w-[1180px]">
           <div className="mx-auto max-w-[760px] text-center">
             <span className="text-xs font-extrabold tracking-[.18em] text-fuchsia-200">ACTIVE CLIENT JOURNEY</span>
@@ -507,7 +555,14 @@ export function HomePageTailwind() {
         </div>
       </section>
 
-      <section id="how-it-works" className="bg-[#130419] px-4 py-20 sm:px-6 sm:py-28">
+      <section id="how-it-works" data-how-it-works className="relative isolate overflow-hidden px-4 py-20 sm:px-6 sm:py-28">
+        <img
+          src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=2200&q=86"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 -z-30 h-full w-full object-cover object-center"
+        />
+        <div className="absolute inset-0 -z-20 bg-slate-950/52 backdrop-blur-[1.5px]" />
         <div className="mx-auto max-w-[1180px]">
           <div className="mx-auto max-w-[780px] text-center">
             <span className="text-xs font-extrabold tracking-[.18em] text-fuchsia-200">HOW IT WORKS</span>

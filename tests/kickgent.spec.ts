@@ -146,3 +146,55 @@ test("fixed floating header and image-backed hero are preserved", async ({ page 
     await expect(floats.nth(index)).toHaveCSS("backdrop-filter", /blur/);
   }
 });
+
+
+test("banner slider keeps readable contrast and switches backgrounds", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Banner slider check runs once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/");
+
+  const hero = page.locator("[data-hero-banner]");
+  const controls = page.getByRole("tablist", { name: "Banner slides" }).getByRole("tab");
+  await expect(controls).toHaveCount(3);
+  await expect(controls.nth(0)).toHaveAttribute("aria-selected", "true");
+
+  const heroImages = hero.locator("img");
+  await expect(heroImages).toHaveCount(3);
+  await controls.nth(1).click();
+  await expect(controls.nth(1)).toHaveAttribute("aria-selected", "true");
+  await expect(heroImages.nth(1)).toHaveCSS("opacity", "1");
+
+  const heading = hero.locator("h1");
+  await expect(heading).toHaveCSS("color", "rgb(255, 255, 255)");
+});
+
+test("requested homepage section backgrounds and glass overlays are applied", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Homepage section styling check runs once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/");
+
+  const platform = page.locator("#solutions");
+  await expect(platform).toHaveCSS("background-color", "rgb(247, 243, 251)");
+
+  const journey = page.locator("[data-active-journey]");
+  await expect(journey.locator("img").first()).toHaveAttribute("src", /images\.unsplash\.com/);
+  await expect(journey.locator("article").first()).toHaveCSS("backdrop-filter", /blur/);
+
+  const how = page.locator("[data-how-it-works]");
+  await expect(how.locator("img").first()).toHaveAttribute("src", /images\.unsplash\.com/);
+  await expect(how.locator("article").first()).toHaveCSS("backdrop-filter", /blur/);
+});
+
+test("inner pages keep layout and receive image-backed glass visual system", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Inner-page visual treatment runs once in Chromium");
+  await page.goto("/mt4-grey-label");
+
+  const hero = page.locator(".page-hero");
+  await expect(hero).toBeVisible();
+  await expect(hero.locator(".hero-grid")).toBeVisible();
+  await expect(hero.locator('[data-pintheme-inner-hero="mt4-grey-label"]')).toBeVisible();
+  await expect(hero.locator(".hero-art")).toHaveCSS("backdrop-filter", /blur/);
+
+  const related = page.locator(".related-card").first();
+  await expect(related).toHaveCSS("backdrop-filter", /blur/);
+});
