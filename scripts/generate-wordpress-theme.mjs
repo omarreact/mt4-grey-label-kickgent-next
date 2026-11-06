@@ -1,12 +1,1 @@
-import { cpSync, existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
-import { resolve } from "node:path";
-
-const root = resolve(import.meta.dirname, "..");
-const source = resolve(root, "wordpress/kickgent-fse");
-const output = resolve(root, "dist/kickgent-fse");
-if (!existsSync(source)) throw new Error("WordPress theme source is missing.");
-rmSync(output, { recursive: true, force: true });
-mkdirSync(resolve(root, "dist"), { recursive: true });
-cpSync(source, output, { recursive: true });
-writeFileSync(resolve(output, "BUILD.txt"), "Generated from the Kickgent Next.js source. Install this folder as a block theme.\n");
-console.log(`Generated WordPress theme at ${output}`);
+import {cpSync,existsSync,mkdirSync,rmSync,writeFileSync} from "node:fs";import {resolve} from "node:path";const root=resolve(import.meta.dirname,".."),dist=resolve(root,"dist"),theme=resolve(root,"wordpress/kickgent-fse"),plugin=resolve(root,"wordpress/kickgent-github-sync");if(!existsSync(theme)||!existsSync(plugin))throw new Error("WordPress packages are missing.");rmSync(dist,{recursive:true,force:true});mkdirSync(dist,{recursive:true});cpSync(theme,resolve(dist,"kickgent-fse"),{recursive:true});cpSync(plugin,resolve(dist,"kickgent-github-sync"),{recursive:true});writeFileSync(resolve(dist,"BUILD.txt"),"Install theme and plugin, then use Tools > Kickgent GitHub Sync.\n");console.log("Generated WordPress theme and sync plugin.");

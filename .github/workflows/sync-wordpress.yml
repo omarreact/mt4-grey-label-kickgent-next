@@ -1,0 +1,29 @@
+name: Synchronize WordPress import package
+on:
+  push:
+    branches: [main]
+    paths: ['app/**','components/**','content/**','scripts/build-wordpress-sync.mjs','scripts/generate-wordpress-theme.mjs','wordpress/kickgent-github-sync/**','.github/workflows/sync-wordpress.yml']
+  workflow_dispatch:
+permissions: { contents: write }
+concurrency: { group: kickgent-wordpress-sync, cancel-in-progress: false }
+jobs:
+  sync:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm run build:wordpress-sync
+      - run: npm run verify:wordpress-sync
+      - run: |
+          npm run generate:wordpress
+          mkdir -p artifacts
+          cd dist && zip -qr ../artifacts/kickgent-fse-theme.zip kickgent-fse && zip -qr ../artifacts/kickgent-github-sync-plugin.zip kickgent-github-sync
+          cp website.xml artifacts/kickgent-pages.xml
+      - uses: actions/upload-artifact@v4
+        with: { name: kickgent-wordpress-sync-package, path: artifacts/, retention-days: 30 }
+      - if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git add website.xml wordpress/kickgent-fse/data wordpress/kickgent-fse/assets/source-parity.css
+          git diff --cached --quiet || (git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'chore(wordpress): synchronize import feed from Next.js' && git push origin HEAD:main)

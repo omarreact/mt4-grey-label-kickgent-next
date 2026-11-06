@@ -12,8 +12,10 @@
     "validate": "node scripts/validate-theme.mjs",
     "audit:design": "node scripts/design-lint.mjs",
     "test:ui": "playwright test",
-    "generate:wordpress": "node scripts/generate-wordpress-theme.mjs",
-    "check": "npm run audit:design && npm run validate && npx tsc --noEmit && npm run build"
+    "generate:wordpress": "npm run build:wordpress-sync && node scripts/generate-wordpress-theme.mjs",
+    "check": "npm run audit:design && npm run validate && npm run verify:wordpress-sync && npx tsc --noEmit && npm run build",
+    "build:wordpress-sync": "node scripts/build-wordpress-sync.mjs",
+    "verify:wordpress-sync": "node scripts/verify-wordpress-sync.mjs"
   },
   "dependencies": {
     "next": "^15.4.9",
