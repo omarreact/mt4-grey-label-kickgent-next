@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "./site-pages.css";
 import { SharedSiteFooter, SharedSiteHeader } from "@/components/SharedSiteChrome";
+import { SiteMotion } from "@/components/SiteMotion";
 
 export const metadata: Metadata = {
   title: { default: "MT4 & MT5 Grey Label Solutions", template: "%s | GreyLabel" },
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         Skip to main content
       </a>
       <SharedSiteHeader />
+      <SiteMotion />
       <div id="main-content">{children}</div>
       <SharedSiteFooter />
     </body>

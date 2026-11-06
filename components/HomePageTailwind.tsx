@@ -197,7 +197,7 @@ export function HomePageTailwind() {
     <main className="overflow-hidden bg-[#100414] text-white">
       <section
         data-hero-banner
-        className="relative isolate min-h-[930px] overflow-hidden px-4 pb-0 pt-[150px] text-white sm:px-6 sm:pt-[170px] lg:pt-[190px]"
+        className="relative isolate min-h-[760px] overflow-hidden px-4 pb-6 pt-[118px] text-white sm:px-6 sm:pt-[128px] lg:h-[min(100svh,820px)] lg:min-h-[720px] lg:pt-[132px]"
       >
         <div className="pointer-events-none absolute inset-0 -z-30" aria-hidden="true">
           {heroSlides.map((slide, index) => (
@@ -210,25 +210,25 @@ export function HomePageTailwind() {
           ))}
         </div>
         <div className="pointer-events-none absolute inset-0 -z-20 bg-slate-950/38 backdrop-blur-[1.5px]" />
-        <div className="pointer-events-none absolute inset-x-[8%] top-[145px] -z-10 hidden h-[700px] rounded-[50%] border border-white/25 md:block" />
+        <div className="pointer-events-none absolute inset-x-[8%] top-[112px] -z-10 hidden h-[560px] rounded-[50%] border border-white/25 md:block" />
 
         <div className="mx-auto max-w-[1180px] text-center">
-          <div className="mx-auto max-w-[820px] rounded-[32px] border border-white/20 bg-slate-950/22 px-4 py-6 shadow-[0_24px_70px_rgba(15,23,42,.2)] backdrop-blur-md sm:px-7 sm:py-8">
+          <div className="mx-auto max-w-[800px] rounded-[28px] border border-white/20 bg-slate-950/22 px-4 py-5 shadow-[0_24px_70px_rgba(15,23,42,.2)] backdrop-blur-md sm:px-6 sm:py-6">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/14 px-3.5 py-2 text-xs font-bold tracking-[.12em] text-white shadow-[0_10px_30px_rgba(15,23,42,.18)] backdrop-blur-2xl">
               <span className="grid size-5 place-items-center rounded-full border border-white/40 bg-white/20">✦</span>
               MT4 & MT5 BROKERAGE TECHNOLOGY
             </span>
 
-            <h1 className="mx-auto mt-9 max-w-[940px] text-balance text-[clamp(3.2rem,6.2vw,5.9rem)] font-semibold leading-[.97] tracking-[-.065em] drop-shadow-[0_4px_22px_rgba(15,23,42,.45)]">
+            <h1 className="mx-auto mt-6 max-w-[900px] text-balance text-[clamp(2.75rem,5vw,4.8rem)] font-semibold leading-[.97] tracking-[-.065em] drop-shadow-[0_4px_22px_rgba(15,23,42,.45)]">
               Launch a brokerage.
               <span className="block">Connect every system.</span>
             </h1>
 
-            <p className="mx-auto mt-6 max-w-[610px] text-pretty text-base font-medium leading-8 text-white/88 drop-shadow-[0_3px_18px_rgba(15,23,42,.45)] sm:text-lg">
+            <p className="mx-auto mt-4 max-w-[620px] text-pretty text-[.95rem] font-medium leading-8 text-white/88 drop-shadow-[0_3px_18px_rgba(15,23,42,.45)] sm:text-lg">
               MT4 and MT5 grey label, CRM, PAMM and MAM plugins, liquidity connectivity and broker websites, brought together by one technology partner.
             </p>
 
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <div className="mt-5 flex flex-wrap justify-center gap-3">
               <a
                 href="#solutions"
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/35 bg-white/18 px-5 text-sm font-extrabold text-white shadow-[0_15px_38px_rgba(15,23,42,.22)] backdrop-blur-2xl transition hover:-translate-y-0.5 hover:bg-white/24"
@@ -243,7 +243,7 @@ export function HomePageTailwind() {
               </a>
             </div>
 
-            <div className="mt-5 flex items-center justify-center gap-2" role="tablist" aria-label="Banner slides">
+            <div className="mt-4 flex items-center justify-center gap-2" role="tablist" aria-label="Banner slides">
               {heroSlides.map((slide, index) => (
                 <button
                   key={slide.label}
@@ -258,19 +258,19 @@ export function HomePageTailwind() {
             </div>
           </div>
 
-          <div className="relative z-10 mx-auto mt-[78px] h-auto min-h-[338px] w-[min(1010px,calc(100%_-_8px))] md:h-[338px]">
-            <div className="pointer-events-none absolute left-1/2 top-3 hidden h-[345px] w-[590px] -translate-x-1/2 rounded-[50%] border border-white/25 md:block" />
+          <div className="relative z-10 mx-auto mt-5 h-auto min-h-[260px] w-[min(1010px,calc(100%_-_8px))] md:h-[338px]">
+            <div className="pointer-events-none absolute left-1/2 top-1 hidden h-[270px] w-[520px] -translate-x-1/2 rounded-[50%] border border-white/25 md:block" />
 
-            <div className="absolute right-12 top-4 hidden size-[84px] place-items-center rounded-full border border-white/30 bg-white/14 text-2xl shadow-[0_18px_48px_rgba(15,23,42,.2)] backdrop-blur-2xl md:grid">
+            <div className="absolute right-16 top-2 hidden size-[66px] place-items-center rounded-full border border-white/30 bg-white/14 text-2xl shadow-[0_18px_48px_rgba(15,23,42,.2)] backdrop-blur-2xl md:grid">
               ✦
             </div>
-            <div className="absolute bottom-2 left-14 hidden size-[88px] place-items-center rounded-full border border-white/30 bg-white/14 text-2xl shadow-[0_18px_48px_rgba(15,23,42,.2)] backdrop-blur-2xl md:grid">
+            <div className="absolute bottom-2 left-20 hidden size-[68px] place-items-center rounded-full border border-white/30 bg-white/14 text-2xl shadow-[0_18px_48px_rgba(15,23,42,.2)] backdrop-blur-2xl md:grid">
               ✉
             </div>
 
             <div
               data-hero-float
-              className="relative z-20 mx-auto w-full min-w-0 max-w-[380px] overflow-hidden rounded-[28px] border border-white/30 bg-white/14 p-5 text-left shadow-[0_26px_70px_rgba(15,23,42,.24)] backdrop-blur-2xl md:absolute md:bottom-[-31px] md:left-1/2 md:min-h-[301px] md:-translate-x-1/2 md:p-6"
+              className="relative z-20 mx-auto w-full min-w-0 max-w-[350px] overflow-hidden rounded-[26px] border border-white/30 bg-white/14 p-4 text-left shadow-[0_26px_70px_rgba(15,23,42,.24)] backdrop-blur-2xl md:absolute md:bottom-0 md:left-1/2 md:min-h-[230px] md:-translate-x-1/2 md:p-5"
             >
               <div className="mx-auto -mt-5 mb-4 h-2.5 w-14 rounded-b-xl border-x border-b border-white/20 bg-white/20 md:-mt-6" />
               <div className="flex min-w-0 items-center justify-between gap-3">
@@ -278,13 +278,13 @@ export function HomePageTailwind() {
                 <span className="min-w-0 flex-1 break-words text-center text-xs font-bold tracking-[.08em] text-white/85">BrokerOS Assistant</span>
                 <span className="grid size-10 shrink-0 place-items-center rounded-full border border-white/20 bg-white/16">✎</span>
               </div>
-              <strong className="mt-10 block break-words text-center text-3xl font-medium leading-tight tracking-[-.055em] sm:text-[2.15rem]">
+              <strong className="mt-6 block break-words text-center text-[1.8rem] font-medium leading-tight tracking-[-.055em] sm:text-[2.15rem]">
                 Ready to launch.
               </strong>
               <p className="mt-2 break-words text-center text-sm leading-6 text-white/78">
                 What would you like to connect?
               </p>
-              <div className="mt-9 grid min-w-0 grid-cols-2 gap-2">
+              <div className="mt-5 grid min-w-0 grid-cols-2 gap-2">
                 <span className="min-w-0 break-words rounded-xl border border-white/18 bg-white/10 p-3 text-xs text-white/90 backdrop-blur-xl">MT5 setup</span>
                 <span className="min-w-0 break-words rounded-xl border border-white/18 bg-white/10 p-3 text-xs text-white/90 backdrop-blur-xl">CRM workflow</span>
               </div>
@@ -292,7 +292,7 @@ export function HomePageTailwind() {
 
             <div
               data-hero-float
-              className="relative z-20 mt-3 w-full min-w-0 max-w-[255px] overflow-hidden rounded-[20px] border border-white/30 bg-white/14 p-4 text-left shadow-[0_20px_55px_rgba(15,23,42,.22)] backdrop-blur-2xl md:absolute md:bottom-[38px] md:left-[110px] md:mt-0"
+              className="relative z-20 mt-3 w-full min-w-0 max-w-[255px] overflow-hidden rounded-[20px] border border-white/30 bg-white/14 p-4 text-left shadow-[0_20px_55px_rgba(15,23,42,.22)] backdrop-blur-2xl md:absolute md:bottom-[28px] md:left-[120px] md:mt-0"
             >
               <span className="block break-words text-[11px] font-bold uppercase tracking-[.12em] text-white/75">Brokerage launch</span>
               <div className="relative mx-auto mt-4 h-[74px] w-[148px] overflow-hidden rounded-t-full border-[12px] border-b-0 border-white/35">
@@ -306,7 +306,7 @@ export function HomePageTailwind() {
 
             <div
               data-hero-float
-              className="relative z-20 mt-3 ml-auto w-full min-w-0 max-w-[230px] overflow-hidden rounded-[20px] border border-white/30 bg-white/14 p-4 text-left shadow-[0_20px_55px_rgba(15,23,42,.22)] backdrop-blur-2xl md:absolute md:bottom-1 md:right-[75px] md:mt-0"
+              className="relative z-20 mt-3 ml-auto w-full min-w-0 max-w-[230px] overflow-hidden rounded-[20px] border border-white/30 bg-white/14 p-4 text-left shadow-[0_20px_55px_rgba(15,23,42,.22)] backdrop-blur-2xl md:absolute md:bottom-[18px] md:right-[95px] md:mt-0"
             >
               <span className="block break-words text-[11px] font-bold uppercase tracking-[.12em] text-white/75">Connected systems</span>
               {["Client onboarding", "PAMM / MAM", "Liquidity bridge"].map((item) => (
@@ -692,8 +692,9 @@ export function HomePageTailwind() {
             </p>
           </div>
           <a
+            data-bottom-cta-button
             href="mailto:admin@pincodeit.com?subject=GreyLabel%20Technology%20Consultation"
-            className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-white px-5 text-sm font-extrabold text-violet-900 shadow-xl transition hover:-translate-y-0.5"
+            className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-xl border border-[#d7c4ea] bg-[#f0e7fb] px-5 text-sm font-extrabold !text-[#4a1f5f] shadow-xl transition hover:-translate-y-0.5 hover:bg-white"
           >
             Talk to our team <ArrowIcon />
           </a>

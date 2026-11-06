@@ -244,3 +244,39 @@ test("inner page banner is compact and only shows route title and subtitle", asy
   const crumbSpans = hero.locator(".breadcrumbs span");
   await expect(crumbSpans.nth(0)).toHaveText("→");
 });
+
+test("bottom CTA button has visible contrast", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "CTA contrast check runs once in Chromium");
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+
+  const button = page.locator("[data-bottom-cta-button]");
+  await button.scrollIntoViewIfNeeded();
+  await expect(button).toBeVisible();
+  await expect(button).toHaveCSS("background-color", "rgb(240, 231, 251)");
+  await expect(button).toHaveCSS("color", "rgb(74, 31, 95)");
+  await expect(button).toContainText("Talk to our team");
+});
+
+test("desktop banner fits the viewport envelope", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Desktop hero-height check runs once in Chromium");
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+
+  const hero = page.locator("[data-hero-banner]");
+  const box = await hero.boundingBox();
+  expect(box).not.toBeNull();
+  expect(box!.height).toBeLessThanOrEqual(830);
+  expect(box!.height).toBeLessThanOrEqual(900);
+});
+
+test("site-wide section motion is attached", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Motion-system check runs once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.goto("/");
+
+  const sections = page.locator("#main-content section");
+  await expect(sections.first()).toBeVisible();
+  const transition = await sections.nth(1).evaluate((element) => getComputedStyle(element).transitionDuration);
+  expect(transition).not.toBe("0s");
+});
