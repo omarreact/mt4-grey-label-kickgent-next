@@ -105,10 +105,11 @@ function MenuGroup({
       <div
         id={id}
         className={[
-          "absolute left-1/2 top-full z-[10000] grid min-w-[270px] -translate-x-1/2 gap-1 rounded-2xl border border-white/80 bg-white/82 p-2.5 opacity-0 shadow-[0_24px_70px_rgba(44,19,69,.18)] backdrop-blur-2xl transition duration-200",
-          "invisible pointer-events-none",
+          "absolute left-1/2 top-full z-[10000] grid min-w-[270px] -translate-x-1/2 gap-1 rounded-2xl border border-white/80 bg-white/82 p-2.5 shadow-[0_24px_70px_rgba(44,19,69,.18)] backdrop-blur-2xl transition duration-200",
           "max-[880px]:static max-[880px]:mt-1 max-[880px]:min-w-0 max-[880px]:translate-x-0 max-[880px]:border-slate-200/70 max-[880px]:bg-white/65 max-[880px]:shadow-none",
-          open ? "visible pointer-events-auto opacity-100" : "max-[880px]:hidden",
+          open
+            ? "visible pointer-events-auto opacity-100"
+            : "invisible pointer-events-none opacity-0 max-[880px]:hidden",
         ].join(" ")}
       >
         {items.map(([name, slug]) => (
@@ -146,18 +147,6 @@ export function SharedSiteHeader() {
     window.addEventListener("keydown", escape);
     return () => window.removeEventListener("keydown", escape);
   }, []);
-
-  useEffect(() => {
-    const main = document.getElementById("main-content");
-    if (!main) return;
-
-    const desktopDropdownOpen = expanded !== null && window.innerWidth > 880;
-    main.style.pointerEvents = desktopDropdownOpen ? "none" : "";
-
-    return () => {
-      main.style.pointerEvents = "";
-    };
-  }, [expanded]);
 
   const active = (href: string) => path === href;
 
