@@ -18,7 +18,6 @@
     </div>
     <div>
       <strong><?php esc_html_e('Contact', 'greylabel-technology'); ?></strong>
-      <?php if (!empty($pt['contact_email'])): ?><a href="mailto:<?php echo esc_attr($pt['contact_email']); ?>"><?php echo esc_html($pt['contact_email']); ?></a><?php endif; ?>
       <?php if (!empty($pt['contact_phone'])): ?><a href="tel:<?php echo esc_attr(preg_replace('/[^+0-9]/', '', $pt['contact_phone'])); ?>"><?php echo esc_html($pt['contact_phone']); ?></a><?php endif; ?>
       <div class="pintheme-footer-social">
         <?php if (!empty($pt['social_whatsapp'])): ?><a href="<?php echo esc_url($pt['social_whatsapp']); ?>" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 8.1c.4 3.6 3 6.2 6.5 7.2l1.3-1.7 2 .9c-.2 1.8-1.6 3-3.4 3-4.8-.2-8.6-4-8.8-8.8 0-1.4.8-2.7 2.1-3.3l.9 2-.6.7Z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></a><?php endif; ?>
