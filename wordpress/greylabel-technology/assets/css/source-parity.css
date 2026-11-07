@@ -57,7 +57,7 @@ button{font:inherit;cursor:pointer}
 .art-bubble.three{bottom:22px;right:25px}
 .page-main{padding:62px 0 42px;background:#fff}
 .content-layout{display:grid;grid-template-columns:255px minmax(0,1fr);gap:clamp(32px,5vw,80px);align-items:start}
-.page-sidebar{position:sticky;top:30px;max-height:calc(100vh - 50px);overflow:auto;padding:22px;border:1px solid #e7d8ed;border-radius:18px;background:linear-gradient(145deg,#fff,#f9f2fd);box-shadow:var(--shadow)}
+.page-sidebar{position:sticky;top:30px;max-height:calc(100vh - 50px);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#c7a6d7 transparent;padding:22px;border:1px solid #e7d8ed;border-radius:18px;background:linear-gradient(145deg,#fff,#f9f2fd);box-shadow:var(--shadow)}.page-sidebar::-webkit-scrollbar{width:7px}.page-sidebar::-webkit-scrollbar-track{background:transparent}.page-sidebar::-webkit-scrollbar-thumb{background:#c7a6d7;border-radius:999px}.page-sidebar::-webkit-scrollbar-thumb:hover{background:#a96ac6}
 .sidebar-title{margin:0 0 14px;color:#702e9f;font-size:.72rem;font-weight:850;letter-spacing:.12em;text-transform:uppercase}
 .toc-links{display:grid;gap:2px}
 .toc-links a{display:block;padding:8px 10px;border-radius:8px;color:#614d6d;font-size:.82rem;line-height:1.45}
