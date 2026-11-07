@@ -750,6 +750,34 @@ test("homepage does not render duplicate local How It Works or CTA sections", as
 });
 
 
+test("site icon replaces decorative star markers across homepage and inner pages", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Brand marker audit runs once in Chromium");
+
+  await page.goto("/");
+  const markers = page.locator("[data-site-icon-marker]");
+  await expect(markers).toHaveCount(2);
+  for (let index = 0; index < 2; index += 1) {
+    await expect(markers.nth(index).locator('svg[aria-label="MT4 Grey Label"]')).toHaveCount(1);
+    await expect(markers.nth(index)).not.toContainText("✦");
+  }
+
+  await page.goto("/about");
+  const overlineIcon = await page.locator(".overline").first().evaluate((element) => ({
+    content: getComputedStyle(element, "::before").content,
+    backgroundImage: getComputedStyle(element, "::before").backgroundImage,
+  }));
+  expect(overlineIcon.content).not.toContain("✦");
+  expect(overlineIcon.backgroundImage).toContain("data:image/svg+xml");
+
+  await page.goto("/contact");
+  const contactIcon = await page.locator(".contact-kicker").first().evaluate((element) => ({
+    content: getComputedStyle(element, "::before").content,
+    backgroundImage: getComputedStyle(element, "::before").backgroundImage,
+  }));
+  expect(contactIcon.content).not.toContain("✦");
+  expect(contactIcon.backgroundImage).toContain("data:image/svg+xml");
+});
+
 test("MT4 Grey Label branding is applied to navigation footer and site icon", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Branding asset check runs once in Chromium");
   await page.setViewportSize({ width: 1280, height: 900 });
