@@ -66,6 +66,7 @@ function pintheme_greylabel_menu_fallback() {
     }
     echo '</ul></li>';
     echo '<li><a href="' . esc_url(home_url('/about/')) . '">' . esc_html__('About', 'greylabel-technology') . '</a></li>';
+    echo '<li><a href="' . esc_url(home_url('/contact/')) . '">' . esc_html__('Contact', 'greylabel-technology') . '</a></li>';
     echo '</ul>';
 }
 
