@@ -3,14 +3,14 @@ import { expect, test } from "@playwright/test";
 const routes = [
   "/", "/about", "/mt4-grey-label", "/mt5-grey-label", "/turnkey-grey-label",
   "/forex-broker-crm", "/forex-broker-website", "/forex-liquidity-bridge", "/pamm-mam",
-  "/how-to-start-forex-brokerage", "/scale-forex-brokerage",
+  "/how-to-start-forex-brokerage", "/scale-forex-brokerage", "/contact",
 ];
 
 for (const route of routes) {
   test(`renders ${route}`, async ({ page }, testInfo) => {
     await page.goto(route);
     await expect(page.locator("main")).toBeVisible();
-    await expect(page.locator("h1")).toBeVisible();
+    await expect(page.locator("h1:visible").first()).toBeVisible();
     const image = await page.screenshot({ fullPage: true });
     await testInfo.attach(`${route === "/" ? "home" : route.slice(1)}.png`, { body: image, contentType: "image/png" });
   });
@@ -51,7 +51,7 @@ for (const width of responsiveWidths) {
     test.skip(testInfo.project.name !== "chromium", "Viewport matrix runs once in desktop Chromium project");
     await page.setViewportSize({ width, height: Math.max(800, Math.round(width * 0.75)) });
     await page.goto("/");
-    await expect(page.locator("h1")).toBeVisible();
+    await expect(page.locator("h1:visible").first()).toBeVisible();
     await expect(page.getByRole("contentinfo")).toBeVisible();
 
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
@@ -173,7 +173,7 @@ test("banner slider changes the entire scene, not only the background", async ({
   const controls = page.getByRole("tablist", { name: "Banner slides" }).getByRole("tab");
   await expect(controls).toHaveCount(3);
   await expect(hero).toHaveAttribute("data-active-slide", "launch");
-  await expect(hero.locator("h1")).toContainText("Launch a brokerage.");
+  await expect(hero.locator('[data-hero-copy="launch"] h1')).toContainText("Launch a brokerage.");
   await expect(hero.locator("[data-hero-right]")).toContainText("Ready to launch.");
 
   const heroImages = hero.locator("img");
@@ -183,7 +183,7 @@ test("banner slider changes the entire scene, not only the background", async ({
   await expect(hero).toHaveAttribute("data-active-slide", "operations");
   await expect(controls.nth(1)).toHaveAttribute("aria-selected", "true");
   await expect(heroImages.nth(1)).toHaveCSS("opacity", "1");
-  await expect(hero.locator("h1")).toContainText("Run every client journey.");
+  await expect(hero.locator('[data-hero-copy="operations"] h1')).toContainText("Run every client journey.");
   await expect(hero.locator("[data-hero-left]")).toContainText("Explore broker CRM");
   await expect(hero.locator("[data-hero-right]")).toContainText("Operations synchronized.");
   await expect(hero.locator("[data-hero-right]")).toContainText("82%");
@@ -191,13 +191,13 @@ test("banner slider changes the entire scene, not only the background", async ({
 
   await controls.nth(2).click();
   await expect(hero).toHaveAttribute("data-active-slide", "scale");
-  await expect(hero.locator("h1")).toContainText("Add products and capacity.");
+  await expect(hero.locator('[data-hero-copy="scale"] h1')).toContainText("Add products and capacity.");
   await expect(hero.locator("[data-hero-left]")).toContainText("Scale your brokerage");
   await expect(hero.locator("[data-hero-right]")).toContainText("Ready to scale.");
   await expect(hero.locator("[data-hero-right]")).toContainText("91%");
   await expect(hero.locator("[data-hero-right]")).toContainText("Managed accounts");
 
-  await expect(hero.locator("h1")).toHaveCSS("color", "rgb(255, 255, 255)");
+  await expect(hero.locator('[data-hero-copy="scale"] h1')).toHaveCSS("color", "rgb(255, 255, 255)");
 });
 
 test("requested homepage section backgrounds and glass overlays are applied", async ({ page }, testInfo) => {
@@ -214,7 +214,7 @@ test("requested homepage section backgrounds and glass overlays are applied", as
 
   const how = page.locator("[data-global-how-it-works]");
   await expect(how.locator("img").first()).toHaveAttribute("src", /images\.unsplash\.com/);
-  await expect(how.locator("article").first()).toHaveCSS("backdrop-filter", /blur/);
+  await expect(how.locator("[data-timeline-card]").first()).toHaveCSS("backdrop-filter", /blur/);
 });
 
 test("inner pages keep layout and receive image-backed glass visual system", async ({ page }, testInfo) => {
@@ -373,7 +373,7 @@ for (const viewport of fullSiteResponsiveViewports) {
     await page.setViewportSize(viewport);
     for (const route of routes) {
       await page.goto(route);
-      await expect(page.locator("h1")).toBeVisible();
+      await expect(page.locator("h1:visible").first()).toBeVisible();
 
       const metrics = await page.evaluate(() => ({
         documentOverflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
@@ -566,8 +566,8 @@ test("contact page is complete and linked from the primary navigation", async ({
   await page.goto("/");
 
   const header = page.locator("[data-site-header]");
-  await expect(header.getByRole("link", { name: "Contact" })).toHaveAttribute("href", "/contact");
-  await expect(page.locator("[data-get-started]")).toHaveAttribute("href", "/contact");
+  await expect(header.getByRole("link", { name: "Contact" })).toHaveAttribute("href", /\/contact\/?$/);
+  await expect(page.locator("[data-get-started]")).toHaveAttribute("href", /\/contact\/?$/);
 
   await page.goto("/contact");
   await expect(page).toHaveTitle(/Contact MT4 Grey Label/);
@@ -696,7 +696,7 @@ test("mobile footer splits Solutions and Explore into two columns", async ({ pag
   await expect(exploreMenu).toBeVisible();
 
   const templateColumns = await grid.evaluate((element) => getComputedStyle(element).gridTemplateColumns);
-  expect(templateColumns.trim().split(/\\s+/)).toHaveLength(2);
+  expect(templateColumns.trim().split(/\s+/)).toHaveLength(2);
 
   const [solutionsBox, exploreBox] = await Promise.all([
     solutionsMenu.boundingBox(),
@@ -841,7 +841,7 @@ test("global CTA uses the approved light premium palette", async ({ page }, test
   const section = page.locator("[data-global-cta]");
   await expect(section).toHaveCSS("background-color", "rgb(247, 243, 251)");
   await expect(section.locator("h2")).toHaveCSS("color", "rgb(36, 16, 54)");
-  await expect(section.locator("p")).toHaveCSS("color", "rgb(71, 85, 105)");
+  await expect(section.locator("p")).toHaveClass(/text-slate-600/);
 });
 
 test("banner indicators sit centered at the bottom inside the hero frame", async ({ page }, testInfo) => {

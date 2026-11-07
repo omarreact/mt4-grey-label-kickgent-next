@@ -148,7 +148,8 @@ export function SharedSiteHeader() {
     return () => window.removeEventListener("keydown", escape);
   }, []);
 
-  const active = (href: string) => path === href;
+  const normalizePath = (value: string) => value === "/" ? "/" : value.replace(/\/+$/, "");
+  const active = (href: string) => normalizePath(path) === normalizePath(href);
 
   return (
     <header data-site-header className="fixed inset-x-0 top-0 z-[9999] isolate px-3 py-3 sm:px-5">

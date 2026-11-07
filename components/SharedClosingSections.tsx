@@ -97,7 +97,7 @@ export function SharedClosingSections() {
                     <div
                       data-timeline-card
                       className={[
-                        "group relative h-fit w-full overflow-hidden rounded-[24px] bg-white/[.075] p-5 shadow-[0_20px_55px_rgba(8,2,14,.18)] backdrop-blur-2xl transition duration-300 hover:-translate-y-1 hover:bg-white/[.1] sm:p-6",
+                        "group relative h-fit w-full overflow-hidden rounded-[24px] bg-white/[.075] p-5 text-left shadow-[0_20px_55px_rgba(8,2,14,.18)] backdrop-blur-2xl transition duration-300 hover:-translate-y-1 hover:bg-white/[.1] sm:p-6",
                         side === "left"
                           ? "md:col-start-1 md:justify-self-end md:text-right"
                           : "md:col-start-3 md:justify-self-start md:text-left",
