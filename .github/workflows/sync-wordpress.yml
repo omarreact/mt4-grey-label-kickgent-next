@@ -53,6 +53,7 @@ jobs:
           fi
 
       - run: npm run check
+      - run: npm run build:single-html
 
       - name: Validate WordPress PHP
         run: find wordpress/greylabel-technology wordpress/pintheme-manager -name '*.php' -print0 | xargs -0 -n1 php -l
@@ -62,6 +63,7 @@ jobs:
       - name: Package versioned release artifacts
         run: |
           mkdir -p artifacts
+          cp template/website.html artifacts/greylabel-technology-single-html-1.0.0.html
           cd dist
           zip -qr ../artifacts/greylabel-technology-1.0.0.zip greylabel-technology
           zip -qr ../artifacts/pintheme-manager-1.0.0.zip pintheme-manager
@@ -81,7 +83,7 @@ jobs:
       - name: Synchronize lockfile, generated metadata and compiled CSS
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.actor != 'github-actions[bot]'
         run: |
-          git add package-lock.json pintheme.manifest.json website.xml wordpress/greylabel-technology/data wordpress/greylabel-technology/assets/css/theme.css wordpress/greylabel-technology/assets/css/source-parity.css
+          git add template/website.html package-lock.json pintheme.manifest.json website.xml wordpress/greylabel-technology/data wordpress/greylabel-technology/assets/css/theme.css wordpress/greylabel-technology/assets/css/source-parity.css
           if ! git diff --cached --quiet; then
             git -c user.name='github-actions[bot]' -c user.email='41898282+omarreact@users.noreply.github.com' commit -m 'chore(pintheme): synchronize GreyLabel distributions'
             git pull --rebase origin main
