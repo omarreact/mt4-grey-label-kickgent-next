@@ -285,7 +285,7 @@ export function HomePageTailwind() {
                   }`}
                 >
                   <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/35 bg-white/14 px-3.5 py-2 text-[.68rem] font-bold tracking-[.1em] text-white shadow-[0_10px_30px_rgba(15,23,42,.18)] backdrop-blur-2xl sm:text-xs">
-                    <span data-site-icon-marker className="grid size-5 shrink-0 place-items-center">
+                    <span data-site-icon-marker aria-hidden="true" className="grid size-5 shrink-0 place-items-center">
                       <BrandLogo compact tone="light" className="size-5" />
                     </span>
                     <span className="min-w-0 break-words">{slide.badge}</span>
@@ -331,7 +331,7 @@ export function HomePageTailwind() {
               className="mx-auto w-[92%] max-w-[360px] rounded-[22px] bg-slate-950/24 p-4 text-left shadow-[0_22px_55px_rgba(15,23,42,.2)] backdrop-blur-2xl md:absolute md:left-[4%] md:top-[8%] lg:left-[8%] lg:top-[10%] lg:w-[78%] xl:left-[10%] xl:w-[72%]"
             >
               <div className="flex min-w-0 items-center gap-3">
-                <span data-site-icon-marker className="grid size-9 shrink-0 place-items-center rounded-xl bg-white/8 shadow-[0_8px_20px_rgba(15,23,42,.12)]">
+                <span data-site-icon-marker aria-hidden="true" className="grid size-9 shrink-0 place-items-center rounded-xl bg-white/8 shadow-[0_8px_20px_rgba(15,23,42,.12)]">
                   <BrandLogo compact tone="light" className="size-7" />
                 </span>
                 <div className="min-w-0">
