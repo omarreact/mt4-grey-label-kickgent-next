@@ -190,9 +190,13 @@ export function KickgentExperience({ page }: Props) {
         const topSafe = sidebarRect.top + 52;
         const bottomSafe = sidebarRect.bottom - 24;
         if (linkRect.top < topSafe || linkRect.bottom > bottomSafe) {
-          link.scrollIntoView({
-            block: "nearest",
-            behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+          const targetTop =
+            pageSidebar.scrollTop +
+            (linkRect.top - sidebarRect.top) -
+            (pageSidebar.clientHeight - linkRect.height) / 2;
+          pageSidebar.scrollTo({
+            top: Math.max(0, targetTop),
+            behavior: "auto",
           });
         }
       }

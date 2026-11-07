@@ -751,8 +751,8 @@ test("contact page is complete and linked from the primary navigation", async ({
 
   const form = page.locator("[data-contact-form]");
   await expect(form).toBeVisible();
-  await expect(form).toHaveAttribute("action", /mailto:admin@pincodeit\.com/);
-  await expect(page.locator("[data-contact-email]")).toHaveAttribute("href", /mailto:admin@pincodeit\.com/);
+  await expect(form).toHaveAttribute("action", /mailto:support@fxgreylabel\\.com/);
+  await expect(page.locator("[data-contact-email]")).toHaveAttribute("href", /mailto:support@fxgreylabel\\.com/);
 
   await expect(page.locator("#contact-name")).toHaveAttribute("required", "");
   await expect(page.locator("#contact-email")).toHaveAttribute("required", "");
