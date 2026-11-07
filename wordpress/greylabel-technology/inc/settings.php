@@ -29,7 +29,7 @@ function pintheme_greylabel_defaults() {
         'sticky_header' => 1,
         'transparent_header' => 0,
         'cta_label' => 'Get Started',
-        'cta_url' => '/contact/',
+        'cta_url' => home_url('/contact/'),
         'alternative_logo_url' => '',
         'footer_logo_url' => '',
         'footer_text' => '© 2026 GreyLabel Technology. Technology services only — not investment advice.',
