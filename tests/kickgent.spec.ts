@@ -811,14 +811,13 @@ test("primary contact channels and social controls use the approved details", as
   await page.goto("/");
 
   const header = page.locator("[data-site-header]");
-  await expect(header.getByRole("link", { name: "WhatsApp +447452191901" })).toHaveAttribute("href", "https://wa.me/447452191901");
-  await expect(header.getByRole("link", { name: "Telegram +447452191901" })).toHaveAttribute("href", "https://t.me/+447452191901");
+  await expect(header.getByRole("link", { name: "WhatsApp +44 7988 028424" })).toHaveAttribute("href", "https://wa.me/447988028424");
+  await expect(header.getByRole("link", { name: "Telegram @forexbrokertech" })).toHaveAttribute("href", "https://t.me/forexbrokertech");
 
   const footer = page.locator("footer");
-  await expect(footer.getByRole("link", { name: "support@fxgreylabel.com" })).toHaveAttribute("href", "mailto:support@fxgreylabel.com");
-  await expect(footer.getByRole("link", { name: "+447452191901", exact: true })).toHaveAttribute("href", "tel:+447452191901");
-  await expect(footer.getByRole("link", { name: "WhatsApp +447452191901" })).toHaveAttribute("href", "https://wa.me/447452191901");
-  await expect(footer.getByRole("link", { name: "Telegram +447452191901" })).toHaveAttribute("href", "https://t.me/+447452191901");
+  await expect(footer.getByRole("link", { name: "+44 7988 028424", exact: true })).toHaveAttribute("href", "tel:+447988028424");
+  await expect(footer.getByRole("link", { name: "WhatsApp +44 7988 028424" })).toHaveAttribute("href", "https://wa.me/447988028424");
+  await expect(footer.getByRole("link", { name: "Telegram @forexbrokertech" })).toHaveAttribute("href", "https://t.me/forexbrokertech");
 
   const scrollTop = page.locator("[data-scroll-top]");
   await expect(scrollTop).toBeHidden();
@@ -828,30 +827,21 @@ test("primary contact channels and social controls use the approved details", as
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBeLessThan(100);
 });
 
-test("contact page is complete and linked from the primary navigation", async ({ page }, testInfo) => {
+test("contact page is complete and uses phone WhatsApp and Telegram only", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Contact route check runs once in Chromium");
   await page.setViewportSize({ width: 1280, height: 900 });
-  await page.goto("/");
+  await page.goto("/contact");
 
   const header = page.locator("[data-site-header]");
-  await expect(header.getByRole("link", { name: "Contact" })).toHaveAttribute("href", /\/contact\/?$/);
-  await expect(page.locator("[data-get-started]")).toHaveAttribute("href", /\/contact\/?$/);
-
-  await page.goto("/contact");
-  await expect(page).toHaveTitle(/Contact MT4 Grey Label/);
   await expect(header.getByRole("link", { name: "Contact" })).toHaveAttribute("aria-current", "page");
 
-  const form = page.locator("[data-contact-form]");
-  await expect(form).toBeVisible();
-  await expect(form).toHaveAttribute("action", /mailto:support@fxgreylabel\.com/);
-  await expect(page.locator("[data-contact-email]")).toHaveAttribute("href", /mailto:support@fxgreylabel\.com/);
-  await expect(page.locator("[data-contact-phone]")).toHaveAttribute("href", "tel:+447452191901");
+  await expect(page.locator('a[href^="mailto:"]')).toHaveCount(0);
+  await expect(page.locator("[data-contact-email]")).toHaveCount(0);
+  await expect(page.locator("[data-contact-phone]")).toHaveAttribute("href", "tel:+447988028424");
+  await expect(page.locator("[data-contact-channels]")).toBeVisible();
 
-  await expect(page.locator("#contact-name")).toHaveAttribute("required", "");
-  await expect(page.locator("#contact-email")).toHaveAttribute("required", "");
-  await expect(page.locator("#contact-solution")).toHaveAttribute("required", "");
-  await expect(page.locator("#contact-stage")).toHaveAttribute("required", "");
-  await expect(page.locator("#contact-message")).toHaveAttribute("required", "");
+  await expect(page.getByRole("link", { name: /WhatsApp/ }).first()).toHaveAttribute("href", "https://wa.me/447988028424");
+  await expect(page.getByRole("link", { name: /Telegram/ }).first()).toHaveAttribute("href", "https://t.me/forexbrokertech");
 });
 
 test("contact page remains responsive and Contact is available in the mobile menu", async ({ page }, testInfo) => {
