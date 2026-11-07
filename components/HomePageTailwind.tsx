@@ -558,7 +558,7 @@ export function HomePageTailwind() {
                   </button>
                 );
               })}
-            </div>            </div>
+            </div>
 
             <article
               data-journey-stage
