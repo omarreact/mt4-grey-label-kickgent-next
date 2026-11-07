@@ -95,13 +95,16 @@ export function SharedClosingSections() {
                       className={[
                         "group relative h-fit w-full overflow-hidden rounded-[24px] bg-white/[.075] p-5 shadow-[0_20px_55px_rgba(8,2,14,.18)] backdrop-blur-2xl transition duration-300 hover:-translate-y-1 hover:bg-white/[.1] sm:p-6",
                         side === "left"
-                          ? "md:col-start-1 md:justify-self-end"
-                          : "md:col-start-3 md:justify-self-start",
+                          ? "md:col-start-1 md:justify-self-end md:text-right"
+                          : "md:col-start-3 md:justify-self-start md:text-left",
                       ].join(" ")}
                     >
                       <span
                         data-timeline-icon
-                        className="grid size-12 place-items-center rounded-2xl bg-white/12 text-fuchsia-100 shadow-[0_14px_38px_rgba(10,3,20,.2)] backdrop-blur-2xl"
+                        className={[
+                          "grid size-12 place-items-center rounded-2xl bg-white/12 text-fuchsia-100 shadow-[0_14px_38px_rgba(10,3,20,.2)] backdrop-blur-2xl",
+                          side === "left" ? "md:ml-auto" : "md:mr-auto",
+                        ].join(" ")}
                       >
                         <TimelineIcon name={step.icon} />
                       </span>

@@ -703,3 +703,46 @@ test("How It Works timeline alternates cards left and right", async ({ page }, t
     await expect(card.locator("[data-timeline-icon]")).toHaveCount(1);
   }
 });
+
+test("timeline card alignment follows its desktop side and stays unchanged on mobile", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Timeline alignment check runs once in Chromium");
+
+  await page.setViewportSize({ width: 1280, height: 1000 });
+  await page.goto("/");
+
+  const rows = page.locator("[data-global-how-it-works] [data-timeline-side]");
+  await expect(rows).toHaveCount(5);
+
+  for (let index = 0; index < 5; index += 1) {
+    const row = rows.nth(index);
+    const side = index % 2 === 0 ? "left" : "right";
+    const card = row.locator("[data-timeline-card]");
+    const icon = card.locator("[data-timeline-icon]");
+
+    await expect(card).toHaveCSS("text-align", side === "left" ? "right" : "left");
+
+    const [cardBox, iconBox] = await Promise.all([card.boundingBox(), icon.boundingBox()]);
+    expect(cardBox).not.toBeNull();
+    expect(iconBox).not.toBeNull();
+
+    if (side === "left") {
+      expect(Math.abs((iconBox!.x + iconBox!.width) - (cardBox!.x + cardBox!.width - 24))).toBeLessThanOrEqual(3);
+    } else {
+      expect(Math.abs(iconBox!.x - (cardBox!.x + 24))).toBeLessThanOrEqual(3);
+    }
+  }
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const mobileCards = page.locator("[data-global-how-it-works] [data-timeline-card]");
+  await expect(mobileCards.first()).toHaveCSS("text-align", "left");
+
+  const [mobileCardBox, mobileIconBox] = await Promise.all([
+    mobileCards.first().boundingBox(),
+    mobileCards.first().locator("[data-timeline-icon]").boundingBox(),
+  ]);
+  expect(mobileCardBox).not.toBeNull();
+  expect(mobileIconBox).not.toBeNull();
+  expect(Math.abs(mobileIconBox!.x - (mobileCardBox!.x + 20))).toBeLessThanOrEqual(3);
+});
