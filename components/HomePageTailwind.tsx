@@ -274,7 +274,7 @@ export function HomePageTailwind() {
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute bottom-[-260px] left-[9%] right-[9%] top-[155px] -z-10 rounded-[50%] border border-violet-700/20 border-b-0"
+            className="pointer-events-none absolute left-1/2 top-[155px] -z-10 h-[125vw] w-[125vw] max-h-[520px] max-w-[520px] -translate-x-1/2 rounded-full border border-violet-700/20 md:bottom-[-260px] md:left-[9%] md:right-[9%] md:top-[155px] md:h-auto md:w-auto md:max-h-none md:max-w-none md:translate-x-0 md:rounded-[50%] md:border-b-0"
           />
 
           <div
