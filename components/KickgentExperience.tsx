@@ -166,6 +166,57 @@ export function KickgentExperience({ page }: Props) {
     const pageSidebar = root.querySelector<HTMLElement>(".page-sidebar");
     pageSidebar?.classList.add("max-[880px]:!hidden");
 
+    const tocLinks = Array.from(root.querySelectorAll<HTMLAnchorElement>(".toc-links a[href^='#']"));
+    const tocTargets = tocLinks
+      .map((link) => {
+        const id = decodeURIComponent(link.getAttribute("href")?.slice(1) || "");
+        const section = id ? root.querySelector<HTMLElement>(`#${CSS.escape(id)}`) : null;
+        return section ? { link, section } : null;
+      })
+      .filter((entry): entry is { link: HTMLAnchorElement; section: HTMLElement } => Boolean(entry));
+
+    let activeTocLink: HTMLAnchorElement | null = null;
+    const setActiveToc = (link: HTMLAnchorElement) => {
+      if (activeTocLink === link) return;
+      activeTocLink?.classList.remove("active");
+      activeTocLink?.removeAttribute("aria-current");
+      activeTocLink = link;
+      link.classList.add("active");
+      link.setAttribute("aria-current", "location");
+
+      if (pageSidebar) {
+        const sidebarRect = pageSidebar.getBoundingClientRect();
+        const linkRect = link.getBoundingClientRect();
+        const topSafe = sidebarRect.top + 52;
+        const bottomSafe = sidebarRect.bottom - 24;
+        if (linkRect.top < topSafe || linkRect.bottom > bottomSafe) {
+          link.scrollIntoView({
+            block: "nearest",
+            behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+          });
+        }
+      }
+    };
+
+    const tocObserver = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => Math.abs(a.boundingClientRect.top - 150) - Math.abs(b.boundingClientRect.top - 150));
+        if (!visible.length) return;
+        const target = visible[0].target as HTMLElement;
+        const match = tocTargets.find((item) => item.section === target);
+        if (match) setActiveToc(match.link);
+      },
+      { rootMargin: "-110px 0px -58% 0px", threshold: [0, 0.01, 0.25] }
+    );
+
+    tocTargets.forEach(({ section }) => tocObserver.observe(section));
+    tocLinks.forEach((link) => {
+      link.addEventListener("click", () => setActiveToc(link), { passive: true });
+    });
+    if (tocTargets[0]) setActiveToc(tocTargets[0].link);
+
     root.querySelectorAll<HTMLElement>(".chapter-tag")
       .forEach((element) => element.classList.add("!hidden"));
 
@@ -186,6 +237,7 @@ export function KickgentExperience({ page }: Props) {
       .forEach((element) => element.classList.add("!hidden"));
 
     return () => {
+      tocObserver.disconnect();
       injected.forEach((script) => script.remove());
       injectedNodes.forEach((node) => node.remove());
     };
