@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState, type FocusEvent } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type FocusEvent } from "react";
 import { usePathname } from "next/navigation";
 import { BrandLogo } from "./BrandLogo";
 
@@ -22,8 +22,15 @@ const guides: readonly NavItem[] = [
   ["Turnkey Brokerage", "turnkey-grey-label"],
 ];
 
+const NAV_TEXT_STYLE: CSSProperties = {
+  fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif",
+  fontSize: "14px",
+  fontWeight: 600,
+  lineHeight: "20px",
+};
+
 const navItem =
-  "inline-flex min-h-11 items-center gap-1.5 rounded-xl px-3 py-2 [font-family:inherit] text-[.84rem] font-semibold leading-none text-slate-700 no-underline transition hover:bg-white/70 hover:text-slate-950 focus-visible:bg-white/80 focus-visible:text-slate-950";
+  "inline-flex min-h-11 items-center gap-1.5 rounded-xl px-3 py-2 text-slate-700 no-underline transition hover:bg-white/70 hover:text-slate-950 focus-visible:bg-white/80 focus-visible:text-slate-950";
 
 const SUPPORT_PHONE = "+44 7988 028424";
 const WHATSAPP_URL = "https://wa.me/447988028424";
@@ -110,6 +117,7 @@ function MenuGroup({
         onClick={() => {
           if (!desktop()) setOpen(!open);
         }}
+        style={NAV_TEXT_STYLE}
         className={`${navItem} w-full justify-between border-0 bg-transparent max-[880px]:rounded-xl max-[880px]:bg-white/55 max-[880px]:px-4`}
       >
         {label}
@@ -131,7 +139,8 @@ function MenuGroup({
             href={`/${slug}`}
             key={slug}
             onClick={onNavigate}
-            className="flex min-h-11 items-center justify-between rounded-xl bg-white/20 px-3.5 py-3 [font-family:inherit] text-[.84rem] font-semibold leading-none text-slate-800 no-underline transition hover:bg-violet-50 hover:text-violet-800 focus-visible:bg-violet-50 focus-visible:text-violet-800"
+            style={NAV_TEXT_STYLE}
+            className="flex min-h-11 items-center justify-between rounded-xl bg-white/20 px-3.5 py-3 text-slate-800 no-underline transition hover:bg-violet-50 hover:text-violet-800 focus-visible:bg-violet-50 focus-visible:text-violet-800"
           >
             <span>{name}</span>
             <svg viewBox="0 0 20 20" aria-hidden="true" className="size-4 text-violet-500" fill="none">
@@ -207,6 +216,7 @@ export function SharedSiteHeader() {
             href="/"
             aria-current={active("/") ? "page" : undefined}
             onClick={close}
+            style={NAV_TEXT_STYLE}
             className={`${navItem} max-[880px]:w-full max-[880px]:justify-between max-[880px]:rounded-xl max-[880px]:bg-white/55 max-[880px]:px-4 ${active("/") ? "bg-violet-50 text-violet-800" : ""}`}
           >
             Home
@@ -234,6 +244,7 @@ export function SharedSiteHeader() {
             href="/about"
             aria-current={active("/about") ? "page" : undefined}
             onClick={close}
+            style={NAV_TEXT_STYLE}
             className={`${navItem} max-[880px]:w-full max-[880px]:justify-between max-[880px]:rounded-xl max-[880px]:bg-white/55 max-[880px]:px-4 ${active("/about") ? "bg-violet-50 text-violet-800" : ""}`}
           >
             About
@@ -243,6 +254,7 @@ export function SharedSiteHeader() {
             href="/contact"
             aria-current={active("/contact") ? "page" : undefined}
             onClick={close}
+            style={NAV_TEXT_STYLE}
             className={`${navItem} max-[880px]:w-full max-[880px]:justify-between max-[880px]:rounded-xl max-[880px]:bg-white/55 max-[880px]:px-4 ${active("/contact") ? "bg-violet-50 text-violet-800" : ""}`}
           >
             Contact
