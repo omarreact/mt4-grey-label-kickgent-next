@@ -79,10 +79,9 @@ export function KickgentExperience({ page }: Props) {
       injectedNodes.push(scrim);
 
       pageHero.classList.add(
-        "!min-h-[400px]",
+        "!h-fit",
         "!pt-[122px]",
         "!pb-10",
-        "sm:!min-h-[460px]",
         "sm:!pt-[136px]",
         "sm:!pb-12"
       );

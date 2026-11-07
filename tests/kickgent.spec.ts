@@ -221,9 +221,8 @@ test("fixed floating header and centered image-backed hero are preserved", async
 
   const hero = page.locator("[data-hero-banner]");
   await expect(hero).toBeVisible();
-  const heroBox = await hero.boundingBox();
-  expect(heroBox).not.toBeNull();
-  expect(heroBox!.height).toBeGreaterThanOrEqual(900);
+  await expect(hero).toHaveClass(/h-fit/);
+  await expect(hero).not.toHaveClass(/min-h-\[100svh\]/);
   const images = hero.locator("[data-hero-background]");
   await expect(images).toHaveCount(3);
   await expect(images.first()).toHaveAttribute("src", /images\.unsplash\.com\/photo-1556761175-4b46a572b786/);
@@ -399,10 +398,8 @@ test("inner page banner is compact and only shows route title and subtitle", asy
   await page.goto("/mt4-grey-label");
 
   const hero = page.locator(".page-hero");
-  const box = await hero.boundingBox();
-  expect(box).not.toBeNull();
-  expect(box!.height).toBeGreaterThanOrEqual(460);
-  expect(box!.height).toBeLessThan(520);
+  await expect(hero).toHaveClass(/!h-fit/);
+  await expect(hero).not.toHaveClass(/!min-h-\[(?:400|460)px\]/);
 
   await expect(hero.locator(".breadcrumbs")).toBeVisible();
   await expect(hero.locator("h1")).toBeVisible();
@@ -428,16 +425,17 @@ test("bottom CTA button has visible contrast", async ({ page }, testInfo) => {
   await expect(button).toContainText("Talk to our team");
 });
 
-test("desktop banner fits the viewport envelope", async ({ page }, testInfo) => {
+test("desktop banner uses content-driven height", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Desktop hero-height check runs once in Chromium");
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");
 
   const hero = page.locator("[data-hero-banner]");
-  const box = await hero.boundingBox();
-  expect(box).not.toBeNull();
-  expect(box!.height).toBeLessThanOrEqual(830);
-  expect(box!.height).toBeLessThanOrEqual(900);
+  const frame = page.locator("[data-hero-frame]");
+  const content = page.locator("[data-hero-left]");
+  await expect(hero).toHaveClass(/h-fit/);
+  await expect(frame).toHaveClass(/h-fit/);
+  await expect(content).toHaveClass(/h-fit/);
 });
 
 test("site-wide section motion is attached", async ({ page }, testInfo) => {
