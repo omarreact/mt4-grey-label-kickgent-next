@@ -415,3 +415,36 @@ test("desktop right-side hero elements stay inside the marked visual stage", asy
 
   expect(boxes[0]!.y + boxes[0]!.height).toBeLessThanOrEqual(Math.min(boxes[1]!.y, boxes[2]!.y) + 1);
 });
+
+test("desktop hero visual module occupies only the marked right-side area", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Desktop red-area geometry runs once in Chromium");
+  await page.setViewportSize({ width: 1648, height: 870 });
+  await page.goto("/");
+
+  const frame = page.locator("[data-hero-frame]");
+  const left = page.locator("[data-hero-left]");
+  const right = page.locator("[data-hero-right]");
+
+  const [frameBox, leftBox, rightBox] = await Promise.all([
+    frame.boundingBox(),
+    left.boundingBox(),
+    right.boundingBox(),
+  ]);
+
+  expect(frameBox).not.toBeNull();
+  expect(leftBox).not.toBeNull();
+  expect(rightBox).not.toBeNull();
+
+  const frameRight = frameBox!.x + frameBox!.width;
+  const frameBottom = frameBox!.y + frameBox!.height;
+  const rightRatio = rightBox!.width / frameBox!.width;
+
+  expect(rightBox!.x).toBeGreaterThanOrEqual(frameBox!.x + frameBox!.width * 0.53);
+  expect(rightRatio).toBeLessThanOrEqual(0.45);
+  expect(rightRatio).toBeGreaterThanOrEqual(0.40);
+  expect(rightBox!.x + rightBox!.width).toBeLessThanOrEqual(frameRight - 20);
+  expect(rightBox!.y).toBeGreaterThanOrEqual(frameBox!.y + 20);
+  expect(rightBox!.y + rightBox!.height).toBeLessThanOrEqual(frameBottom - 20);
+
+  expect(leftBox!.x + leftBox!.width).toBeLessThanOrEqual(rightBox!.x - 8);
+});

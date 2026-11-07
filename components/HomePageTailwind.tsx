@@ -289,12 +289,12 @@ export function HomePageTailwind() {
         <div className="pointer-events-none absolute inset-0 -z-20 bg-slate-950/42 backdrop-blur-[1.5px]" />
         <div className="pointer-events-none absolute inset-x-[5%] top-[15%] -z-10 hidden h-[68%] rounded-[50%] border border-white/20 xl:block" />
 
-        <div className="mx-auto grid w-full max-w-[1480px] gap-7 xl:h-full xl:grid-cols-[1.02fr_.98fr] xl:items-center xl:gap-10 2xl:gap-12">
+        <div data-hero-frame className="relative mx-auto w-full max-w-[1480px] overflow-hidden rounded-[38px] border border-white/20 bg-slate-950/30 p-4 shadow-[0_30px_90px_rgba(15,23,42,.24)] backdrop-blur-xl sm:p-6 xl:h-[560px] xl:p-7">
           <div
             data-hero-left
             data-hero-scene={activeHero.id}
             aria-live="polite"
-            className={`min-w-0 rounded-[30px] border border-white/20 bg-slate-950/28 p-5 text-left shadow-[0_24px_70px_rgba(15,23,42,.22)] backdrop-blur-xl transition-all duration-500 sm:p-7 xl:p-8 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
+            className={`min-w-0 rounded-[28px] border border-white/14 bg-white/[.045] p-5 text-left transition-all duration-500 sm:p-7 xl:flex xl:h-full xl:w-[52%] xl:flex-col xl:justify-center xl:border-0 xl:bg-transparent xl:p-8 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
           >
             <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/35 bg-white/14 px-3.5 py-2 text-[.68rem] font-bold tracking-[.1em] text-white shadow-[0_10px_30px_rgba(15,23,42,.18)] backdrop-blur-2xl sm:text-xs">
               <span className="grid size-5 shrink-0 place-items-center rounded-full border border-white/40 bg-white/20">✦</span>
@@ -343,7 +343,7 @@ export function HomePageTailwind() {
           <div
             data-hero-right
             data-hero-scene={activeHero.id}
-            className={`relative min-w-0 rounded-[32px] border border-white/20 bg-white/10 p-4 shadow-[0_28px_80px_rgba(15,23,42,.24)] backdrop-blur-2xl transition-all duration-500 sm:p-5 xl:h-[500px] xl:p-0 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
+            className={`relative mt-5 min-w-0 rounded-[28px] border border-white/20 bg-white/10 p-4 shadow-[0_28px_80px_rgba(15,23,42,.24)] backdrop-blur-2xl transition-all duration-500 sm:p-5 xl:absolute xl:bottom-7 xl:right-7 xl:top-7 xl:mt-0 xl:w-[43%] xl:p-0 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
           >
             <div
               data-hero-right-stage
