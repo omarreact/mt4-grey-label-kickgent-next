@@ -104,6 +104,28 @@ test("desktop navigation submenu stays open and can be clicked", async ({ page }
   await expect(page).toHaveURL(/\/mt4-grey-label\/?$/);
 });
 
+test("site-wide spacing and text leading stay compact", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Compact rhythm audit runs once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/");
+
+  const solutions = page.locator("#solutions");
+  const paddingTop = await solutions.evaluate((element) => parseFloat(getComputedStyle(element).paddingTop));
+  expect(paddingTop).toBeLessThanOrEqual(64);
+
+  const paragraph = solutions.locator("p").first();
+  const lineHeight = await paragraph.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return parseFloat(style.lineHeight) / parseFloat(style.fontSize);
+  });
+  expect(lineHeight).toBeLessThanOrEqual(1.65);
+
+  await page.goto("/mt4-grey-label");
+  const innerMain = page.locator(".page-main");
+  const innerPaddingTop = await innerMain.evaluate((element) => parseFloat(getComputedStyle(element).paddingTop));
+  expect(innerPaddingTop).toBeLessThanOrEqual(64);
+});
+
 test("homepage branding, portraits, carousel and glass overlays render", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Homepage enhancement checks run once in Chromium");
   await page.setViewportSize({ width: 1280, height: 900 });
@@ -629,6 +651,29 @@ test("solution carousel uses icons instead of numeric indicators", async ({ page
   for (const marker of ["01","02","03","04","05","06","07","08","09","10"]) {
     await expect(page.locator("[data-solution-card]", { hasText: marker })).toHaveCount(0);
   }
+});
+
+test("primary contact channels and social controls use the approved details", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Contact channel audit runs once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/");
+
+  const header = page.locator("[data-site-header]");
+  await expect(header.getByRole("link", { name: "WhatsApp +447452191901" })).toHaveAttribute("href", "https://wa.me/447452191901");
+  await expect(header.getByRole("link", { name: "Telegram +447452191901" })).toHaveAttribute("href", "https://t.me/+447452191901");
+
+  const footer = page.locator("footer");
+  await expect(footer.getByRole("link", { name: "support@fxgreylabel.com" })).toHaveAttribute("href", "mailto:support@fxgreylabel.com");
+  await expect(footer.getByRole("link", { name: "+447452191901" })).toHaveAttribute("href", "tel:+447452191901");
+  await expect(footer.getByRole("link", { name: "WhatsApp +447452191901" })).toHaveAttribute("href", "https://wa.me/447452191901");
+  await expect(footer.getByRole("link", { name: "Telegram +447452191901" })).toHaveAttribute("href", "https://t.me/+447452191901");
+
+  const scrollTop = page.locator("[data-scroll-top]");
+  await expect(scrollTop).toBeHidden();
+  await page.evaluate(() => window.scrollTo(0, 900));
+  await expect(scrollTop).toBeVisible();
+  await scrollTop.click();
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeLessThan(100);
 });
 
 test("contact page is complete and linked from the primary navigation", async ({ page }, testInfo) => {
