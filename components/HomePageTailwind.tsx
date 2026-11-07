@@ -326,7 +326,8 @@ export function HomePageTailwind() {
                     <Link
                       href={slide.secondary.href}
                       tabIndex={isActive ? undefined : -1}
-                      className="inline-flex min-h-[52px] items-center justify-center gap-[10px] rounded-[11px] border border-[#6f2fac6b] bg-white/80 px-[22px] text-sm font-extrabold !text-[#35184d] shadow-[0_8px_18px_#4b23631a] backdrop-blur-sm transition hover:-translate-y-[3px] hover:border-[#7c39b4] hover:bg-white max-[480px]:min-h-12 max-[480px]:w-full"
+                      style={{ color: "#35184d" }}
+                      className="inline-flex min-h-[52px] items-center justify-center gap-[10px] rounded-[11px] border border-[#6f2fac6b] bg-white/80 px-[22px] text-sm font-extrabold shadow-[0_8px_18px_#4b23631a] backdrop-blur-sm transition hover:-translate-y-[3px] hover:border-[#7c39b4] hover:bg-white max-[480px]:min-h-12 max-[480px]:w-full"
                     >
                       {slide.secondary.label} <ArrowIcon />
                     </Link>
