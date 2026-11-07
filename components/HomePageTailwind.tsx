@@ -5,16 +5,67 @@ import { useEffect, useRef, useState } from "react";
 
 const heroSlides = [
   {
+    id: "launch",
     image: "https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=2200&q=88",
-    label: "Brokerage operations",
+    label: "Brokerage launch",
+    badge: "MT4 & MT5 BROKERAGE TECHNOLOGY",
+    title: "Launch a brokerage.",
+    titleAccent: "Connect every system.",
+    description:
+      "MT4 and MT5 grey label, CRM, PAMM and MAM plugins, liquidity connectivity and broker websites, brought together by one technology partner.",
+    primary: { label: "Explore solutions", href: "#solutions" },
+    secondary: { label: "See how it works", href: "#how-it-works" },
+    assistantTitle: "Ready to launch.",
+    assistantText: "Choose the systems you want connected first.",
+    assistantChips: ["MT5 setup", "CRM workflow"],
+    progressLabel: "Brokerage launch",
+    progressValue: 64,
+    progressClass: "w-[64%]",
+    progressText: "Configuration aligned",
+    systemsLabel: "Connected systems",
+    systems: ["Client onboarding", "PAMM / MAM", "Liquidity bridge"],
   },
   {
+    id: "operations",
     image: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=2200&q=88",
-    label: "Connected technology team",
+    label: "Connected operations",
+    badge: "CONNECTED BROKER OPERATIONS",
+    title: "Run every client journey.",
+    titleAccent: "From one connected stack.",
+    description:
+      "Bring onboarding, KYC, funding, trading accounts and partner operations into a workflow where every hand-off stays visible.",
+    primary: { label: "Explore broker CRM", href: "/forex-broker-crm" },
+    secondary: { label: "Explore MT5", href: "/mt5-grey-label" },
+    assistantTitle: "Operations synchronized.",
+    assistantText: "Your CRM, accounts and payment states stay in context.",
+    assistantChips: ["KYC approved", "Account provisioned"],
+    progressLabel: "Client activation",
+    progressValue: 82,
+    progressClass: "w-[82%]",
+    progressText: "Workflow automated",
+    systemsLabel: "Live workflow",
+    systems: ["KYC & payments", "Trading accounts", "IB attribution"],
   },
   {
+    id: "scale",
     image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=2200&q=88",
-    label: "Brokerage growth collaboration",
+    label: "Brokerage growth",
+    badge: "SCALE WITHOUT FRAGMENTATION",
+    title: "Add products and capacity.",
+    titleAccent: "Keep the stack coherent.",
+    description:
+      "Expand managed accounts, liquidity, client acquisition and infrastructure without turning each new capability into a disconnected system.",
+    primary: { label: "Scale your brokerage", href: "/scale-forex-brokerage" },
+    secondary: { label: "Explore PAMM / MAM", href: "/pamm-mam" },
+    assistantTitle: "Ready to scale.",
+    assistantText: "Add capacity without rebuilding the operational core.",
+    assistantChips: ["PAMM / MAM", "New liquidity"],
+    progressLabel: "Growth readiness",
+    progressValue: 91,
+    progressClass: "w-[91%]",
+    progressText: "Expansion mapped",
+    systemsLabel: "Growth stack",
+    systems: ["Managed accounts", "Liquidity routing", "Client growth"],
   },
 ] as const;
 
@@ -172,13 +223,38 @@ function CheckIcon() {
 export function HomePageTailwind() {
   const [journeyIndex, setJourneyIndex] = useState(0);
   const [heroSlide, setHeroSlide] = useState(0);
+  const [heroVisible, setHeroVisible] = useState(true);
+  const heroTransitionRef = useRef<number | null>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
+
+  const activeHero = heroSlides[heroSlide];
+
+  const selectHeroSlide = (next: number) => {
+    if (next === heroSlide || !heroVisible) return;
+    setHeroVisible(false);
+    if (heroTransitionRef.current !== null) window.clearTimeout(heroTransitionRef.current);
+    heroTransitionRef.current = window.setTimeout(() => {
+      setHeroSlide(next);
+      setHeroVisible(true);
+      heroTransitionRef.current = null;
+    }, 220);
+  };
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      setHeroSlide((current) => (current + 1) % heroSlides.length);
+      setHeroVisible(false);
+      if (heroTransitionRef.current !== null) window.clearTimeout(heroTransitionRef.current);
+      heroTransitionRef.current = window.setTimeout(() => {
+        setHeroSlide((current) => (current + 1) % heroSlides.length);
+        setHeroVisible(true);
+        heroTransitionRef.current = null;
+      }, 220);
     }, 6500);
-    return () => window.clearInterval(timer);
+
+    return () => {
+      window.clearInterval(timer);
+      if (heroTransitionRef.current !== null) window.clearTimeout(heroTransitionRef.current);
+    };
   }, []);
 
   const scrollSolutions = (direction: number) => {
@@ -197,7 +273,8 @@ export function HomePageTailwind() {
     <main className="overflow-hidden bg-[#100414] text-white">
       <section
         data-hero-banner
-        className="relative isolate overflow-hidden px-4 pb-10 pt-[112px] text-white sm:px-6 sm:pt-[122px] lg:h-[min(100svh,820px)] lg:min-h-[720px] lg:py-[118px]"
+        data-active-slide={activeHero.id}
+        className="relative isolate overflow-hidden px-4 pb-10 pt-[112px] text-white sm:px-6 sm:pt-[122px] xl:h-[min(100svh,820px)] xl:min-h-[690px] xl:py-[104px]"
       >
         <div className="pointer-events-none absolute inset-0 -z-30" aria-hidden="true">
           {heroSlides.map((slide, index) => (
@@ -210,51 +287,53 @@ export function HomePageTailwind() {
           ))}
         </div>
         <div className="pointer-events-none absolute inset-0 -z-20 bg-slate-950/42 backdrop-blur-[1.5px]" />
-        <div className="pointer-events-none absolute inset-x-[5%] top-[15%] -z-10 hidden h-[68%] rounded-[50%] border border-white/20 lg:block" />
+        <div className="pointer-events-none absolute inset-x-[5%] top-[15%] -z-10 hidden h-[68%] rounded-[50%] border border-white/20 xl:block" />
 
-        <div className="mx-auto grid w-full max-w-[1180px] gap-7 lg:h-full lg:grid-cols-[0.94fr_1.06fr] lg:items-center lg:gap-9 xl:gap-12">
+        <div className="mx-auto grid w-full max-w-[1180px] gap-7 xl:h-full xl:grid-cols-[0.94fr_1.06fr] xl:items-center xl:gap-12">
           <div
             data-hero-left
-            className="min-w-0 rounded-[30px] border border-white/20 bg-slate-950/28 p-5 text-left shadow-[0_24px_70px_rgba(15,23,42,.22)] backdrop-blur-xl sm:p-7 lg:p-8"
+            data-hero-scene={activeHero.id}
+            aria-live="polite"
+            className={`min-w-0 rounded-[30px] border border-white/20 bg-slate-950/28 p-5 text-left shadow-[0_24px_70px_rgba(15,23,42,.22)] backdrop-blur-xl transition-all duration-500 sm:p-7 xl:p-8 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
           >
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/14 px-3.5 py-2 text-xs font-bold tracking-[.12em] text-white shadow-[0_10px_30px_rgba(15,23,42,.18)] backdrop-blur-2xl">
-              <span className="grid size-5 place-items-center rounded-full border border-white/40 bg-white/20">✦</span>
-              MT4 & MT5 BROKERAGE TECHNOLOGY
+            <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/35 bg-white/14 px-3.5 py-2 text-[.68rem] font-bold tracking-[.1em] text-white shadow-[0_10px_30px_rgba(15,23,42,.18)] backdrop-blur-2xl sm:text-xs">
+              <span className="grid size-5 shrink-0 place-items-center rounded-full border border-white/40 bg-white/20">✦</span>
+              <span className="min-w-0 break-words">{activeHero.badge}</span>
             </span>
 
-            <h1 className="mt-6 max-w-[620px] text-balance text-[clamp(2.9rem,5.1vw,4.85rem)] font-semibold leading-[.96] tracking-[-.065em] text-white drop-shadow-[0_4px_22px_rgba(15,23,42,.48)]">
-              Launch a brokerage.
-              <span className="block">Connect every system.</span>
+            <h1 className="mt-6 max-w-[620px] text-balance text-[clamp(2.45rem,5vw,4.65rem)] font-semibold leading-[.96] tracking-[-.06em] text-white drop-shadow-[0_4px_22px_rgba(15,23,42,.48)]">
+              {activeHero.title}
+              <span className="block">{activeHero.titleAccent}</span>
             </h1>
 
-            <p className="mt-5 max-w-[590px] text-pretty text-[.98rem] font-medium leading-7 text-white/88 drop-shadow-[0_3px_18px_rgba(15,23,42,.45)] sm:text-[1.05rem]">
-              MT4 and MT5 grey label, CRM, PAMM and MAM plugins, liquidity connectivity and broker websites, brought together by one technology partner.
+            <p className="mt-5 max-w-[590px] text-pretty text-[.95rem] font-medium leading-7 text-white/88 drop-shadow-[0_3px_18px_rgba(15,23,42,.45)] sm:text-[1.03rem]">
+              {activeHero.description}
             </p>
 
-            <div className="mt-6 flex flex-wrap gap-3">
-              <a
-                href="#solutions"
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Link
+                href={activeHero.primary.href}
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/35 bg-white/18 px-5 text-sm font-extrabold text-white shadow-[0_15px_38px_rgba(15,23,42,.22)] backdrop-blur-2xl transition hover:-translate-y-0.5 hover:bg-white/24"
               >
-                Explore solutions <ArrowIcon />
-              </a>
-              <a
-                href="#how-it-works"
+                {activeHero.primary.label} <ArrowIcon />
+              </Link>
+              <Link
+                href={activeHero.secondary.href}
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/30 bg-white/12 px-5 text-sm font-bold text-white shadow-[0_12px_34px_rgba(15,23,42,.18)] backdrop-blur-2xl transition hover:-translate-y-0.5 hover:bg-white/20"
               >
-                See how it works <ArrowIcon />
-              </a>
+                {activeHero.secondary.label} <ArrowIcon />
+              </Link>
             </div>
 
             <div className="mt-5 flex items-center gap-2" role="tablist" aria-label="Banner slides">
               {heroSlides.map((slide, index) => (
                 <button
-                  key={slide.label}
+                  key={slide.id}
                   type="button"
                   role="tab"
                   aria-label={`Show ${slide.label} banner`}
                   aria-selected={heroSlide === index}
-                  onClick={() => setHeroSlide(index)}
+                  onClick={() => selectHeroSlide(index)}
                   className={`h-2.5 rounded-full border border-white/50 backdrop-blur-xl transition-all ${heroSlide === index ? "w-8 bg-white" : "w-2.5 bg-white/35 hover:bg-white/60"}`}
                 />
               ))}
@@ -263,7 +342,8 @@ export function HomePageTailwind() {
 
           <div
             data-hero-right
-            className="relative min-w-0 rounded-[32px] border border-white/20 bg-white/10 p-4 shadow-[0_28px_80px_rgba(15,23,42,.24)] backdrop-blur-2xl sm:p-5 lg:h-[500px] lg:p-6"
+            data-hero-scene={activeHero.id}
+            className={`relative min-w-0 rounded-[32px] border border-white/20 bg-white/10 p-4 shadow-[0_28px_80px_rgba(15,23,42,.24)] backdrop-blur-2xl transition-all duration-500 sm:p-5 xl:h-[470px] xl:p-6 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
           >
             <div className="pointer-events-none absolute inset-4 rounded-[28px] border border-white/15" />
             <div className="pointer-events-none absolute left-1/2 top-1/2 h-[72%] w-[78%] -translate-x-1/2 -translate-y-1/2 rounded-[50%] border border-white/20" />
@@ -271,27 +351,30 @@ export function HomePageTailwind() {
               ✦
             </div>
 
-            <div className="relative z-10 grid h-full min-h-[470px] grid-rows-[auto_auto] gap-4 lg:min-h-0 lg:grid-rows-[1fr_auto]">
+            <div className="relative z-10 grid h-full min-h-[440px] grid-rows-[auto_auto] gap-4 xl:min-h-0 xl:grid-rows-[1fr_auto]">
               <div
                 data-hero-float
                 className="mx-auto flex w-full max-w-[390px] min-w-0 flex-col justify-between rounded-[26px] border border-white/28 bg-slate-950/24 p-5 text-left shadow-[0_24px_65px_rgba(15,23,42,.22)] backdrop-blur-2xl sm:p-6"
               >
                 <div className="flex min-w-0 items-center justify-between gap-3">
                   <span className="grid size-10 shrink-0 place-items-center rounded-full border border-white/20 bg-white/14">☰</span>
-                  <span className="min-w-0 flex-1 break-words text-center text-xs font-bold tracking-[.08em] text-white/85">BrokerOS Assistant</span>
+                  <span className="min-w-0 flex-1 break-words text-center text-xs font-bold tracking-[.08em] text-white/85">{activeHero.label}</span>
                   <span className="grid size-10 shrink-0 place-items-center rounded-full border border-white/20 bg-white/14">✎</span>
                 </div>
-                <div className="py-6 text-center">
-                  <strong className="block break-words text-[1.9rem] font-medium leading-tight tracking-[-.055em] sm:text-[2.1rem]">
-                    Ready to launch.
+                <div className="py-5 text-center">
+                  <strong className="block break-words text-[1.8rem] font-medium leading-tight tracking-[-.05em] sm:text-[2rem]">
+                    {activeHero.assistantTitle}
                   </strong>
                   <p className="mt-2 break-words text-sm leading-6 text-white/78">
-                    What would you like to connect?
+                    {activeHero.assistantText}
                   </p>
                 </div>
-                <div className="grid min-w-0 grid-cols-2 gap-2">
-                  <span className="min-w-0 break-words rounded-xl border border-white/18 bg-white/10 p-3 text-xs text-white/90 backdrop-blur-xl">MT5 setup</span>
-                  <span className="min-w-0 break-words rounded-xl border border-white/18 bg-white/10 p-3 text-xs text-white/90 backdrop-blur-xl">CRM workflow</span>
+                <div className="grid min-w-0 grid-cols-1 gap-2 min-[420px]:grid-cols-2">
+                  {activeHero.assistantChips.map((chip) => (
+                    <span key={chip} className="min-w-0 break-words rounded-xl border border-white/18 bg-white/10 p-3 text-xs text-white/90 backdrop-blur-xl">
+                      {chip}
+                    </span>
+                  ))}
                 </div>
               </div>
 
@@ -300,13 +383,15 @@ export function HomePageTailwind() {
                   data-hero-float
                   className="min-w-0 rounded-[20px] border border-white/28 bg-slate-950/24 p-4 text-left shadow-[0_18px_48px_rgba(15,23,42,.2)] backdrop-blur-2xl"
                 >
-                  <span className="block break-words text-[11px] font-bold uppercase tracking-[.12em] text-white/75">Brokerage launch</span>
+                  <span className="block break-words text-[11px] font-bold uppercase tracking-[.12em] text-white/75">{activeHero.progressLabel}</span>
                   <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/12">
-                    <div className="h-full w-[64%] rounded-full bg-gradient-to-r from-fuchsia-300 to-violet-300" />
+                    <div
+                      className={`h-full rounded-full bg-gradient-to-r from-fuchsia-300 to-violet-300 transition-[width] duration-700 ${activeHero.progressClass}`}
+                    />
                   </div>
                   <div className="mt-3 flex min-w-0 items-center justify-between gap-3 text-xs">
-                    <span className="min-w-0 break-words text-white/75">Configuration aligned</span>
-                    <strong className="shrink-0 text-white">64%</strong>
+                    <span className="min-w-0 break-words text-white/75">{activeHero.progressText}</span>
+                    <strong className="shrink-0 text-white">{activeHero.progressValue}%</strong>
                   </div>
                 </div>
 
@@ -314,9 +399,9 @@ export function HomePageTailwind() {
                   data-hero-float
                   className="min-w-0 rounded-[20px] border border-white/28 bg-slate-950/24 p-4 text-left shadow-[0_18px_48px_rgba(15,23,42,.2)] backdrop-blur-2xl"
                 >
-                  <span className="block break-words text-[11px] font-bold uppercase tracking-[.12em] text-white/75">Connected systems</span>
+                  <span className="block break-words text-[11px] font-bold uppercase tracking-[.12em] text-white/75">{activeHero.systemsLabel}</span>
                   <div className="mt-3 grid gap-1.5">
-                    {["Client onboarding", "PAMM / MAM", "Liquidity bridge"].map((item) => (
+                    {activeHero.systems.map((item) => (
                       <div key={item} className="flex min-w-0 items-center gap-2 text-xs text-white/90">
                         <span className="shrink-0">↗</span>
                         <span className="min-w-0 break-words">{item}</span>

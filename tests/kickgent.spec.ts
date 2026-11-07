@@ -162,24 +162,40 @@ test("fixed floating header and image-backed hero are preserved", async ({ page 
 });
 
 
-test("banner slider keeps readable contrast and switches backgrounds", async ({ page }, testInfo) => {
+test("banner slider changes the entire scene, not only the background", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Banner slider check runs once in Chromium");
-  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.setViewportSize({ width: 1366, height: 768 });
   await page.goto("/");
 
   const hero = page.locator("[data-hero-banner]");
   const controls = page.getByRole("tablist", { name: "Banner slides" }).getByRole("tab");
   await expect(controls).toHaveCount(3);
-  await expect(controls.nth(0)).toHaveAttribute("aria-selected", "true");
+  await expect(hero).toHaveAttribute("data-active-slide", "launch");
+  await expect(hero.locator("h1")).toContainText("Launch a brokerage.");
+  await expect(hero.locator("[data-hero-right]")).toContainText("Ready to launch.");
 
   const heroImages = hero.locator("img");
   await expect(heroImages).toHaveCount(3);
+
   await controls.nth(1).click();
+  await expect(hero).toHaveAttribute("data-active-slide", "operations");
   await expect(controls.nth(1)).toHaveAttribute("aria-selected", "true");
   await expect(heroImages.nth(1)).toHaveCSS("opacity", "1");
+  await expect(hero.locator("h1")).toContainText("Run every client journey.");
+  await expect(hero.locator("[data-hero-left]")).toContainText("Explore broker CRM");
+  await expect(hero.locator("[data-hero-right]")).toContainText("Operations synchronized.");
+  await expect(hero.locator("[data-hero-right]")).toContainText("82%");
+  await expect(hero.locator("[data-hero-right]")).toContainText("KYC & payments");
 
-  const heading = hero.locator("h1");
-  await expect(heading).toHaveCSS("color", "rgb(255, 255, 255)");
+  await controls.nth(2).click();
+  await expect(hero).toHaveAttribute("data-active-slide", "scale");
+  await expect(hero.locator("h1")).toContainText("Add products and capacity.");
+  await expect(hero.locator("[data-hero-left]")).toContainText("Scale your brokerage");
+  await expect(hero.locator("[data-hero-right]")).toContainText("Ready to scale.");
+  await expect(hero.locator("[data-hero-right]")).toContainText("91%");
+  await expect(hero.locator("[data-hero-right]")).toContainText("Managed accounts");
+
+  await expect(hero.locator("h1")).toHaveCSS("color", "rgb(255, 255, 255)");
 });
 
 test("requested homepage section backgrounds and glass overlays are applied", async ({ page }, testInfo) => {
@@ -316,8 +332,12 @@ for (const viewport of bannerViewports) {
     expect(leftBox!.y + leftBox!.height).toBeLessThanOrEqual(heroBox!.y + heroBox!.height + 1);
     expect(rightBox!.y + rightBox!.height).toBeLessThanOrEqual(heroBox!.y + heroBox!.height + 1);
 
-    const horizontalOverlap = Math.min(leftBox!.x + leftBox!.width, rightBox!.x + rightBox!.width) - Math.max(leftBox!.x, rightBox!.x);
-    expect(horizontalOverlap).toBeLessThanOrEqual(0);
+    if (viewport.width >= 1280) {
+      const horizontalOverlap = Math.min(leftBox!.x + leftBox!.width, rightBox!.x + rightBox!.width) - Math.max(leftBox!.x, rightBox!.x);
+      expect(horizontalOverlap).toBeLessThanOrEqual(0);
+    } else {
+      expect(leftBox!.y + leftBox!.height).toBeLessThanOrEqual(rightBox!.y + 1);
+    }
 
     const visualBox = rightBox!;
     const floats = page.locator("[data-hero-right] [data-hero-float]");
@@ -330,6 +350,43 @@ for (const viewport of bannerViewports) {
       expect(box!.y).toBeGreaterThanOrEqual(visualBox.y - 1);
       expect(box!.x + box!.width).toBeLessThanOrEqual(visualBox.x + visualBox.width + 1);
       expect(box!.y + box!.height).toBeLessThanOrEqual(visualBox.y + visualBox.height + 1);
+    }
+  });
+}
+
+const fullSiteResponsiveViewports = [
+  { width: 320, height: 568 },
+  { width: 390, height: 844 },
+  { width: 768, height: 1024 },
+  { width: 1024, height: 768 },
+  { width: 1440, height: 900 },
+  { width: 1920, height: 1080 },
+];
+
+for (const viewport of fullSiteResponsiveViewports) {
+  test(`all routes stay responsive at ${viewport.width}x${viewport.height}`, async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== "chromium", "Full-site viewport audit runs once in Chromium");
+
+    await page.setViewportSize(viewport);
+    for (const route of routes) {
+      await page.goto(route);
+      await expect(page.locator("h1")).toBeVisible();
+
+      const metrics = await page.evaluate(() => ({
+        documentOverflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        bodyOverflow: document.body.scrollWidth - document.documentElement.clientWidth,
+      }));
+
+      expect(metrics.documentOverflow, `${route} document overflow at ${viewport.width}x${viewport.height}`).toBeLessThanOrEqual(1);
+      expect(metrics.bodyOverflow, `${route} body overflow at ${viewport.width}x${viewport.height}`).toBeLessThanOrEqual(1);
+
+      const wideMedia = await page.locator("img, video, canvas, svg").evaluateAll((elements) =>
+        elements.filter((element) => {
+          const rect = element.getBoundingClientRect();
+          return rect.width > window.innerWidth + 1;
+        }).length
+      );
+      expect(wideMedia, `${route} oversized media at ${viewport.width}x${viewport.height}`).toBe(0);
     }
   });
 }
