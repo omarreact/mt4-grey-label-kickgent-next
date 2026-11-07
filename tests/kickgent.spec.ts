@@ -271,8 +271,8 @@ test("bottom CTA button has visible contrast", async ({ page }, testInfo) => {
   const button = page.locator("[data-bottom-cta-button]");
   await button.scrollIntoViewIfNeeded();
   await expect(button).toBeVisible();
-  await expect(button).toHaveCSS("background-color", "rgb(240, 231, 251)");
-  await expect(button).toHaveCSS("color", "rgb(74, 31, 95)");
+  await expect(button).toHaveCSS("background-color", "rgb(74, 31, 95)");
+  await expect(button).toHaveCSS("color", "rgb(255, 255, 255)");
   await expect(button).toContainText("Talk to our team");
 });
 
@@ -745,4 +745,14 @@ test("timeline card alignment follows its desktop side and stays unchanged on mo
   expect(mobileCardBox).not.toBeNull();
   expect(mobileIconBox).not.toBeNull();
   expect(Math.abs(mobileIconBox!.x - (mobileCardBox!.x + 20))).toBeLessThanOrEqual(3);
+});
+
+test("global CTA uses the approved light premium palette", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "CTA palette check runs once in Chromium");
+  await page.goto("/");
+
+  const section = page.locator("[data-global-cta]");
+  await expect(section).toHaveCSS("background-color", "rgb(247, 243, 251)");
+  await expect(section.locator("h2")).toHaveCSS("color", "rgb(36, 16, 54)");
+  await expect(section.locator("p")).toHaveCSS("color", "rgb(71, 85, 105)");
 });

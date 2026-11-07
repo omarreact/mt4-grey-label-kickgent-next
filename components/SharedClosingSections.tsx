@@ -129,21 +129,21 @@ export function SharedClosingSections() {
         </div>
       </section>
 
-      <section data-global-cta className="h-fit bg-[#100414] px-4 py-14 text-white sm:px-6 sm:py-18">
-        <div className="mx-auto flex h-fit max-w-[1180px] flex-col gap-8 overflow-hidden rounded-[32px] bg-[radial-gradient(circle_at_82%_20%,rgba(217,70,239,.22),transparent_32%),linear-gradient(135deg,rgba(124,58,237,.22),rgba(255,255,255,.04))] p-7 shadow-[0_30px_85px_rgba(8,2,14,.26)] backdrop-blur-2xl sm:p-10 lg:flex-row lg:items-center lg:justify-between">
+      <section data-global-cta className="h-fit bg-[#f7f3fb] px-4 py-14 text-[#241036] sm:px-6 sm:py-18">
+        <div className="mx-auto flex h-fit max-w-[1180px] flex-col gap-8 overflow-hidden rounded-[32px] border border-violet-100/80 bg-[radial-gradient(circle_at_84%_18%,rgba(192,132,252,.2),transparent_34%),linear-gradient(135deg,rgba(255,255,255,.96),rgba(246,240,251,.9))] p-7 shadow-[0_24px_70px_rgba(74,31,95,.12)] backdrop-blur-2xl sm:p-10 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-[720px]">
-            <span className="text-xs font-extrabold tracking-[.18em] text-fuchsia-200">START WITH THE RIGHT FOUNDATION</span>
-            <h2 className="mt-4 text-balance text-[clamp(2.2rem,5vw,4.3rem)] font-semibold leading-[1.02] tracking-[-.055em]">
+            <span className="text-xs font-extrabold tracking-[.18em] text-violet-700">START WITH THE RIGHT FOUNDATION</span>
+            <h2 className="mt-4 text-balance text-[clamp(2.2rem,5vw,4.3rem)] font-semibold leading-[1.02] tracking-[-.055em] text-[#241036]">
               Build a brokerage stack that can grow without becoming fragmented.
             </h2>
-            <p className="mt-5 max-w-[650px] text-sm leading-7 text-violet-100/75 sm:text-base">
+            <p className="mt-5 max-w-[650px] text-sm leading-7 text-slate-600 sm:text-base">
               Tell us what you want to launch, which systems you already have and where your operational bottlenecks are.
             </p>
           </div>
           <a
             data-bottom-cta-button
             href="mailto:admin@pincodeit.com?subject=MT4%20Grey%20Label%20Technology%20Consultation"
-            className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-[#f0e7fb] px-5 text-sm font-extrabold !text-[#4a1f5f] shadow-xl transition hover:-translate-y-0.5 hover:bg-white"
+            className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-[#4a1f5f] px-5 text-sm font-extrabold !text-white shadow-[0_14px_34px_rgba(74,31,95,.2)] transition hover:-translate-y-0.5 hover:bg-[#351445]"
           >
             Talk to our team <ArrowIcon />
           </a>
