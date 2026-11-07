@@ -111,7 +111,7 @@ function MenuGroup({
         onClick={() => {
           if (!desktop()) setOpen(!open);
         }}
-        className={`${navItem} w-full justify-between border-0 bg-transparent max-[880px]:border-b max-[880px]:border-slate-200/70`}
+        className={`${navItem} w-full justify-between border-0 bg-transparent max-[880px]:rounded-xl max-[880px]:bg-white/55 max-[880px]:px-4`}
       >
         {label}
         <ChevronIcon open={open} />
@@ -121,7 +121,7 @@ function MenuGroup({
         id={id}
         className={[
           "absolute left-1/2 top-full z-[10000] grid min-w-[270px] -translate-x-1/2 gap-1 rounded-2xl border border-white/90 bg-white/[.90] p-2.5 shadow-[0_28px_80px_rgba(44,19,69,.24)] backdrop-blur-3xl supports-[backdrop-filter]:bg-white/[.84] transition duration-200",
-          "max-[880px]:static max-[880px]:mt-1 max-[880px]:min-w-0 max-[880px]:translate-x-0 max-[880px]:border-white/80 max-[880px]:bg-white/[.92] max-[880px]:shadow-[0_18px_55px_rgba(44,19,69,.18)] max-[880px]:backdrop-blur-3xl max-[880px]:supports-[backdrop-filter]:bg-white/[.86]",
+          "max-[880px]:static max-[880px]:mt-1 max-[880px]:min-w-0 max-[880px]:translate-x-0 max-[880px]:rounded-[16px] max-[880px]:border-slate-200/80 max-[880px]:bg-white/98 max-[880px]:p-2 max-[880px]:shadow-[0_12px_32px_rgba(44,19,69,.12)] max-[880px]:backdrop-blur-xl max-[880px]:supports-[backdrop-filter]:bg-white/96",
           open
             ? "visible pointer-events-auto opacity-100"
             : "invisible pointer-events-none opacity-0 max-[880px]:hidden",
@@ -199,7 +199,7 @@ export function SharedSiteHeader() {
           id="kg-primary-navigation"
           className={[
             "ml-auto flex flex-1 items-center justify-end gap-1",
-            "max-[880px]:absolute max-[880px]:left-0 max-[880px]:right-0 max-[880px]:top-[calc(100%+10px)] max-[880px]:max-h-[calc(100dvh-105px)] max-[880px]:flex-col max-[880px]:items-stretch max-[880px]:gap-0 max-[880px]:overflow-y-auto max-[880px]:rounded-[20px] max-[880px]:border max-[880px]:border-white/70 max-[880px]:bg-white/62 max-[880px]:p-3 max-[880px]:shadow-[0_28px_80px_rgba(44,19,69,.22)] max-[880px]:backdrop-blur-3xl max-[880px]:supports-[backdrop-filter]:bg-white/48",
+            "max-[880px]:absolute max-[880px]:left-0 max-[880px]:right-0 max-[880px]:top-[calc(100%+10px)] max-[880px]:max-h-[calc(100dvh-125px)] max-[880px]:flex-col max-[880px]:items-stretch max-[880px]:gap-1 max-[880px]:overflow-y-auto max-[880px]:overscroll-contain max-[880px]:rounded-[20px] max-[880px]:border max-[880px]:border-white/85 max-[880px]:bg-[#f6f2f8]/96 max-[880px]:p-3 max-[880px]:shadow-[0_28px_80px_rgba(44,19,69,.28)] max-[880px]:backdrop-blur-3xl max-[880px]:supports-[backdrop-filter]:bg-[#f6f2f8]/94",
             mobileOpen ? "max-[880px]:flex" : "max-[880px]:hidden",
           ].join(" ")}
           aria-label="Primary navigation"
@@ -208,7 +208,7 @@ export function SharedSiteHeader() {
             href="/"
             aria-current={active("/") ? "page" : undefined}
             onClick={close}
-            className={`${navItem} max-[880px]:w-full max-[880px]:justify-between ${active("/") ? "bg-violet-50 text-violet-800" : ""}`}
+            className={`${navItem} max-[880px]:w-full max-[880px]:justify-between max-[880px]:rounded-xl max-[880px]:bg-white/55 max-[880px]:px-4 ${active("/") ? "bg-violet-50 text-violet-800" : ""}`}
           >
             Home
           </Link>
@@ -235,7 +235,7 @@ export function SharedSiteHeader() {
             href="/about"
             aria-current={active("/about") ? "page" : undefined}
             onClick={close}
-            className={`${navItem} max-[880px]:w-full max-[880px]:justify-between ${active("/about") ? "bg-violet-50 text-violet-800" : ""}`}
+            className={`${navItem} max-[880px]:w-full max-[880px]:justify-between max-[880px]:rounded-xl max-[880px]:bg-white/55 max-[880px]:px-4 ${active("/about") ? "bg-violet-50 text-violet-800" : ""}`}
           >
             About
           </Link>
@@ -244,11 +244,11 @@ export function SharedSiteHeader() {
             href="/contact"
             aria-current={active("/contact") ? "page" : undefined}
             onClick={close}
-            className={`${navItem} max-[880px]:w-full max-[880px]:justify-between ${active("/contact") ? "bg-violet-50 text-violet-800" : ""}`}
+            className={`${navItem} max-[880px]:w-full max-[880px]:justify-between max-[880px]:rounded-xl max-[880px]:bg-white/55 max-[880px]:px-4 ${active("/contact") ? "bg-violet-50 text-violet-800" : ""}`}
           >
             Contact
           </Link>
-          <div data-header-social className="ml-1 flex items-center gap-1.5 max-[880px]:mt-2 max-[880px]:w-full max-[880px]:border-t max-[880px]:border-slate-200/70 max-[880px]:pt-3">
+          <div data-header-social className="ml-1 flex items-center gap-1.5 max-[880px]:ml-0 max-[880px]:mt-2 max-[880px]:w-full max-[880px]:border-t max-[880px]:border-slate-200/80 max-[880px]:px-1 max-[880px]:pt-3">
             <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" aria-label="WhatsApp +447452191901" className="grid size-9 place-items-center rounded-xl border border-emerald-200/80 bg-emerald-50 text-emerald-700 no-underline transition hover:-translate-y-0.5 hover:bg-emerald-100 max-[880px]:flex-1"><WhatsAppIcon /></a>
             <a href={TELEGRAM_URL} target="_blank" rel="noreferrer" aria-label="Telegram +447452191901" className="grid size-9 place-items-center rounded-xl border border-sky-200/80 bg-sky-50 text-sky-700 no-underline transition hover:-translate-y-0.5 hover:bg-sky-100 max-[880px]:flex-1"><TelegramIcon /></a>
           </div>

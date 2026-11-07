@@ -713,6 +713,47 @@ test("solution carousel uses icons instead of numeric indicators", async ({ page
   }
 });
 
+test("mobile navigation drawer isolates page content and keeps expanded submenu contained", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Mobile drawer visual containment runs once in Chromium");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  await page.getByRole("button", { name: "Open navigation" }).click();
+  const nav = page.locator("#kg-primary-navigation");
+  await expect(nav).toBeVisible();
+
+  const navStyle = await nav.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return {
+      backgroundColor: style.backgroundColor,
+      maxHeight: parseFloat(style.maxHeight),
+      overflowY: style.overflowY,
+    };
+  });
+  const alpha = Number(navStyle.backgroundColor.match(/rgba\([^,]+,[^,]+,[^,]+,\s*([\d.]+)\)/)?.[1] ?? "1");
+  expect(alpha).toBeGreaterThanOrEqual(0.9);
+  expect(navStyle.overflowY).toBe("auto");
+  expect(navStyle.maxHeight).toBeLessThanOrEqual(720);
+
+  await nav.getByRole("button", { name: "Solutions" }).click();
+  const submenu = page.locator("#kg-solutions-menu");
+  await expect(submenu).toBeVisible();
+
+  const submenuStyle = await submenu.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return {
+      position: style.position,
+      backgroundColor: style.backgroundColor,
+    };
+  });
+  expect(submenuStyle.position).toBe("static");
+  const submenuAlpha = Number(submenuStyle.backgroundColor.match(/rgba\([^,]+,[^,]+,[^,]+,\s*([\d.]+)\)/)?.[1] ?? "1");
+  expect(submenuAlpha).toBeGreaterThanOrEqual(0.9);
+
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+  expect(overflow).toBeLessThanOrEqual(1);
+});
+
 test("navigation and submenu typography are uniform", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Navigation typography audit runs once in Chromium");
   await page.setViewportSize({ width: 1280, height: 900 });
