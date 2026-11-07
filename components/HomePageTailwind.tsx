@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { BrandLogo } from "./BrandLogo";
 
 const heroSlides = [
   {
