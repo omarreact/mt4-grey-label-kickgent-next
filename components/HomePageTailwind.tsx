@@ -249,7 +249,7 @@ export function HomePageTailwind() {
       >
         <div
           data-hero-frame
-          className="relative mx-auto h-fit w-full max-w-[1480px] overflow-hidden rounded-[38px] border border-white/70 bg-[#f3e7fb] pb-14 shadow-[0_30px_90px_rgba(76,34,105,.16)] md:min-h-[620px] lg:min-h-[580px] xl:min-h-[560px]"
+          className="relative isolate mx-auto h-fit w-full max-w-[1480px] overflow-hidden rounded-[38px] border border-white/70 bg-[#f3e7fb] pb-14 shadow-[0_30px_90px_rgba(76,34,105,.16)] md:min-h-[620px] lg:min-h-[580px] xl:min-h-[560px]"
         >
           <div className="pointer-events-none absolute inset-0 -z-30" aria-hidden="true">
             {heroSlides.map((slide, index) => (
