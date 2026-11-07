@@ -23,7 +23,7 @@ export default {
     pagesFile: "content/kickgent-pages.ts",
   },
   urls: {
-    nextjs: "https://mt4-grey-label-kickgent-next.vercel.app/",
+    nextjs: "https://mt4-grey-label.vercel.app/",
     html: "https://omarreact.github.io/mt4-grey-label-kickgent-next/",
     wordpress: null,
   },

@@ -249,6 +249,29 @@ test("inner-page hero photos are unique and not reused by homepage/global surfac
   expect(heroSet.size).toBe(innerRoutes.length);
 });
 
+test("inner page route pills use the branded site icon", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Breadcrumb brand treatment runs once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/about");
+
+  const breadcrumbs = page.locator(".breadcrumbs");
+  await expect(breadcrumbs).toBeVisible();
+
+  const homeIcon = await breadcrumbs.locator("a").evaluate((element) => ({
+    content: getComputedStyle(element, "::before").content,
+    backgroundImage: getComputedStyle(element, "::before").backgroundImage,
+  }));
+  const currentIcon = await breadcrumbs.locator("> span:last-child").evaluate((element) => ({
+    content: getComputedStyle(element, "::before").content,
+    backgroundImage: getComputedStyle(element, "::before").backgroundImage,
+  }));
+
+  expect(homeIcon.content).not.toBe("none");
+  expect(homeIcon.backgroundImage).toContain("data:image/svg+xml");
+  expect(currentIcon.content).not.toBe("none");
+  expect(currentIcon.backgroundImage).toContain("data:image/svg+xml");
+});
+
 test("inner pages keep layout and receive image-backed glass visual system", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Inner-page visual treatment runs once in Chromium");
   await page.goto("/mt4-grey-label");

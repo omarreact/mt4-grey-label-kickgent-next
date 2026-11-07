@@ -15,7 +15,7 @@ This repository is the initial proof of concept for **PinTheme by PINCODE IT**. 
 
 | View | Purpose | URL/status |
 | --- | --- | --- |
-| Next.js | Development/reference | `https://mt4-grey-label-kickgent-next.vercel.app/` — configured; verify separately |
+| Next.js | Development/reference | `https://mt4-grey-label.vercel.app/` — configured; verify separately |
 | HTML | Standalone static output | `https://omarreact.github.io/mt4-grey-label-kickgent-next/` — deployed through GitHub Pages |
 | WordPress | Production CMS | Project-configurable; no production/staging URL is hardcoded |
 
@@ -23,7 +23,7 @@ The HTML view is marked **DEPLOYED**, not **VERIFIED**, until an independent fro
 
 ## Routes
 
-The canonical source currently exports 11 routes: `/`, `/mt4-grey-label/`, `/mt5-grey-label/`, `/turnkey-grey-label/`, `/forex-broker-crm/`, `/forex-broker-website/`, `/forex-liquidity-bridge/`, `/pamm-mam/`, `/how-to-start-forex-brokerage/`, `/scale-forex-brokerage/`, and `/about/`.
+The canonical source currently exports 12 routes: `/`, `/mt4-grey-label/`, `/mt5-grey-label/`, `/turnkey-grey-label/`, `/forex-broker-crm/`, `/forex-broker-website/`, `/forex-liquidity-bridge/`, `/pamm-mam/`, `/how-to-start-forex-brokerage/`, `/scale-forex-brokerage/`, `/about/`, and `/contact/`.
 
 ## Architecture
 
