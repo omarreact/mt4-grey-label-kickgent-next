@@ -296,7 +296,7 @@ export function HomePageTailwind() {
                     <span className="block">{slide.titleAccent}</span>
                   </h1>
 
-                  <p className="mt-5 max-w-[590px] text-pretty text-[.92rem] font-medium leading-7 text-white/88 drop-shadow-[0_3px_18px_rgba(15,23,42,.45)] sm:text-[1.03rem] md:mt-4 md:text-[.9rem] md:leading-6 lg:text-[1rem] lg:leading-7">
+                  <p className="mt-5 max-w-[590px] text-pretty text-[.92rem] font-medium leading-[1.55] text-white/88 drop-shadow-[0_3px_18px_rgba(15,23,42,.45)] sm:text-[1.03rem] md:mt-4 md:text-[.9rem] md:leading-6 lg:text-[1rem] lg:leading-[1.55]">
                     {slide.description}
                   </p>
 
@@ -418,7 +418,7 @@ export function HomePageTailwind() {
         </div>
       </section>
 
-      <section className="border-y border-white/8 bg-[#18071f] px-4 py-20 sm:px-6 sm:py-24">
+      <section className="border-y border-white/8 bg-[#18071f] px-4 py-14 sm:px-6 sm:py-16">
         <div className="mx-auto grid max-w-[1180px] gap-12 lg:grid-cols-[.85fr_1.15fr] lg:items-center">
           <div>
             <div className="flex items-center gap-4">
@@ -469,14 +469,14 @@ export function HomePageTailwind() {
         </div>
       </section>
 
-      <section id="solutions" className="h-fit bg-[#f7f3fb] px-4 py-20 text-slate-950 sm:px-6 sm:py-28">
+      <section id="solutions" className="h-fit bg-[#f7f3fb] px-4 py-14 text-slate-950 sm:px-6 sm:py-16">
         <div className="mx-auto max-w-[1180px]">
           <div className="mx-auto max-w-[760px] text-center">
             <span className="text-xs font-extrabold tracking-[.18em] text-violet-700">MORE THAN A PLATFORM</span>
             <h2 className="mt-4 text-balance text-[clamp(2.5rem,5.2vw,4.8rem)] font-semibold leading-[1.02] tracking-[-.055em]">
               More systems than most founders expect
             </h2>
-            <p className="mx-auto mt-5 max-w-[680px] text-base leading-8 text-slate-600">
+            <p className="mx-auto mt-5 max-w-[680px] text-base leading-[1.6] text-slate-600">
               The trading platform is only one layer. A working brokerage needs client operations, managed accounts, execution connectivity and a client-facing experience around it.
             </p>
           </div>
@@ -496,14 +496,14 @@ export function HomePageTailwind() {
                   <FeatureIcon name={card.icon} className="size-7" />
                 </span>
                 <h3 className="relative mt-7 text-xl font-bold tracking-[-.035em] text-slate-950">{card.title}</h3>
-                <p className="relative mt-3 max-w-[440px] text-sm leading-7 text-slate-600">{card.text}</p>
+                <p className="relative mt-3 max-w-[440px] text-sm leading-[1.55] text-slate-600">{card.text}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section data-active-journey className="relative isolate overflow-hidden px-4 py-20 sm:px-6 sm:py-28">
+      <section data-active-journey className="relative isolate overflow-hidden px-4 py-14 sm:px-6 sm:py-16">
         <img
           src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=2200&q=86"
           alt=""
@@ -517,7 +517,7 @@ export function HomePageTailwind() {
             <h2 className="mt-4 text-balance text-[clamp(2.6rem,5vw,4.8rem)] font-semibold leading-[1] tracking-[-.06em]">
               Turn four disconnected hand-offs into one visible workflow
             </h2>
-            <p className="mx-auto mt-5 max-w-[690px] text-base leading-8 text-violet-100/65">
+            <p className="mx-auto mt-5 max-w-[690px] text-base leading-[1.6] text-violet-100/65">
               Follow the client from first registration to an active trading relationship, while each system keeps the next team and next action in context.
             </p>
           </div>
@@ -600,7 +600,7 @@ export function HomePageTailwind() {
                             <FeatureIcon name={step.icon} className="size-4" /> CONNECTED WORKFLOW
                           </span>
                           <h3 className="mt-3 break-words text-3xl font-semibold tracking-[-.05em] sm:text-4xl">{step.title}</h3>
-                          <p className="mt-4 max-w-[620px] text-sm leading-7 text-violet-100/70 sm:text-base">{step.text}</p>
+                          <p className="mt-4 max-w-[620px] text-sm leading-[1.55] text-violet-100/70 sm:text-base">{step.text}</p>
                         </div>
                         <span className="rounded-full border border-emerald-200/20 bg-emerald-300/10 px-3 py-2 text-xs font-bold text-emerald-200 backdrop-blur-xl">
                           Live workflow
@@ -634,7 +634,7 @@ export function HomePageTailwind() {
         </div>
       </section>
 
-      <section className="h-fit bg-[#f7f3fb] px-4 py-20 text-slate-950 sm:px-6 sm:py-28">
+      <section className="h-fit bg-[#f7f3fb] px-4 py-14 text-slate-950 sm:px-6 sm:py-16">
         <div className="mx-auto max-w-[1180px]">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div className="max-w-[780px]">
@@ -642,7 +642,7 @@ export function HomePageTailwind() {
               <h2 className="mt-4 text-balance text-[clamp(2.5rem,5vw,4.6rem)] font-semibold leading-[1.02] tracking-[-.055em]">
                 The complete brokerage technology library
               </h2>
-              <p className="mt-5 max-w-[690px] text-base leading-8 text-slate-600">
+              <p className="mt-5 max-w-[690px] text-base leading-[1.6] text-slate-600">
                 Browse the platform, operations, growth and implementation pages as an interactive solution track.
               </p>
             </div>
@@ -671,7 +671,7 @@ export function HomePageTailwind() {
             ref={sliderRef}
             role="region"
             aria-label="GreyLabel solution carousel"
-            className="mt-10 flex items-stretch snap-x snap-mandatory gap-4 overflow-x-auto pb-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="mt-8 flex items-stretch snap-x snap-mandatory gap-4 overflow-x-auto pb-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {solutionSlides.map((slide) => (
               <Link
@@ -693,7 +693,7 @@ export function HomePageTailwind() {
                   </span>
                 </div>
                 <h3 className="relative mt-10 text-2xl font-semibold tracking-[-.04em]">{slide.title}</h3>
-                <p className="relative mt-4 flex-1 text-sm leading-7 text-slate-600">{slide.text}</p>
+                <p className="relative mt-4 flex-1 text-sm leading-[1.55] text-slate-600">{slide.text}</p>
                 <span className="relative mt-auto inline-flex pt-7 text-sm font-extrabold text-violet-700">Explore solution →</span>
               </Link>
             ))}
@@ -701,12 +701,12 @@ export function HomePageTailwind() {
         </div>
       </section>
 
-      <section className="bg-[#0f0314] px-4 py-20 sm:px-6 sm:py-24">
+      <section className="bg-[#0f0314] px-4 py-14 sm:px-6 sm:py-16">
         <div className="mx-auto grid max-w-[1180px] gap-5 lg:grid-cols-2">
           <article className="rounded-[28px] border border-white/10 bg-white/[.045] p-6 sm:p-8">
             <span className="text-xs font-extrabold tracking-[.16em] text-fuchsia-200">PLATFORM CHOICE</span>
             <h2 className="mt-4 text-4xl font-semibold tracking-[-.055em]">MT4 or MT5?</h2>
-            <p className="mt-4 max-w-[520px] text-sm leading-7 text-violet-100/65">
+            <p className="mt-4 max-w-[520px] text-sm leading-[1.55] text-violet-100/65">
               Many brokerages use the platforms for different client segments rather than treating the choice as permanent.
             </p>
             <div className="mt-7 grid gap-3 sm:grid-cols-2">
@@ -732,7 +732,7 @@ export function HomePageTailwind() {
           <article className="rounded-[28px] border border-white/10 bg-[linear-gradient(135deg,rgba(148,72,247,.18),rgba(255,255,255,.035))] p-6 sm:p-8">
             <span className="text-xs font-extrabold tracking-[.16em] text-fuchsia-200">THE FULL STACK</span>
             <h2 className="mt-4 text-4xl font-semibold tracking-[-.055em]">Every system speaking the same language</h2>
-            <p className="mt-4 text-sm leading-7 text-violet-100/65">
+            <p className="mt-4 text-sm leading-[1.55] text-violet-100/65">
               Launch the minimum viable stack, then add products and capacity without turning each addition into a separate technology island.
             </p>
             <div className="mt-7 grid grid-cols-2 gap-3">
@@ -744,12 +744,12 @@ export function HomePageTailwind() {
         </div>
       </section>
 
-      <section className="bg-[#f7f3fb] px-4 py-20 text-slate-950 sm:px-6 sm:py-24">
+      <section className="bg-[#f7f3fb] px-4 py-14 text-slate-950 sm:px-6 sm:py-16">
         <div className="mx-auto grid max-w-[1180px] gap-8 lg:grid-cols-[.8fr_1.2fr]">
           <div>
             <span className="text-xs font-extrabold tracking-[.18em] text-violet-700">FREQUENTLY ASKED QUESTIONS</span>
             <h2 className="mt-4 text-[clamp(2.5rem,5vw,4.5rem)] font-semibold leading-[1] tracking-[-.06em]">Clear answers before you build</h2>
-            <p className="mt-5 max-w-[480px] text-base leading-8 text-slate-600">
+            <p className="mt-5 max-w-[480px] text-base leading-[1.6] text-slate-600">
               Platform availability, integration scope and operational ownership should be understood before implementation begins.
             </p>
           </div>
@@ -761,7 +761,7 @@ export function HomePageTailwind() {
                   <span>{question}</span>
                   <span className="grid size-8 shrink-0 place-items-center rounded-full bg-violet-50 text-violet-700 transition group-open:rotate-45">+</span>
                 </summary>
-                <p className="pt-4 text-sm leading-7 text-slate-600">{answer}</p>
+                <p className="pt-4 text-sm leading-[1.55] text-slate-600">{answer}</p>
               </details>
             ))}
           </div>
