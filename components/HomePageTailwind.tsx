@@ -253,8 +253,7 @@ export function HomePageTailwind() {
             data-hero-background
             src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=2200&q=88"
             alt=""
-            className="absolute inset-0 h-full w-full object-cover"
-            style={{ objectPosition: "center 46%" }}
+            className="absolute inset-0 h-full w-full object-cover object-[center_46%]"
           />
         </div>
         <div data-hero-overlay className="pointer-events-none absolute inset-0 -z-20 bg-slate-950/34 backdrop-blur-[0.5px]" />
