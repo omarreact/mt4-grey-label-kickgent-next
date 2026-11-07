@@ -756,3 +756,38 @@ test("global CTA uses the approved light premium palette", async ({ page }, test
   await expect(section.locator("h2")).toHaveCSS("color", "rgb(36, 16, 54)");
   await expect(section.locator("p")).toHaveCSS("color", "rgb(71, 85, 105)");
 });
+
+test("banner indicators sit centered at the bottom inside the hero frame", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Banner indicator geometry runs once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/");
+
+  const frame = page.locator("[data-hero-frame]");
+  const indicators = page.locator("[data-hero-indicators]");
+  await expect(indicators).toBeVisible();
+
+  const [frameBox, indicatorBox] = await Promise.all([frame.boundingBox(), indicators.boundingBox()]);
+  expect(frameBox).not.toBeNull();
+  expect(indicatorBox).not.toBeNull();
+
+  const frameCenter = frameBox!.x + frameBox!.width / 2;
+  const indicatorCenter = indicatorBox!.x + indicatorBox!.width / 2;
+  expect(Math.abs(frameCenter - indicatorCenter)).toBeLessThanOrEqual(2);
+  expect(indicatorBox!.y + indicatorBox!.height).toBeLessThan(frameBox!.y + frameBox!.height);
+  expect(frameBox!.y + frameBox!.height - (indicatorBox!.y + indicatorBox!.height)).toBeLessThanOrEqual(28);
+});
+
+test("mobile banner shows only left content and removes outside bottom spacing", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Mobile hero visibility check runs once in Chromium");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  await expect(page.locator("[data-hero-left]")).toBeVisible();
+  await expect(page.locator("[data-hero-right]")).toBeHidden();
+  await expect(page.locator("[data-hero-indicators]")).toBeVisible();
+
+  const bottomPadding = await page.locator("[data-hero-banner]").evaluate((element) =>
+    parseFloat(getComputedStyle(element).paddingBottom)
+  );
+  expect(bottomPadding).toBe(0);
+});

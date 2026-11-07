@@ -248,7 +248,7 @@ export function HomePageTailwind() {
       <section
         data-hero-banner
         data-active-slide={activeHero.id}
-        className="relative isolate h-fit overflow-hidden px-4 pb-10 pt-[112px] text-white sm:px-6 sm:pt-[122px] md:min-h-[760px] md:py-[100px] xl:min-h-[690px]"
+        className="relative isolate h-fit overflow-hidden px-4 pb-0 pt-[112px] text-white sm:px-6 sm:pt-[122px] md:min-h-[760px] md:pb-0 md:pt-[100px] xl:min-h-[690px]"
       >
         <div className="pointer-events-none absolute inset-0 -z-30" aria-hidden="true">
           {heroSlides.map((slide, index) => (
@@ -263,7 +263,7 @@ export function HomePageTailwind() {
         <div className="pointer-events-none absolute inset-0 -z-20 bg-slate-950/42 backdrop-blur-[1.5px]" />
         <div className="pointer-events-none absolute inset-x-[5%] top-[15%] -z-10 hidden h-[68%] rounded-[50%] border border-white/20 md:block" />
 
-        <div data-hero-frame className="relative mx-auto h-fit w-full max-w-[1480px] overflow-hidden rounded-[38px] border border-white/20 bg-slate-950/30 p-4 shadow-[0_30px_90px_rgba(15,23,42,.24)] backdrop-blur-xl sm:p-6 md:min-h-[620px] md:p-5 lg:min-h-[580px] xl:min-h-[560px] xl:p-7">
+        <div data-hero-frame className="relative mx-auto h-fit w-full max-w-[1480px] overflow-hidden rounded-[38px] border border-white/20 bg-slate-950/30 p-4 pb-14 shadow-[0_30px_90px_rgba(15,23,42,.24)] backdrop-blur-xl sm:p-6 sm:pb-14 md:min-h-[620px] md:p-5 md:pb-14 lg:min-h-[580px] xl:min-h-[560px] xl:p-7 xl:pb-14">
           <div
             data-hero-left
             data-hero-scene={activeHero.id}
@@ -299,25 +299,12 @@ export function HomePageTailwind() {
               </Link>
             </div>
 
-            <div className="mt-5 flex items-center gap-2" role="tablist" aria-label="Banner slides">
-              {heroSlides.map((slide, index) => (
-                <button
-                  key={slide.id}
-                  type="button"
-                  role="tab"
-                  aria-label={`Show ${slide.label} banner`}
-                  aria-selected={heroSlide === index}
-                  onClick={() => selectHeroSlide(index)}
-                  className={`h-2.5 rounded-full border border-white/50 backdrop-blur-xl transition-all ${heroSlide === index ? "w-8 bg-white" : "w-2.5 bg-white/35 hover:bg-white/60"}`}
-                />
-              ))}
-            </div>
           </div>
 
           <div
             data-hero-right
             data-hero-scene={activeHero.id}
-            className={`relative mt-5 min-w-0 transition-all duration-500 md:absolute md:bottom-5 md:right-5 md:top-5 md:mt-0 md:w-[43%] xl:bottom-7 xl:right-7 xl:top-7 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
+            className={`relative mt-5 hidden min-w-0 transition-all duration-500 md:absolute md:bottom-5 md:right-5 md:top-5 md:mt-0 md:block md:w-[43%] xl:bottom-7 xl:right-7 xl:top-7 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
           >
             <div
               data-hero-float
@@ -388,6 +375,25 @@ export function HomePageTailwind() {
                 ))}
               </div>
             </div>
+          </div>
+
+          <div
+            data-hero-indicators
+            className="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 items-center justify-center gap-2 sm:bottom-5"
+            role="tablist"
+            aria-label="Banner slides"
+          >
+            {heroSlides.map((slide, index) => (
+              <button
+                key={slide.id}
+                type="button"
+                role="tab"
+                aria-label={`Show ${slide.label} banner`}
+                aria-selected={heroSlide === index}
+                onClick={() => selectHeroSlide(index)}
+                className={`h-2.5 rounded-full border border-white/50 backdrop-blur-xl transition-all ${heroSlide === index ? "w-8 bg-white" : "w-2.5 bg-white/35 hover:bg-white/60"}`}
+              />
+            ))}
           </div>
         </div>
       </section>
