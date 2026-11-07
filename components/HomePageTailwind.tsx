@@ -249,14 +249,13 @@ export function HomePageTailwind() {
         className="relative isolate h-fit overflow-hidden px-4 pb-4 pt-[112px] text-white sm:px-6 sm:pb-5 sm:pt-[122px] md:min-h-[760px] md:pb-0 md:pt-[100px] xl:min-h-[690px]"
       >
         <div className="pointer-events-none absolute inset-0 -z-30" aria-hidden="true">
-          {heroSlides.map((slide, index) => (
-            <img
-              key={slide.image}
-              src={slide.image}
-              alt=""
-              className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-1000 ${index === heroSlide ? "opacity-100" : "opacity-0"}`}
-            />
-          ))}
+          <img
+            data-hero-background
+            src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=2200&q=88"
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover"
+            style={{ objectPosition: "center 46%" }}
+          />
         </div>
         <div data-hero-overlay className="pointer-events-none absolute inset-0 -z-20 bg-slate-950/34 backdrop-blur-[0.5px]" />
         <div className="pointer-events-none absolute inset-x-[5%] top-[15%] -z-10 hidden h-[68%] rounded-[50%] border border-white/20 md:block" />
