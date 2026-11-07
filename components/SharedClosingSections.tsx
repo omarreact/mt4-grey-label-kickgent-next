@@ -79,7 +79,7 @@ export function SharedClosingSections() {
             <div className="absolute left-7 top-0 bottom-0 hidden border-l border-fuchsia-200/25 sm:block lg:left-0 lg:right-0 lg:top-7 lg:bottom-auto lg:border-l-0 lg:border-t" aria-hidden="true" />
             <div className="grid gap-5 lg:grid-cols-5 lg:gap-4">
               {timelineSteps.map((step) => (
-                <article key={step.title} className="relative h-fit pl-0 sm:pl-16 lg:pl-0 lg:pt-14">
+                <article key={step.title} className="relative h-fit pl-0 backdrop-blur-[1px] sm:pl-16 lg:pl-0 lg:pt-14">
                   <span className="mb-4 grid size-12 place-items-center rounded-2xl bg-white/12 text-fuchsia-100 shadow-[0_14px_38px_rgba(10,3,20,.2)] backdrop-blur-2xl sm:absolute sm:left-1 sm:top-0 sm:mb-0 lg:left-0 lg:top-0">
                     <TimelineIcon name={step.icon} />
                   </span>
