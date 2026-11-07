@@ -14,7 +14,7 @@ function pintheme_greylabel_defaults() {
         'header_background' => '#100414',
         'footer_background' => '#0d0312',
         'container_width' => 1180,
-        'section_spacing' => 72,
+        'section_spacing' => 56,
         'card_radius' => 17,
         'button_radius' => 11,
         'logo_width' => 150,
@@ -33,9 +33,10 @@ function pintheme_greylabel_defaults() {
         'alternative_logo_url' => '',
         'footer_logo_url' => '',
         'footer_text' => '© 2026 GreyLabel Technology. Technology services only — not investment advice.',
-        'contact_email' => 'admin@pincodeit.com',
-        'social_whatsapp' => '',
-        'social_telegram' => '',
+        'contact_email' => 'support@fxgreylabel.com',
+        'contact_phone' => '+447452191901',
+        'social_whatsapp' => 'https://wa.me/447452191901',
+        'social_telegram' => 'https://t.me/+447452191901',
     ];
 }
 
@@ -80,6 +81,7 @@ function pintheme_greylabel_sanitize_settings($input) {
     $out['footer_logo_url'] = esc_url_raw($input['footer_logo_url'] ?? '');
     $out['footer_text'] = sanitize_text_field($input['footer_text'] ?? $defaults['footer_text']);
     $out['contact_email'] = sanitize_email($input['contact_email'] ?? $defaults['contact_email']);
+    $out['contact_phone'] = sanitize_text_field($input['contact_phone'] ?? $defaults['contact_phone']);
     $out['social_whatsapp'] = esc_url_raw($input['social_whatsapp'] ?? '');
     $out['social_telegram'] = esc_url_raw($input['social_telegram'] ?? '');
     return $out;
@@ -163,6 +165,7 @@ function pintheme_greylabel_settings_page() {
         <h2><?php esc_html_e('Footer', 'greylabel-technology'); ?></h2>
         <table class="form-table" role="presentation">
           <?php pintheme_greylabel_field($s, 'contact_email', 'Contact email', 'email'); ?>
+          <?php pintheme_greylabel_field($s, 'contact_phone', 'Primary phone'); ?>
           <?php pintheme_greylabel_field($s, 'social_whatsapp', 'WhatsApp URL', 'url'); ?>
           <?php pintheme_greylabel_field($s, 'social_telegram', 'Telegram URL', 'url'); ?>
           <?php pintheme_greylabel_field($s, 'footer_text', 'Copyright / footer text'); ?>
