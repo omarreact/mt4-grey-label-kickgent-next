@@ -21,6 +21,21 @@ export function SiteMotion() {
 
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const routeShell = document.querySelector<HTMLElement>("#main-content");
+
+    if (routeShell) {
+      routeShell.classList.remove("route-entered");
+      routeShell.classList.add("route-entering");
+      if (reduceMotion) {
+        routeShell.classList.remove("route-entering");
+        routeShell.classList.add("route-entered");
+      } else {
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          routeShell.classList.remove("route-entering");
+          routeShell.classList.add("route-entered");
+        }));
+      }
+    }
     const targets = Array.from(
       document.querySelectorAll<HTMLElement>(
         "#main-content section, #main-content .content-section, #main-content .related-card, #main-content .page-sidebar, [data-global-how-it-works], [data-global-cta], footer > div"
@@ -54,6 +69,7 @@ export function SiteMotion() {
 
     return () => {
       observer.disconnect();
+      routeShell?.classList.remove("route-entering", "route-entered");
       targets.forEach((element) => {
         element.style.transitionDelay = "";
       });
