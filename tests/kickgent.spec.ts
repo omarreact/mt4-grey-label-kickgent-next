@@ -1337,3 +1337,34 @@ test("semantic tone contract keeps typography readable on dark and light surface
   await expect(innerMain).toHaveAttribute("data-tone", "light");
   await expect(innerHero.locator("h1")).toHaveCSS("color", "rgb(255, 255, 255)");
 });
+
+
+for (const mobileWidth of [320, 390]) {
+  test(`banner CTA buttons stay on one row at ${mobileWidth}px`, async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== "chromium", "Mobile banner CTA geometry runs once in Chromium");
+    await page.setViewportSize({ width: mobileWidth, height: 844 });
+    await page.goto("/");
+
+    const tabs = page.getByRole("tablist", { name: "Banner slides" }).getByRole("tab");
+    for (let index = 0; index < 3; index += 1) {
+      if (index > 0) await tabs.nth(index).click();
+      const activeId = await page.locator("[data-hero-banner]").getAttribute("data-active-slide");
+      const actions = page.locator(`[data-hero-copy="${activeId}"] [data-hero-actions]`);
+      const buttons = actions.locator("a");
+      await expect(buttons).toHaveCount(2);
+
+      const [first, second, parent] = await Promise.all([
+        buttons.nth(0).boundingBox(),
+        buttons.nth(1).boundingBox(),
+        actions.boundingBox(),
+      ]);
+      expect(first).not.toBeNull();
+      expect(second).not.toBeNull();
+      expect(parent).not.toBeNull();
+      expect(Math.abs(first!.y - second!.y)).toBeLessThanOrEqual(1);
+      expect(first!.x + first!.width).toBeLessThanOrEqual(second!.x + 1);
+      expect(first!.x).toBeGreaterThanOrEqual(parent!.x - 1);
+      expect(second!.x + second!.width).toBeLessThanOrEqual(parent!.x + parent!.width + 1);
+    }
+  });
+}
