@@ -500,3 +500,29 @@ test("right hero parent has no extra overlay", async ({ page }, testInfo) => {
   await expect(right).toHaveCSS("backdrop-filter", "none");
   await expect(right).toHaveCSS("box-shadow", "none");
 });
+
+test("right hero contains only independent floating elements", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Premium floating-element structure runs once in Chromium");
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+
+  const right = page.locator("[data-hero-right]");
+  await expect(right).toBeVisible();
+  await expect(right).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  await expect(right).toHaveCSS("box-shadow", "none");
+  await expect(right).toHaveCSS("border-top-width", "0px");
+
+  const floats = right.locator("[data-hero-float]");
+  await expect(floats).toHaveCount(3);
+
+  for (let index = 0; index < 3; index += 1) {
+    const box = await floats.nth(index).boundingBox();
+    const parent = await right.boundingBox();
+    expect(box).not.toBeNull();
+    expect(parent).not.toBeNull();
+    expect(box!.x).toBeGreaterThanOrEqual(parent!.x - 1);
+    expect(box!.x + box!.width).toBeLessThanOrEqual(parent!.x + parent!.width + 1);
+    expect(box!.y).toBeGreaterThanOrEqual(parent!.y - 1);
+    expect(box!.y + box!.height).toBeLessThanOrEqual(parent!.y + parent!.height + 1);
+  }
+});

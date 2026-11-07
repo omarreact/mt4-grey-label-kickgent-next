@@ -343,36 +343,33 @@ export function HomePageTailwind() {
           <div
             data-hero-right
             data-hero-scene={activeHero.id}
-            className={`relative mt-5 min-w-0 p-4 transition-all duration-500 sm:p-5 md:absolute md:bottom-5 md:right-5 md:top-5 md:mt-0 md:w-[43%] md:p-0 xl:bottom-7 xl:right-7 xl:top-7 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
+            className={`relative mt-5 min-w-0 transition-all duration-500 md:absolute md:bottom-5 md:right-5 md:top-5 md:mt-0 md:w-[43%] xl:bottom-7 xl:right-7 xl:top-7 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
           >
-            <div className="pointer-events-none absolute right-4 top-4 grid size-10 place-items-center rounded-full bg-white/12 text-base shadow-[0_10px_30px_rgba(15,23,42,.16)] backdrop-blur-xl lg:right-6 lg:top-6 lg:size-12 lg:text-lg xl:right-7 xl:top-7 xl:size-14 xl:text-xl">
-              ✦
-            </div>
-
             <div
               data-hero-float
-              className="mx-auto flex w-full max-w-[420px] min-w-0 flex-col justify-between rounded-[24px] bg-slate-950/26 p-4 text-left shadow-[0_24px_65px_rgba(15,23,42,.22)] backdrop-blur-2xl md:absolute md:left-1/2 md:top-4 md:w-[84%] md:-translate-x-1/2 lg:top-5 lg:w-[78%] lg:p-5 xl:top-7 xl:w-[72%] xl:p-6"
+              className="mx-auto w-[92%] max-w-[360px] rounded-[22px] bg-slate-950/24 p-4 text-left shadow-[0_22px_55px_rgba(15,23,42,.2)] backdrop-blur-2xl md:absolute md:left-[4%] md:top-[8%] lg:left-[8%] lg:top-[10%] lg:w-[78%] xl:left-[10%] xl:w-[72%]"
             >
-              <div className="flex min-w-0 items-center justify-between gap-3">
-                <span className="grid size-8 shrink-0 place-items-center rounded-full bg-white/12 shadow-[0_8px_20px_rgba(15,23,42,.12)] lg:size-9 xl:size-10">☰</span>
-                <span className="min-w-0 flex-1 break-words text-center text-xs font-bold tracking-[.08em] text-white/85">{activeHero.label}</span>
-                <span className="grid size-8 shrink-0 place-items-center rounded-full bg-white/12 shadow-[0_8px_20px_rgba(15,23,42,.12)] lg:size-9 xl:size-10">✎</span>
+              <div className="flex min-w-0 items-center gap-3">
+                <span className="grid size-9 shrink-0 place-items-center rounded-full bg-white/12 text-sm shadow-[0_8px_20px_rgba(15,23,42,.12)]">
+                  ✦
+                </span>
+                <div className="min-w-0">
+                  <span className="block break-words text-[10px] font-black uppercase tracking-[.14em] text-white/60">
+                    {activeHero.label}
+                  </span>
+                  <strong className="mt-1 block break-words text-[1.2rem] font-semibold leading-tight tracking-[-.035em] text-white lg:text-[1.45rem] xl:text-[1.7rem]">
+                    {activeHero.assistantTitle}
+                  </strong>
+                </div>
               </div>
-
-              <div className="py-5 text-center">
-                <strong className="block break-words text-[1.35rem] font-medium leading-tight tracking-[-.05em] md:text-[1.25rem] lg:text-[1.55rem] xl:text-[2rem]">
-                  {activeHero.assistantTitle}
-                </strong>
-                <p className="mt-2 break-words text-xs leading-5 text-white/78 lg:text-sm lg:leading-6">
-                  {activeHero.assistantText}
-                </p>
-              </div>
-
-              <div className="grid min-w-0 grid-cols-1 gap-2 min-[420px]:grid-cols-2">
+              <p className="mt-3 text-xs leading-5 text-white/72 lg:text-sm lg:leading-6">
+                {activeHero.assistantText}
+              </p>
+              <div className="mt-3 flex flex-wrap gap-2">
                 {activeHero.assistantChips.map((chip) => (
                   <span
                     key={chip}
-                    className="min-w-0 break-words rounded-xl bg-white/10 p-3 text-xs text-white/90 shadow-[inset_0_1px_0_rgba(255,255,255,.06)] backdrop-blur-xl"
+                    className="rounded-full bg-white/10 px-3 py-1.5 text-[11px] font-semibold text-white/85 backdrop-blur-xl"
                   >
                     {chip}
                   </span>
@@ -380,36 +377,41 @@ export function HomePageTailwind() {
               </div>
             </div>
 
-            <div className="mt-4 grid gap-2.5 sm:grid-cols-2 md:absolute md:inset-x-4 md:bottom-4 md:mt-0 md:grid-cols-1 lg:inset-x-5 lg:bottom-5 lg:grid-cols-2 xl:inset-x-6 xl:bottom-6 xl:gap-3">
-              <div
-                data-hero-float
-                className="min-w-0 rounded-[18px] bg-slate-950/26 p-3.5 text-left shadow-[0_18px_48px_rgba(15,23,42,.2)] backdrop-blur-2xl lg:p-4"
-              >
-                <span className="block break-words text-[11px] font-bold uppercase tracking-[.12em] text-white/75">{activeHero.progressLabel}</span>
-                <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/12">
-                  <div
-                    className={`h-full rounded-full bg-gradient-to-r from-fuchsia-300 to-violet-300 transition-[width] duration-700 ${activeHero.progressClass}`}
-                  />
-                </div>
-                <div className="mt-3 flex min-w-0 items-center justify-between gap-3 text-xs">
-                  <span className="min-w-0 break-words text-white/75">{activeHero.progressText}</span>
-                  <strong className="shrink-0 text-white">{activeHero.progressValue}%</strong>
-                </div>
+            <div
+              data-hero-float
+              className="ml-auto mt-4 w-[88%] max-w-[320px] rounded-[20px] bg-slate-950/22 p-4 text-left shadow-[0_18px_44px_rgba(15,23,42,.18)] backdrop-blur-2xl md:absolute md:right-[2%] md:top-[43%] lg:right-[4%] lg:top-[45%] lg:w-[68%] xl:right-[6%] xl:w-[64%]"
+            >
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-[10px] font-black uppercase tracking-[.14em] text-white/60">
+                  {activeHero.progressLabel}
+                </span>
+                <strong className="text-sm text-white">{activeHero.progressValue}%</strong>
               </div>
+              <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10">
+                <div
+                  className={`h-full rounded-full bg-gradient-to-r from-fuchsia-300 to-violet-300 transition-[width] duration-700 ${activeHero.progressClass}`}
+                />
+              </div>
+              <p className="mt-2 text-xs text-white/70">{activeHero.progressText}</p>
+            </div>
 
-              <div
-                data-hero-float
-                className="min-w-0 rounded-[18px] bg-slate-950/26 p-3.5 text-left shadow-[0_18px_48px_rgba(15,23,42,.2)] backdrop-blur-2xl lg:p-4"
-              >
-                <span className="block break-words text-[11px] font-bold uppercase tracking-[.12em] text-white/75">{activeHero.systemsLabel}</span>
-                <div className="mt-3 grid gap-1.5">
-                  {activeHero.systems.map((item) => (
-                    <div key={item} className="flex min-w-0 items-center gap-2 text-xs text-white/90">
-                      <span className="shrink-0">↗</span>
-                      <span className="min-w-0 break-words">{item}</span>
-                    </div>
-                  ))}
-                </div>
+            <div
+              data-hero-float
+              className="mt-4 w-[92%] max-w-[330px] rounded-[20px] bg-slate-950/22 p-4 text-left shadow-[0_18px_44px_rgba(15,23,42,.18)] backdrop-blur-2xl md:absolute md:bottom-[6%] md:left-[2%] lg:bottom-[8%] lg:left-[5%] lg:w-[70%] xl:left-[8%] xl:w-[66%]"
+            >
+              <span className="text-[10px] font-black uppercase tracking-[.14em] text-white/60">
+                {activeHero.systemsLabel}
+              </span>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {activeHero.systems.map((item) => (
+                  <span
+                    key={item}
+                    className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 text-[11px] font-semibold text-white/85 backdrop-blur-xl"
+                  >
+                    <span className="text-white/55">↗</span>
+                    {item}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
