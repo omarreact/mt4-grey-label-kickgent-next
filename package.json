@@ -21,7 +21,9 @@
     "verify:wordpress-sync": "node scripts/verify-wordpress-sync.mjs",
     "generate:wordpress": "npm run build:pintheme && npm run build:css && npm run validate:pintheme && node scripts/generate-wordpress-theme.mjs",
     "export:html": "node scripts/export-html.mjs",
-    "check": "npm run audit:design && npm run validate && npm run typecheck && npm run build:pintheme && npm run build:css && npm run build && npm run validate:html && npm run validate:pintheme"
+    "check": "npm run audit:design && npm run validate && npm run typecheck && npm run build:pintheme && npm run build:css && npm run build && npm run validate:html && npm run validate:pintheme",
+    "build:single-html": "node scripts/build-single-html.mjs",
+    "export:single-html": "npm run build && npm run build:single-html"
   },
   "dependencies": {
     "next": "^15.4.9",
