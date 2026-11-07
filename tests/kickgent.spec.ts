@@ -109,7 +109,8 @@ test("homepage branding, portraits, carousel and glass overlays render", async (
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/");
 
-  await expect(page.locator('svg[aria-label="MT4 Grey Label"]')).toHaveCount(2);
+  await expect(page.locator('[data-site-header] svg[aria-label="MT4 Grey Label"]')).toHaveCount(1);
+  await expect(page.locator('footer svg[aria-label="MT4 Grey Label"]')).toHaveCount(1);
 
   const portraits = page.locator('img[alt*="Portrait of a"]');
   await expect(portraits).toHaveCount(4);
@@ -755,8 +756,8 @@ test("site icon replaces decorative star markers across homepage and inner pages
 
   await page.goto("/");
   const markers = page.locator("[data-site-icon-marker]");
-  await expect(markers).toHaveCount(2);
-  for (let index = 0; index < 2; index += 1) {
+  await expect(markers).toHaveCount(4);
+  for (let index = 0; index < 4; index += 1) {
     await expect(markers.nth(index).locator('svg[aria-label="MT4 Grey Label"]')).toHaveCount(1);
     await expect(markers.nth(index)).not.toContainText("✦");
   }
@@ -783,10 +784,9 @@ test("MT4 Grey Label branding is applied to navigation footer and site icon", as
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/");
 
-  const logos = page.locator('svg[aria-label="MT4 Grey Label"]');
-  await expect(logos).toHaveCount(2);
-  await expect(page.locator('[data-site-header] svg[aria-label="MT4 Grey Label"]')).toBeVisible();
-  await expect(page.locator('footer svg[aria-label="MT4 Grey Label"]')).toBeVisible();
+  await expect(page.locator('[data-site-header] svg[aria-label="MT4 Grey Label"]')).toHaveCount(1);
+  await expect(page.locator('footer svg[aria-label="MT4 Grey Label"]')).toHaveCount(1);
+  await expect(page.locator('[data-site-icon-marker] svg[aria-label="MT4 Grey Label"]')).toHaveCount(4);
 
   const icon = page.locator('link[rel="icon"]').first();
   await expect(icon).toHaveAttribute("href", /mt4-grey-label-icon|icon/);
