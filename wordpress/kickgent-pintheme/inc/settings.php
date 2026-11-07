@@ -15,7 +15,7 @@ function pintheme_kickgent_defaults() {
         'header_height' => 76,
         'sticky_header' => 1,
         'cta_label' => 'Get Started',
-        'cta_url' => 'mailto:admin@pincodeit.com?subject=GreyLabel%20Enquiry',
+        'cta_url' => 'mailto:support@fxgreylabel.com?subject=GreyLabel%20Enquiry',
         'footer_text' => '© 2026 GreyLabel Technology. Technology services only — not investment advice.',
     ];
 }
