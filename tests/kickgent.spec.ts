@@ -1015,9 +1015,14 @@ test("mobile hero content is vertically centered and CTA buttons share one row",
   const left = page.locator("[data-hero-left]");
   const activeCopy = page.locator("[data-hero-copy]:visible").first();
   const actions = page.locator("[data-hero-actions]");
-  const [leftBox, copyBox] = await Promise.all([left.boundingBox(), activeCopy.boundingBox()]);
+  const [leftBox, copyBox, leftMinHeight] = await Promise.all([
+    left.boundingBox(),
+    activeCopy.boundingBox(),
+    left.evaluate((element) => getComputedStyle(element).minHeight),
+  ]);
   expect(leftBox).not.toBeNull();
   expect(copyBox).not.toBeNull();
+  expect(leftMinHeight).toBe("0px");
 
   const leftCenter = leftBox!.y + leftBox!.height / 2;
   const copyCenter = copyBox!.y + copyBox!.height / 2;
