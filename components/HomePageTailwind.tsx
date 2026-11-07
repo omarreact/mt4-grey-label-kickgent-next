@@ -266,7 +266,7 @@ export function HomePageTailwind() {
             data-hero-left
             data-hero-scene={activeHero.id}
             aria-live="polite"
-            className="grid h-fit min-w-0 rounded-[28px] bg-transparent p-5 text-left sm:p-7 md:min-h-[580px] md:w-[52%] md:p-5 lg:min-h-[540px] lg:p-7 xl:min-h-[520px] xl:p-8"
+            className="grid min-h-[820px] min-w-0 place-items-center rounded-[28px] bg-transparent p-5 text-left sm:min-h-[720px] sm:p-7 md:min-h-[580px] md:w-[52%] md:place-items-stretch md:p-5 lg:min-h-[540px] lg:p-7 xl:min-h-[520px] xl:p-8"
           >
             {heroSlides.map((slide, index) => {
               const isActive = heroSlide === index;
@@ -276,7 +276,7 @@ export function HomePageTailwind() {
                   key={slide.id}
                   data-hero-copy={slide.id}
                   aria-hidden={!isActive}
-                  className={`col-start-1 row-start-1 min-w-0 self-start transition-all duration-500 md:self-center ${
+                  className={`col-start-1 row-start-1 min-w-0 self-center transition-all duration-500 ${
                     isActive
                       ? heroVisible
                         ? "visible translate-y-0 opacity-100"
@@ -300,18 +300,18 @@ export function HomePageTailwind() {
                     {slide.description}
                   </p>
 
-                  <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap md:mt-5 md:gap-2.5">
+                  <div data-hero-actions className="mt-6 grid grid-cols-2 gap-2.5 md:mt-5 md:flex md:flex-wrap">
                     <Link
                       href={slide.primary.href}
                       tabIndex={isActive ? undefined : -1}
-                      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/35 bg-white/18 px-5 text-sm font-extrabold text-white shadow-[0_15px_38px_rgba(15,23,42,.22)] backdrop-blur-2xl transition hover:-translate-y-0.5 hover:bg-white/24"
+                      className="inline-flex min-h-12 min-w-0 items-center justify-center gap-1.5 rounded-xl border border-white/35 bg-white/18 px-3 text-center text-xs font-extrabold text-white shadow-[0_15px_38px_rgba(15,23,42,.22)] backdrop-blur-2xl transition hover:-translate-y-0.5 hover:bg-white/24 sm:text-sm md:px-5"
                     >
                       {slide.primary.label} <ArrowIcon />
                     </Link>
                     <Link
                       href={slide.secondary.href}
                       tabIndex={isActive ? undefined : -1}
-                      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/30 bg-white/12 px-5 text-sm font-bold text-white shadow-[0_12px_34px_rgba(15,23,42,.18)] backdrop-blur-2xl transition hover:-translate-y-0.5 hover:bg-white/20"
+                      className="inline-flex min-h-12 min-w-0 items-center justify-center gap-1.5 rounded-xl border border-white/30 bg-white/12 px-3 text-center text-xs font-bold text-white shadow-[0_12px_34px_rgba(15,23,42,.18)] backdrop-blur-2xl transition hover:-translate-y-0.5 hover:bg-white/20 sm:text-sm md:px-5"
                     >
                       {slide.secondary.label} <ArrowIcon />
                     </Link>
