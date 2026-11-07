@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import config from "../pintheme.config.mjs";
 
@@ -19,12 +19,43 @@ const extractMain = (markup) => {
   const match = markup.match(/<main\b([^>]*)>([\s\S]*?)<\/main>/i);
   return match ? `<div class="kg-imported-page"${match[1]}>${match[2]}</div>` : markup;
 };
-const pages = Object.values(source).map((page) => ({
-  slug: page.slug,
-  title: page.title,
-  description: page.description,
-  content: extractMain(page.markup),
-}));
+
+const cleanExportFragment = (html) => html
+  .replace(/<script\b[\s\S]*?<\/script>/gi, "")
+  .replace(/<!--(?:.|\n|\r)*?-->/g, "")
+  .trim();
+
+const exportedContentForRoute = (route) => {
+  const slug = route === "/" ? "home" : route.replace(/^\/+|\/+$/g, "");
+  const file = resolve(
+    root,
+    config.outputs.htmlDirectory,
+    route === "/" ? "index.html" : slug,
+    route === "/" ? "" : "index.html"
+  );
+  if (!existsSync(file)) return null;
+
+  const html = readFileSync(file, "utf8");
+  const start = html.indexOf('<div id="main-content">');
+  const end = html.indexOf("<footer", start);
+  if (start < 0 || end < 0) return null;
+
+  return cleanExportFragment(html.slice(start, end));
+};
+
+const pages = config.routes.map((route) => {
+  const slug = route === "/" ? "home" : route.replace(/^\/+|\/+$/g, "");
+  const page = source[slug];
+  if (!page) throw new Error(`Missing canonical page data for route ${route}.`);
+
+  const exported = exportedContentForRoute(route);
+  return {
+    slug: page.slug,
+    title: page.title,
+    description: page.description,
+    content: exported || extractMain(page.markup),
+  };
+});
 
 if (pages.length !== config.routes.length) {
   throw new Error(`Route/page mismatch: ${pages.length} canonical pages for ${config.routes.length} configured routes.`);
