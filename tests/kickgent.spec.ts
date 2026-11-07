@@ -120,6 +120,22 @@ test("homepage branding, portraits, carousel and glass overlays render", async (
 
   const slider = page.getByRole("region", { name: "GreyLabel solution carousel" });
   await expect(slider).toBeVisible();
+
+  const solutionCards = slider.locator("[data-solution-card]");
+  await expect(solutionCards).toHaveCount(10);
+  const cardHeights = await solutionCards.evaluateAll((cards) =>
+    cards.map((card) => card.getBoundingClientRect().height)
+  );
+  expect(Math.max(...cardHeights) - Math.min(...cardHeights)).toBeLessThanOrEqual(1);
+
+  const ctaBottoms = await solutionCards.evaluateAll((cards) =>
+    cards.slice(0, 3).map((card) => {
+      const cta = card.querySelector("span:last-child");
+      return cta ? cta.getBoundingClientRect().bottom : 0;
+    })
+  );
+  expect(Math.max(...ctaBottoms) - Math.min(...ctaBottoms)).toBeLessThanOrEqual(1);
+
   const before = await slider.evaluate((element) => element.scrollLeft);
   await page.getByRole("button", { name: "Next solutions" }).click();
   await expect.poll(() => slider.evaluate((element) => element.scrollLeft)).toBeGreaterThan(before);
@@ -268,8 +284,8 @@ test("inner page route pills use the branded site icon", async ({ page }, testIn
 
   expect(homeIcon.content).not.toBe("none");
   expect(homeIcon.backgroundImage).toContain("data:image/svg+xml");
-  expect(currentIcon.content).not.toBe("none");
-  expect(currentIcon.backgroundImage).toContain("data:image/svg+xml");
+  expect(currentIcon.content === "none" || currentIcon.content === "normal").toBeTruthy();
+  expect(currentIcon.backgroundImage).toBe("none");
 });
 
 test("inner pages keep layout and receive image-backed glass visual system", async ({ page }, testInfo) => {

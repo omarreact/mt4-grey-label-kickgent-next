@@ -671,14 +671,14 @@ export function HomePageTailwind() {
             ref={sliderRef}
             role="region"
             aria-label="GreyLabel solution carousel"
-            className="mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="mt-10 flex items-stretch snap-x snap-mandatory gap-4 overflow-x-auto pb-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {solutionSlides.map((slide) => (
               <Link
                 data-solution-card
                 key={slide.title}
                 href={slide.href}
-                className="group relative h-fit min-w-0 shrink-0 basis-[86%] snap-start overflow-hidden rounded-[26px] bg-white p-6 text-slate-950 shadow-[0_18px_45px_rgba(52,30,74,.08)] ring-1 ring-slate-200/80 no-underline transition hover:-translate-y-1 hover:ring-violet-300 sm:basis-[48%] lg:basis-[31.5%]"
+                className="group relative flex min-w-0 shrink-0 basis-[86%] snap-start flex-col self-stretch overflow-hidden rounded-[26px] bg-white p-6 text-slate-950 shadow-[0_18px_45px_rgba(52,30,74,.08)] ring-1 ring-slate-200/80 no-underline transition hover:-translate-y-1 hover:ring-violet-300 sm:basis-[48%] lg:basis-[31.5%]"
               >
                 <FeatureIcon
                   name={slide.icon}
@@ -693,8 +693,8 @@ export function HomePageTailwind() {
                   </span>
                 </div>
                 <h3 className="relative mt-10 text-2xl font-semibold tracking-[-.04em]">{slide.title}</h3>
-                <p className="relative mt-4 text-sm leading-7 text-slate-600">{slide.text}</p>
-                <span className="relative mt-7 inline-flex text-sm font-extrabold text-violet-700">Explore solution →</span>
+                <p className="relative mt-4 flex-1 text-sm leading-7 text-slate-600">{slide.text}</p>
+                <span className="relative mt-auto inline-flex pt-7 text-sm font-extrabold text-violet-700">Explore solution →</span>
               </Link>
             ))}
           </div>
