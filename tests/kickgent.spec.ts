@@ -573,8 +573,9 @@ test("global How It Works CTA and footer render once on homepage and inner pages
   }
 });
 
-test("global How It Works is a timeline with icons and no numbered step badges", async ({ page }, testInfo) => {
+test("global How It Works is a compact alternating timeline with icons and no numbered step badges", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Global timeline check runs once in Chromium");
+  await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
 
   const how = page.locator("[data-global-how-it-works]");
@@ -586,6 +587,20 @@ test("global How It Works is a timeline with icons and no numbered step badges",
   );
   expect(timelineGap).toBeLessThanOrEqual(16);
   expect(timelineGap).toBeGreaterThanOrEqual(8);
+
+  const cards = how.locator("[data-timeline-card]");
+  const firstBox = await cards.nth(0).boundingBox();
+  const secondBox = await cards.nth(1).boundingBox();
+  const thirdBox = await cards.nth(2).boundingBox();
+  expect(firstBox).not.toBeNull();
+  expect(secondBox).not.toBeNull();
+  expect(thirdBox).not.toBeNull();
+
+  // Desktop rows intentionally overlap vertically so the alternating sides do not
+  // leave a full card-height of empty space between cards on the same side.
+  expect(secondBox!.y).toBeLessThan(firstBox!.y + firstBox!.height);
+  const firstToThirdSameSideGap = thirdBox!.y - (firstBox!.y + firstBox!.height);
+  expect(firstToThirdSameSideGap).toBeLessThan(220);
 
   for (const marker of ["01","02","03","04","05"]) {
     await expect(how).not.toContainText(marker);

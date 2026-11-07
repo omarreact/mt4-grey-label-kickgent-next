@@ -88,7 +88,11 @@ export function SharedClosingSections() {
                   <article
                     key={step.title}
                     data-timeline-side={side}
-                    className="relative grid h-fit md:grid-cols-[minmax(0,1fr)_72px_minmax(0,1fr)] md:items-center"
+                    data-timeline-index={index}
+                    className={[
+                      "relative grid h-fit md:grid-cols-[minmax(0,1fr)_72px_minmax(0,1fr)] md:items-center",
+                      index > 0 ? "md:-mt-20 lg:-mt-24" : "",
+                    ].join(" ")}
                   >
                     <div
                       data-timeline-card
