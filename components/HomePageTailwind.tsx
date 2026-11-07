@@ -319,14 +319,14 @@ export function HomePageTailwind() {
                     <Link
                       href={slide.primary.href}
                       tabIndex={isActive ? undefined : -1}
-                      className="inline-flex min-h-[52px] items-center justify-center gap-[10px] rounded-[11px] border border-[#d7aaff91] bg-gradient-to-br from-[#8038e9] to-[#a95be9] px-[22px] text-sm font-extrabold text-white shadow-[inset_0_1px_#ffffff80,0_10px_24px_#742bb147] transition hover:-translate-y-[3px] hover:brightness-110 max-[480px]:min-h-12 max-[480px]:w-full"
+                      className="inline-flex min-h-[52px] items-center justify-center gap-[10px] rounded-[11px] border border-[#d7aaff91] bg-gradient-to-br from-[#8038e9] to-[#a95be9] px-[22px] text-sm font-extrabold !text-white shadow-[inset_0_1px_#ffffff80,0_10px_24px_#742bb147] transition hover:-translate-y-[3px] hover:brightness-110 max-[480px]:min-h-12 max-[480px]:w-full"
                     >
                       {slide.primary.label} <ArrowIcon />
                     </Link>
                     <Link
                       href={slide.secondary.href}
                       tabIndex={isActive ? undefined : -1}
-                      className="inline-flex min-h-[52px] items-center justify-center gap-[10px] rounded-[11px] border border-[#6f2fac6b] bg-white/80 px-[22px] text-sm font-extrabold text-[#35184d] shadow-[0_8px_18px_#4b23631a] backdrop-blur-sm transition hover:-translate-y-[3px] hover:border-[#7c39b4] hover:bg-white max-[480px]:min-h-12 max-[480px]:w-full"
+                      className="inline-flex min-h-[52px] items-center justify-center gap-[10px] rounded-[11px] border border-[#6f2fac6b] bg-white/80 px-[22px] text-sm font-extrabold !text-[#35184d] shadow-[0_8px_18px_#4b23631a] backdrop-blur-sm transition hover:-translate-y-[3px] hover:border-[#7c39b4] hover:bg-white max-[480px]:min-h-12 max-[480px]:w-full"
                     >
                       {slide.secondary.label} <ArrowIcon />
                     </Link>
