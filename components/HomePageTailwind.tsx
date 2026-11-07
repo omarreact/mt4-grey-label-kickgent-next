@@ -8,7 +8,7 @@ const heroSlides = [
     id: "launch",
     image: "https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=2200&q=88",
     label: "Brokerage launch",
-    badge: "MT4 & MT5 BROKERAGE TECHNOLOGY",
+    badge: "MT4 & MT5 brokerage technology",
     title: "Launch a brokerage.",
     titleAccent: "Connect every system.",
     description:
@@ -29,7 +29,7 @@ const heroSlides = [
     id: "operations",
     image: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=2200&q=88",
     label: "Connected operations",
-    badge: "CONNECTED BROKER OPERATIONS",
+    badge: "Connected broker operations",
     title: "Run every client journey.",
     titleAccent: "From one connected stack.",
     description:
@@ -50,7 +50,7 @@ const heroSlides = [
     id: "scale",
     image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=2200&q=88",
     label: "Brokerage growth",
-    badge: "SCALE WITHOUT FRAGMENTATION",
+    badge: "Scale without fragmentation",
     title: "Add products and capacity.",
     titleAccent: "Keep the stack coherent.",
     description:
@@ -245,11 +245,11 @@ export function HomePageTailwind() {
       <section
         data-hero-banner
         data-active-slide={activeHero.id}
-        className="relative isolate h-fit overflow-hidden px-4 pb-4 pt-[112px] sm:px-6 sm:pb-5 sm:pt-[122px] md:min-h-[760px] md:pb-0 md:pt-[100px] xl:min-h-[690px]"
+        className="relative isolate h-fit min-h-[690px] overflow-hidden px-2 pb-2 pt-2 text-center sm:px-3 sm:pb-3 sm:pt-3 md:min-h-[760px] xl:min-h-[690px]"
       >
         <div
           data-hero-frame
-          className="relative isolate mx-auto h-fit w-full max-w-[1480px] overflow-hidden rounded-[38px] border border-white/70 bg-[#f3e7fb] pb-14 shadow-[0_30px_90px_rgba(76,34,105,.16)] md:min-h-[620px] lg:min-h-[580px] xl:min-h-[560px]"
+          className="relative isolate min-h-[674px] w-full overflow-hidden rounded-[18px] bg-[#f3e7fb] md:min-h-[736px] xl:min-h-[666px]"
         >
           <div className="pointer-events-none absolute inset-0 -z-30" aria-hidden="true">
             {heroSlides.map((slide, index) => (
@@ -258,30 +258,30 @@ export function HomePageTailwind() {
                 data-hero-background={slide.id}
                 src={slide.image}
                 alt=""
-                className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-1000 ${index === heroSlide ? "opacity-100" : "opacity-0"}`}
+                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${index === heroSlide ? "opacity-100" : "opacity-0"} ${slide.id === "launch" ? "object-[center_46%]" : "object-center"}`}
               />
             ))}
           </div>
 
           <div
             data-hero-overlay
-            className="pointer-events-none absolute inset-0 -z-20 bg-[linear-gradient(115deg,rgba(255,250,255,.82),rgba(236,215,250,.76)_52%,rgba(219,230,255,.62))]"
+            className="pointer-events-none absolute inset-0 -z-20 bg-[linear-gradient(115deg,rgba(247,237,253,.87),rgba(229,206,246,.79)_54%,rgba(204,230,235,.69))]"
           />
 
-          <div className="pointer-events-none absolute inset-0 -z-10 grid grid-cols-5 opacity-45" aria-hidden="true">
-            <span className="border-r border-white/55 bg-white/10" />
-            <span className="border-r border-white/45 bg-fuchsia-100/10" />
-            <span className="border-r border-white/45 bg-white/5" />
-            <span className="border-r border-white/45 bg-violet-100/10" />
-            <span className="bg-white/5" />
-          </div>
-          <div className="pointer-events-none absolute left-1/2 top-[52%] -z-10 hidden h-[108%] w-[88%] -translate-x-1/2 -translate-y-1/2 rounded-[50%] border border-violet-500/20 md:block" aria-hidden="true" />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-[82px_0_0] -z-10 bg-[repeating-linear-gradient(90deg,transparent_0_7.6%,rgba(112,65,165,.105)_7.65%_12.5%)] [mask-image:linear-gradient(90deg,transparent,#000_15%_85%,transparent)]"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute bottom-[-260px] left-[9%] right-[9%] top-[155px] -z-10 rounded-[50%] border border-violet-700/20 border-b-0"
+          />
 
           <div
             data-hero-left
             data-hero-scene={activeHero.id}
             aria-live="polite"
-            className="relative grid min-h-[500px] place-items-center px-5 py-10 text-center sm:px-8 md:min-h-[620px] md:px-12 md:py-12 lg:min-h-[580px] xl:min-h-[560px]"
+            className="relative grid min-h-[674px] place-items-center px-5 pb-14 pt-12 text-center sm:px-7 md:min-h-[736px] md:px-10 md:pb-16 md:pt-14 xl:min-h-[666px] xl:pb-14 xl:pt-12"
           >
             {heroSlides.map((slide, index) => {
               const isActive = heroSlide === index;
@@ -291,7 +291,7 @@ export function HomePageTailwind() {
                   key={slide.id}
                   data-hero-copy={slide.id}
                   aria-hidden={!isActive}
-                  className={`col-start-1 row-start-1 mx-auto flex w-full max-w-[1120px] flex-col items-center transition-all duration-500 ${
+                  className={`col-start-1 row-start-1 mx-auto flex w-full max-w-[1100px] flex-col items-center transition-all duration-500 ${
                     isActive
                       ? heroVisible
                         ? "visible translate-y-0 opacity-100"
@@ -299,34 +299,34 @@ export function HomePageTailwind() {
                       : "invisible pointer-events-none translate-y-2 opacity-0"
                   }`}
                 >
-                  <span className="inline-flex items-center gap-3 rounded-full border border-white/80 bg-white/72 px-5 py-3 text-sm font-medium text-[#4f3a5d] shadow-[0_10px_28px_rgba(80,42,104,.08)] backdrop-blur-xl sm:text-base">
-                    <span aria-hidden="true" className="grid size-7 place-items-center rounded-full bg-violet-100 text-violet-700">✦</span>
-                    <span>{slide.badge.replace(/\bBROKERAGE TECHNOLOGY\b/i, "brokerage technology").replace(/\bCONNECTED BROKER OPERATIONS\b/i, "Connected broker operations").replace(/\bSCALE WITHOUT FRAGMENTATION\b/i, "Scale without fragmentation")}</span>
+                  <span className="inline-flex items-center gap-[9px] rounded-full border border-violet-300/45 bg-white/45 py-2 pl-[11px] pr-4 text-[.78rem] font-medium text-[#513968] shadow-[inset_0_1px_#fff,0_8px_22px_rgba(87,48,107,.11)] backdrop-blur-sm">
+                    <span aria-hidden="true" className="grid size-5 place-items-center rounded-full bg-[#f5eaff] text-[#6a22c2]">✦</span>
+                    <span>{slide.badge}</span>
                   </span>
 
-                  <h1 className="mt-8 max-w-[1120px] text-balance text-[clamp(3rem,6.3vw,6.9rem)] font-black leading-[.94] tracking-[-.075em] text-[#251039]">
+                  <h1 className="mt-[34px] max-w-[1100px] text-balance text-[clamp(3.3rem,6.1vw,5.8rem)] font-[650] leading-[1.15] tracking-[-.045em] text-[#28113d] max-[640px]:mt-6 max-[640px]:text-[clamp(2.1rem,9vw,2.9rem)] max-[640px]:tracking-[-.04em]">
                     <span className="block">{slide.title}</span>
-                    <span className="mt-3 block bg-gradient-to-r from-[#5c2689] via-[#7f34ae] to-[#aa48d1] bg-clip-text text-transparent sm:mt-4">
+                    <span className="block bg-gradient-to-r from-[#512278] to-[#963fbe] bg-clip-text text-transparent">
                       {slide.titleAccent}
                     </span>
                   </h1>
 
-                  <p className="mt-7 max-w-[860px] text-pretty text-[clamp(1rem,1.45vw,1.35rem)] font-medium leading-[1.55] text-[#54445f]">
+                  <p className="mt-4 max-w-[570px] text-pretty text-base leading-[1.7] text-[#5b476c] max-[640px]:text-[.96rem] max-[640px]:leading-[1.65]">
                     {slide.description}
                   </p>
 
-                  <div data-hero-actions className="mt-8 grid w-full max-w-[540px] grid-cols-2 gap-3 sm:mt-9">
+                  <div data-hero-actions className="mt-[30px] flex flex-wrap items-center justify-center gap-3 max-[480px]:mt-[22px] max-[480px]:w-full max-[480px]:flex-col max-[480px]:gap-[10px]">
                     <Link
                       href={slide.primary.href}
                       tabIndex={isActive ? undefined : -1}
-                      className="inline-flex min-h-16 min-w-0 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#7b2fe8] to-[#a944e8] px-4 text-center text-sm font-extrabold text-white shadow-[0_16px_34px_rgba(126,47,207,.26)] transition hover:-translate-y-0.5 hover:brightness-105 sm:px-6 sm:text-base"
+                      className="inline-flex min-h-[52px] items-center justify-center gap-[10px] rounded-[11px] border border-[#d7aaff91] bg-gradient-to-br from-[#8038e9] to-[#a95be9] px-[22px] text-sm font-extrabold text-white shadow-[inset_0_1px_#ffffff80,0_10px_24px_#742bb147] transition hover:-translate-y-[3px] hover:brightness-110 max-[480px]:min-h-12 max-[480px]:w-full"
                     >
                       {slide.primary.label} <ArrowIcon />
                     </Link>
                     <Link
                       href={slide.secondary.href}
                       tabIndex={isActive ? undefined : -1}
-                      className="inline-flex min-h-16 min-w-0 items-center justify-center gap-2 rounded-2xl border border-violet-200/90 bg-white/86 px-4 text-center text-sm font-extrabold text-[#271238] shadow-[0_12px_30px_rgba(75,39,99,.08)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-white sm:px-6 sm:text-base"
+                      className="inline-flex min-h-[52px] items-center justify-center gap-[10px] rounded-[11px] border border-[#6f2fac6b] bg-white/80 px-[22px] text-sm font-extrabold text-[#35184d] shadow-[0_8px_18px_#4b23631a] backdrop-blur-sm transition hover:-translate-y-[3px] hover:border-[#7c39b4] hover:bg-white max-[480px]:min-h-12 max-[480px]:w-full"
                     >
                       {slide.secondary.label} <ArrowIcon />
                     </Link>
@@ -338,7 +338,7 @@ export function HomePageTailwind() {
 
           <div
             data-hero-indicators
-            className="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 items-center justify-center gap-2 sm:bottom-5"
+            className="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 items-center justify-center gap-2"
             role="tablist"
             aria-label="Banner slides"
           >
