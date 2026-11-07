@@ -223,18 +223,27 @@ export function SharedSiteHeader() {
           >
             About
           </Link>
+
+          <Link
+            href="/contact"
+            aria-current={active("/contact") ? "page" : undefined}
+            onClick={close}
+            className={`${navItem} max-[880px]:w-full max-[880px]:justify-between ${active("/contact") ? "bg-violet-50 text-violet-800" : ""}`}
+          >
+            Contact
+          </Link>
         </nav>
 
-        <a
+        <Link
           data-get-started
           className="ml-2 inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl border border-[#d8c6ea] bg-[#f0e7fb] px-4 text-[.8rem] font-extrabold !text-[#4a1f5f] no-underline shadow-[0_10px_28px_rgba(74,31,95,.12)] transition hover:-translate-y-0.5 hover:border-[#c8ace4] hover:bg-white hover:shadow-[0_14px_34px_rgba(74,31,95,.16)] max-[880px]:hidden"
-          href="mailto:admin@pincodeit.com?subject=MT4%20Grey%20Label%20Enquiry"
+          href="/contact"
         >
           Get Started
           <svg viewBox="0 0 20 20" aria-hidden="true" className="size-4" fill="none">
             <path d="M6 14 14 6m0 0H8m6 0v6" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-        </a>
+        </Link>
       </div>
     </header>
   );
@@ -283,6 +292,9 @@ export function SharedSiteFooter() {
               ))}
               <Link className="w-fit text-sm font-medium text-violet-100/70 no-underline transition hover:text-white" href="/about">
                 About & Why Choose Us
+              </Link>
+              <Link className="w-fit text-sm font-medium text-violet-100/70 no-underline transition hover:text-white" href="/contact">
+                Contact Us
               </Link>
             </div>
           </div>
