@@ -79,12 +79,18 @@ export function SharedClosingSections() {
             <div className="absolute left-7 top-0 bottom-0 hidden border-l border-fuchsia-200/25 sm:block lg:left-0 lg:right-0 lg:top-7 lg:bottom-auto lg:border-l-0 lg:border-t" aria-hidden="true" />
             <div className="grid gap-5 lg:grid-cols-5 lg:gap-4">
               {timelineSteps.map((step) => (
-                <article key={step.title} className="relative h-fit pl-0 backdrop-blur-[1px] sm:pl-16 lg:pl-0 lg:pt-14">
-                  <span className="mb-4 grid size-12 place-items-center rounded-2xl bg-white/12 text-fuchsia-100 shadow-[0_14px_38px_rgba(10,3,20,.2)] backdrop-blur-2xl sm:absolute sm:left-1 sm:top-0 sm:mb-0 lg:left-0 lg:top-0">
-                    <TimelineIcon name={step.icon} />
-                  </span>
-                  <div className="h-fit rounded-[22px] bg-white/[.075] p-5 shadow-[0_20px_55px_rgba(8,2,14,.18)] backdrop-blur-2xl">
-                    <h3 className="text-lg font-bold tracking-[-.03em]">{step.title}</h3>
+                <article key={step.title} className="relative h-fit backdrop-blur-[1px]">
+                  <div
+                    data-timeline-card
+                    className="group relative h-fit overflow-hidden rounded-[22px] bg-white/[.075] p-5 shadow-[0_20px_55px_rgba(8,2,14,.18)] backdrop-blur-2xl transition duration-300 hover:-translate-y-1 hover:bg-white/[.1]"
+                  >
+                    <span
+                      data-timeline-icon
+                      className="grid size-12 place-items-center rounded-2xl bg-white/12 text-fuchsia-100 shadow-[0_14px_38px_rgba(10,3,20,.2)] backdrop-blur-2xl"
+                    >
+                      <TimelineIcon name={step.icon} />
+                    </span>
+                    <h3 className="mt-5 text-lg font-bold tracking-[-.03em]">{step.title}</h3>
                     <p className="mt-3 text-sm leading-6 text-violet-100/72">{step.text}</p>
                     <p className="mt-5 text-xs font-semibold leading-5 text-fuchsia-100/75">{step.detail}</p>
                   </div>

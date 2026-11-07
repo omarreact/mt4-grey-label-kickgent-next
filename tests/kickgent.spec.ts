@@ -647,3 +647,27 @@ test("MT4 Grey Label branding is applied to navigation footer and site icon", as
   await expect(page.locator('link[rel="manifest"]')).toHaveAttribute("href", /site\.webmanifest/);
   await expect(page).toHaveTitle(/MT4 Grey Label/);
 });
+
+
+test("How It Works icons live inside their timeline cards", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Timeline icon placement runs once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/");
+
+  const cards = page.locator("[data-global-how-it-works] [data-timeline-card]");
+  await expect(cards).toHaveCount(5);
+
+  for (let index = 0; index < 5; index += 1) {
+    const card = cards.nth(index);
+    const icon = card.locator("[data-timeline-icon]");
+    await expect(icon).toHaveCount(1);
+
+    const [cardBox, iconBox] = await Promise.all([card.boundingBox(), icon.boundingBox()]);
+    expect(cardBox).not.toBeNull();
+    expect(iconBox).not.toBeNull();
+    expect(iconBox!.x).toBeGreaterThanOrEqual(cardBox!.x);
+    expect(iconBox!.y).toBeGreaterThanOrEqual(cardBox!.y);
+    expect(iconBox!.x + iconBox!.width).toBeLessThanOrEqual(cardBox!.x + cardBox!.width + 1);
+    expect(iconBox!.y + iconBox!.height).toBeLessThanOrEqual(cardBox!.y + cardBox!.height + 1);
+  }
+});
