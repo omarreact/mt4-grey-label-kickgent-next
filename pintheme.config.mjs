@@ -4,6 +4,7 @@ export default {
   site: {
     name: "GreyLabel Technology",
     shortName: "GreyLabel",
+    themeName: "MT4 Gray Label",
     slug: "greylabel-technology",
   },
   author: { name: "PINCODE IT" },

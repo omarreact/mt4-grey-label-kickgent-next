@@ -4,6 +4,7 @@ import { resolve } from "node:path";
 import config from "../pintheme.config.mjs";
 
 const root = resolve(import.meta.dirname, "..");
+const themeName = config.site.themeName || config.site.name;
 const theme = resolve(root, config.outputs.wordpressThemeDirectory);
 const dataDir = resolve(theme, "data");
 const cssDir = resolve(theme, "assets/css");
@@ -91,7 +92,7 @@ const manifest = {
   status: config.status,
   wordpress: {
     compatible: true,
-    themeName: config.site.name,
+    themeName,
     themeSlug: config.site.slug,
     textDomain: config.site.slug,
     requiresWordPress: config.requirements.wordpress,
@@ -126,7 +127,7 @@ const manifest = {
   },
 
   /* Backward-compatible keys consumed by PinTheme Manager 1.0. */
-  themeName: config.site.name,
+  themeName,
   themeSlug: config.site.slug,
   themeVersion: config.project.themeVersion,
   wordpressCompatible: true,
@@ -162,10 +163,10 @@ const wxr = `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:co
 mkdirSync(dataDir, { recursive: true });
 mkdirSync(cssDir, { recursive: true });
 writeFileSync(resolve(theme, "style.css"), `/*
-Theme Name: ${config.site.name}
+Theme Name: ${themeName}
 Theme URI: https://github.com/${config.source.repository}
 Author: ${config.author.name}
-Description: Custom WordPress theme for ${config.site.name} generated through PinTheme.
+Description: Native WordPress theme for ${themeName}.
 Version: ${config.project.themeVersion}
 Requires at least: ${config.requirements.wordpress}
 Requires PHP: ${config.requirements.php}
@@ -181,4 +182,4 @@ const sharedCss = readFileSync(resolve(root, "app/site-pages.css"), "utf8");
 const homeStyles = source.home?.styles || "";
 writeFileSync(resolve(cssDir, "source-parity.css"), `/* Transitional compatibility CSS generated from the approved Next.js source. */\n${sharedCss}\n${homeStyles}\n`);
 
-console.log(`PinTheme generated ${pages.length} GreyLabel pages and manifest for ${config.site.slug}.`);
+console.log(`Generated ${pages.length} GreyLabel pages and WordPress metadata for ${themeName}.`);

@@ -6,7 +6,7 @@ This repository is the initial proof of concept for **PinTheme by PINCODE IT**. 
 
 - Site: **GreyLabel Technology**
 - Frontend short brand: **GreyLabel**
-- Theme name: **GreyLabel Technology**
+- Theme name: **MT4 Gray Label**
 - Theme slug / text domain: `greylabel-technology`
 - Design reference: Kickgent (reference only; it is not the WordPress theme name)
 - Source repository: `omarreact/mt4-grey-label-kickgent-next`
