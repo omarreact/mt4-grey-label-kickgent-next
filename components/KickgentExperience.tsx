@@ -88,10 +88,10 @@ export function KickgentExperience({ page }: Props) {
 
       pageHero.classList.add(
         "!h-fit",
-        "!pt-[122px]",
-        "!pb-10",
-        "sm:!pt-[136px]",
-        "sm:!pb-12"
+        "!pt-[104px]",
+        "!pb-7",
+        "sm:!pt-[116px]",
+        "sm:!pb-8"
       );
 
       const heroGrid = pageHero.querySelector<HTMLElement>(".hero-grid");
@@ -114,24 +114,24 @@ export function KickgentExperience({ page }: Props) {
         "!max-w-[900px]",
         "!text-white",
         "!text-[clamp(1.95rem,4vw,3.55rem)]",
-        "!leading-[1.02]",
+        "!leading-[.98]",
         "max-[640px]:!text-[clamp(1.55rem,6.5vw,1.95rem)]",
-        "max-[640px]:!leading-[1.08]",
+        "max-[640px]:!leading-[1.02]",
         "drop-shadow-[0_3px_18px_rgba(15,23,42,.5)]"
       );
 
       const subtitle = pageHero.querySelector<HTMLElement>(".lead-paragraph");
       subtitle?.classList.add(
         "!order-3",
-        "!mt-4",
+        "!mt-2",
         "!mb-0",
         "!max-w-[760px]",
         "!text-[.95rem]",
-        "!leading-7",
+        "!leading-5",
         "!text-white/86",
-        "sm:!text-base",
+        "sm:!text-[.95rem]",
         "max-[640px]:!text-[.82rem]",
-        "max-[640px]:!leading-6",
+        "max-[640px]:!leading-[1.4]",
         "drop-shadow-[0_3px_18px_rgba(15,23,42,.45)]"
       );
 
@@ -139,7 +139,7 @@ export function KickgentExperience({ page }: Props) {
       if (breadcrumbs) {
         breadcrumbs.classList.add(
           "!order-1",
-          "!mb-5",
+          "!mb-3",
           "!mt-0",
           "!inline-flex",
           "!w-fit",
@@ -149,9 +149,9 @@ export function KickgentExperience({ page }: Props) {
           "!border",
           "!border-white/25",
           "!bg-white/12",
-          "!px-3.5",
-          "!py-2",
-          "!text-[.7rem]",
+          "!px-3",
+          "!py-1.5",
+          "!text-[.66rem]",
           "!font-extrabold",
           "!uppercase",
           "!tracking-[.1em]",

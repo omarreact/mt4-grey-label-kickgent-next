@@ -408,10 +408,20 @@ test("inner page banner is compact and only shows route title and subtitle", asy
   await expect(hero.locator(".hero-actions")).toBeHidden();
   await expect(hero.locator(".hero-art")).toBeHidden();
 
-  const titleSize = await hero.locator("h1").evaluate((element) => parseFloat(getComputedStyle(element).fontSize));
-  const subtitleSize = await hero.locator(".lead-paragraph").evaluate((element) => parseFloat(getComputedStyle(element).fontSize));
+  const [titleSize, titleLineHeight, subtitleSize, subtitleLineHeight, heroPaddingTop, heroPaddingBottom] = await Promise.all([
+    hero.locator("h1").evaluate((element) => parseFloat(getComputedStyle(element).fontSize)),
+    hero.locator("h1").evaluate((element) => parseFloat(getComputedStyle(element).lineHeight)),
+    hero.locator(".lead-paragraph").evaluate((element) => parseFloat(getComputedStyle(element).fontSize)),
+    hero.locator(".lead-paragraph").evaluate((element) => parseFloat(getComputedStyle(element).lineHeight)),
+    hero.evaluate((element) => parseFloat(getComputedStyle(element).paddingTop)),
+    hero.evaluate((element) => parseFloat(getComputedStyle(element).paddingBottom)),
+  ]);
   expect(titleSize).toBeLessThanOrEqual(57);
+  expect(titleLineHeight / titleSize).toBeLessThanOrEqual(1.02);
   expect(subtitleSize).toBeLessThanOrEqual(16);
+  expect(subtitleLineHeight / subtitleSize).toBeLessThanOrEqual(1.5);
+  expect(heroPaddingTop).toBeLessThanOrEqual(116);
+  expect(heroPaddingBottom).toBeLessThanOrEqual(32);
 
   const crumbSpans = hero.locator(".breadcrumbs span");
   await expect(crumbSpans.nth(0)).toHaveText("→");
@@ -1384,6 +1394,19 @@ test("inner page hero typography stays compact on mobile", async ({ page }, test
   const titleSize = await hero.locator("h1").evaluate((element) => parseFloat(getComputedStyle(element).fontSize));
   const subtitleSize = await hero.locator(".lead-paragraph").evaluate((element) => parseFloat(getComputedStyle(element).fontSize));
 
+  const [titleLineHeight, subtitleLineHeight, subtitleMarginTop, heroPaddingTop, heroPaddingBottom] = await Promise.all([
+    hero.locator("h1").evaluate((element) => parseFloat(getComputedStyle(element).lineHeight)),
+    hero.locator(".lead-paragraph").evaluate((element) => parseFloat(getComputedStyle(element).lineHeight)),
+    hero.locator(".lead-paragraph").evaluate((element) => parseFloat(getComputedStyle(element).marginTop)),
+    hero.evaluate((element) => parseFloat(getComputedStyle(element).paddingTop)),
+    hero.evaluate((element) => parseFloat(getComputedStyle(element).paddingBottom)),
+  ]);
+
   expect(titleSize).toBeLessThanOrEqual(32);
+  expect(titleLineHeight / titleSize).toBeLessThanOrEqual(1.03);
   expect(subtitleSize).toBeLessThanOrEqual(14);
+  expect(subtitleLineHeight / subtitleSize).toBeLessThanOrEqual(1.45);
+  expect(subtitleMarginTop).toBeLessThanOrEqual(8);
+  expect(heroPaddingTop).toBeLessThanOrEqual(104);
+  expect(heroPaddingBottom).toBeLessThanOrEqual(28);
 });
