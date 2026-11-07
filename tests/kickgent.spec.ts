@@ -1190,6 +1190,38 @@ test("mobile hero content is vertically centered and CTA buttons share one row",
   expect(secondBox!.x).toBeGreaterThan(firstBox!.x);
 });
 
+test("banner keeps a light backdrop so the background image stays visible", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Hero backdrop audit runs once in Chromium");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const frame = page.locator("[data-hero-frame]");
+  const overlay = page.locator("[data-hero-overlay]");
+
+  const frameStyle = await frame.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return {
+      backgroundColor: style.backgroundColor,
+      backdropFilter: style.backdropFilter,
+    };
+  });
+  const overlayStyle = await overlay.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return {
+      backgroundColor: style.backgroundColor,
+      backdropFilter: style.backdropFilter,
+    };
+  });
+
+  expect(frameStyle.backdropFilter).toContain("blur(4px)");
+  expect(overlayStyle.backdropFilter).toContain("blur(0.5px)");
+
+  const frameAlpha = Number(frameStyle.backgroundColor.match(/rgba\([^,]+,[^,]+,[^,]+,\s*([\d.]+)\)/)?.[1] ?? "1");
+  const overlayAlpha = Number(overlayStyle.backgroundColor.match(/rgba\([^,]+,[^,]+,[^,]+,\s*([\d.]+)\)/)?.[1] ?? "1");
+  expect(frameAlpha).toBeLessThanOrEqual(0.23);
+  expect(overlayAlpha).toBeLessThanOrEqual(0.35);
+});
+
 test("mobile banner shows only left content without an inner border and keeps compact bottom spacing", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Mobile hero visibility check runs once in Chromium");
   await page.setViewportSize({ width: 390, height: 844 });

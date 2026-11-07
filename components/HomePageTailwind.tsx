@@ -258,10 +258,10 @@ export function HomePageTailwind() {
             />
           ))}
         </div>
-        <div className="pointer-events-none absolute inset-0 -z-20 bg-slate-950/42 backdrop-blur-[1.5px]" />
+        <div data-hero-overlay className="pointer-events-none absolute inset-0 -z-20 bg-slate-950/34 backdrop-blur-[0.5px]" />
         <div className="pointer-events-none absolute inset-x-[5%] top-[15%] -z-10 hidden h-[68%] rounded-[50%] border border-white/20 md:block" />
 
-        <div data-hero-frame className="relative mx-auto h-fit w-full max-w-[1480px] overflow-hidden rounded-[38px] border border-white/20 bg-slate-950/30 p-4 pb-14 shadow-[0_30px_90px_rgba(15,23,42,.24)] backdrop-blur-xl sm:p-6 sm:pb-14 md:min-h-[620px] md:p-5 md:pb-14 lg:min-h-[580px] xl:min-h-[560px] xl:p-7 xl:pb-14">
+        <div data-hero-frame className="relative mx-auto h-fit w-full max-w-[1480px] overflow-hidden rounded-[38px] border border-white/20 bg-slate-950/22 p-4 pb-14 shadow-[0_30px_90px_rgba(15,23,42,.22)] backdrop-blur-[4px] sm:p-6 sm:pb-14 md:min-h-[620px] md:p-5 md:pb-14 lg:min-h-[580px] xl:min-h-[560px] xl:p-7 xl:pb-14">
           <div
             data-hero-left
             data-hero-scene={activeHero.id}
