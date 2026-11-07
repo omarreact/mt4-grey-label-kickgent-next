@@ -33,6 +33,10 @@
           'depth' => 2,
       ]); ?>
     </nav>
+    <div class="pintheme-header-social">
+      <?php if (!empty($pt['social_whatsapp'])): ?><a href="<?php echo esc_url($pt['social_whatsapp']); ?>" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 8.1c.4 3.6 3 6.2 6.5 7.2l1.3-1.7 2 .9c-.2 1.8-1.6 3-3.4 3-4.8-.2-8.6-4-8.8-8.8 0-1.4.8-2.7 2.1-3.3l.9 2-.6.7Z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></a><?php endif; ?>
+      <?php if (!empty($pt['social_telegram'])): ?><a href="<?php echo esc_url($pt['social_telegram']); ?>" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m20 4-3 15-5-3.6-2.4 2.3.4-4.8L17 6.7 7.9 12.5 3 11Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></a><?php endif; ?>
+    </div>
     <?php if (!empty($pt['cta_label']) && !empty($pt['cta_url'])): ?>
       <a class="pintheme-cta" href="<?php echo esc_url($pt['cta_url'], ['http','https','mailto']); ?>">
         <?php echo esc_html($pt['cta_label']); ?> <span aria-hidden="true">↗</span>
