@@ -580,6 +580,13 @@ test("global How It Works is a timeline with icons and no numbered step badges",
   const how = page.locator("[data-global-how-it-works]");
   await expect(how.locator("article")).toHaveCount(5);
   await expect(how.locator("article svg")).toHaveCount(5);
+
+  const timelineGap = await how.locator("[data-timeline-list]").evaluate((element) =>
+    parseFloat(getComputedStyle(element).rowGap)
+  );
+  expect(timelineGap).toBeLessThanOrEqual(16);
+  expect(timelineGap).toBeGreaterThanOrEqual(8);
+
   for (const marker of ["01","02","03","04","05"]) {
     await expect(how).not.toContainText(marker);
   }

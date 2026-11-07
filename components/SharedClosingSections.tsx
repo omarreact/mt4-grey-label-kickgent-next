@@ -80,7 +80,7 @@ export function SharedClosingSections() {
               className="pointer-events-none absolute bottom-6 left-1/2 top-6 hidden -translate-x-1/2 border-l border-fuchsia-200/25 md:block"
               aria-hidden="true"
             />
-            <div className="grid gap-5 md:gap-7">
+            <div data-timeline-list className="grid gap-3 md:gap-4">
               {timelineSteps.map((step, index) => {
                 const side = index % 2 === 0 ? "left" : "right";
 
