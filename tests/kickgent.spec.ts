@@ -724,7 +724,7 @@ test("primary contact channels and social controls use the approved details", as
 
   const footer = page.locator("footer");
   await expect(footer.getByRole("link", { name: "support@fxgreylabel.com" })).toHaveAttribute("href", "mailto:support@fxgreylabel.com");
-  await expect(footer.getByRole("link", { name: "+447452191901" })).toHaveAttribute("href", "tel:+447452191901");
+  await expect(footer.getByRole("link", { name: "+447452191901", exact: true })).toHaveAttribute("href", "tel:+447452191901");
   await expect(footer.getByRole("link", { name: "WhatsApp +447452191901" })).toHaveAttribute("href", "https://wa.me/447452191901");
   await expect(footer.getByRole("link", { name: "Telegram +447452191901" })).toHaveAttribute("href", "https://t.me/+447452191901");
 
