@@ -98,6 +98,25 @@ function pintheme_manager_sync_menu($pages_by_slug) {
     if (!$menu_id || is_wp_error($menu_id)) return;
     $existing_items = wp_get_nav_menu_items($menu_id) ?: [];
     if ($existing_items) {
+        $contact_id = absint($pages_by_slug['contact'] ?? 0);
+        if ($contact_id) {
+            $has_contact = false;
+            foreach ($existing_items as $item) {
+                if ('page' === $item->object && $contact_id === absint($item->object_id)) {
+                    $has_contact = true;
+                    break;
+                }
+            }
+            if (!$has_contact) {
+                wp_update_nav_menu_item($menu_id, 0, [
+                    'menu-item-title' => 'Contact',
+                    'menu-item-object-id' => $contact_id,
+                    'menu-item-object' => 'page',
+                    'menu-item-type' => 'post_type',
+                    'menu-item-status' => 'publish',
+                ]);
+            }
+        }
         $locations = (array) get_theme_mod('nav_menu_locations', []);
         if (empty($locations['primary'])) $locations['primary'] = $menu_id;
         if (empty($locations['footer'])) $locations['footer'] = $menu_id;
