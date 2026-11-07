@@ -343,74 +343,73 @@ export function HomePageTailwind() {
           <div
             data-hero-right
             data-hero-scene={activeHero.id}
-            className={`relative mt-5 min-w-0 rounded-[28px] border border-white/20 bg-white/10 p-4 shadow-[0_28px_80px_rgba(15,23,42,.24)] backdrop-blur-2xl transition-all duration-500 sm:p-5 md:absolute md:bottom-5 md:right-5 md:top-5 md:mt-0 md:w-[43%] md:p-0 xl:bottom-7 xl:right-7 xl:top-7 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
+            className={`relative mt-5 min-w-0 overflow-hidden rounded-[28px] bg-white/[.07] p-4 shadow-[0_28px_80px_rgba(15,23,42,.24)] backdrop-blur-2xl transition-all duration-500 sm:p-5 md:absolute md:bottom-5 md:right-5 md:top-5 md:mt-0 md:w-[43%] md:p-0 xl:bottom-7 xl:right-7 xl:top-7 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
           >
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(255,255,255,.12),transparent_58%)]" />
+            <div className="pointer-events-none absolute right-4 top-4 grid size-10 place-items-center rounded-full bg-white/12 text-base shadow-[0_10px_30px_rgba(15,23,42,.16)] backdrop-blur-xl lg:right-6 lg:top-6 lg:size-12 lg:text-lg xl:right-7 xl:top-7 xl:size-14 xl:text-xl">
+              ✦
+            </div>
+
             <div
-              data-hero-right-stage
-              className="relative z-10 min-h-[440px] md:h-full md:min-h-0"
+              data-hero-float
+              className="mx-auto flex w-full max-w-[420px] min-w-0 flex-col justify-between rounded-[24px] bg-slate-950/26 p-4 text-left shadow-[0_24px_65px_rgba(15,23,42,.22)] backdrop-blur-2xl md:absolute md:left-1/2 md:top-4 md:w-[84%] md:-translate-x-1/2 lg:top-5 lg:w-[78%] lg:p-5 xl:top-7 xl:w-[72%] xl:p-6"
             >
-              <div className="pointer-events-none absolute inset-3 rounded-[24px] border border-white/15 md:inset-4 xl:inset-5" />
-              <div className="pointer-events-none absolute left-1/2 top-1/2 h-[72%] w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-[50%] border border-white/20" />
-              <div className="pointer-events-none absolute right-4 top-4 grid size-10 place-items-center rounded-full border border-white/25 bg-white/10 text-base backdrop-blur-xl lg:right-6 lg:top-6 lg:size-12 lg:text-lg xl:right-7 xl:top-7 xl:size-14 xl:text-xl">
-                ✦
+              <div className="flex min-w-0 items-center justify-between gap-3">
+                <span className="grid size-8 shrink-0 place-items-center rounded-full bg-white/12 shadow-[0_8px_20px_rgba(15,23,42,.12)] lg:size-9 xl:size-10">☰</span>
+                <span className="min-w-0 flex-1 break-words text-center text-xs font-bold tracking-[.08em] text-white/85">{activeHero.label}</span>
+                <span className="grid size-8 shrink-0 place-items-center rounded-full bg-white/12 shadow-[0_8px_20px_rgba(15,23,42,.12)] lg:size-9 xl:size-10">✎</span>
+              </div>
+
+              <div className="py-5 text-center">
+                <strong className="block break-words text-[1.35rem] font-medium leading-tight tracking-[-.05em] md:text-[1.25rem] lg:text-[1.55rem] xl:text-[2rem]">
+                  {activeHero.assistantTitle}
+                </strong>
+                <p className="mt-2 break-words text-xs leading-5 text-white/78 lg:text-sm lg:leading-6">
+                  {activeHero.assistantText}
+                </p>
+              </div>
+
+              <div className="grid min-w-0 grid-cols-1 gap-2 min-[420px]:grid-cols-2">
+                {activeHero.assistantChips.map((chip) => (
+                  <span
+                    key={chip}
+                    className="min-w-0 break-words rounded-xl bg-white/10 p-3 text-xs text-white/90 shadow-[inset_0_1px_0_rgba(255,255,255,.06)] backdrop-blur-xl"
+                  >
+                    {chip}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-4 grid gap-2.5 sm:grid-cols-2 md:absolute md:inset-x-4 md:bottom-4 md:mt-0 md:grid-cols-1 lg:inset-x-5 lg:bottom-5 lg:grid-cols-2 xl:inset-x-6 xl:bottom-6 xl:gap-3">
+              <div
+                data-hero-float
+                className="min-w-0 rounded-[18px] bg-slate-950/26 p-3.5 text-left shadow-[0_18px_48px_rgba(15,23,42,.2)] backdrop-blur-2xl lg:p-4"
+              >
+                <span className="block break-words text-[11px] font-bold uppercase tracking-[.12em] text-white/75">{activeHero.progressLabel}</span>
+                <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/12">
+                  <div
+                    className={`h-full rounded-full bg-gradient-to-r from-fuchsia-300 to-violet-300 transition-[width] duration-700 ${activeHero.progressClass}`}
+                  />
+                </div>
+                <div className="mt-3 flex min-w-0 items-center justify-between gap-3 text-xs">
+                  <span className="min-w-0 break-words text-white/75">{activeHero.progressText}</span>
+                  <strong className="shrink-0 text-white">{activeHero.progressValue}%</strong>
+                </div>
               </div>
 
               <div
                 data-hero-float
-                className="mx-auto flex w-full max-w-[420px] min-w-0 flex-col justify-between rounded-[24px] border border-white/28 bg-slate-950/28 p-4 text-left shadow-[0_24px_65px_rgba(15,23,42,.22)] backdrop-blur-2xl md:absolute md:left-1/2 md:top-4 md:w-[84%] md:-translate-x-1/2 lg:top-5 lg:w-[78%] lg:p-5 xl:top-7 xl:w-[72%] xl:p-6"
+                className="min-w-0 rounded-[18px] bg-slate-950/26 p-3.5 text-left shadow-[0_18px_48px_rgba(15,23,42,.2)] backdrop-blur-2xl lg:p-4"
               >
-                <div className="flex min-w-0 items-center justify-between gap-3">
-                  <span className="grid size-8 shrink-0 place-items-center rounded-full border border-white/20 bg-white/14 lg:size-9 xl:size-10">☰</span>
-                  <span className="min-w-0 flex-1 break-words text-center text-xs font-bold tracking-[.08em] text-white/85">{activeHero.label}</span>
-                  <span className="grid size-10 shrink-0 place-items-center rounded-full border border-white/20 bg-white/14">✎</span>
-                </div>
-                <div className="py-5 text-center">
-                  <strong className="block break-words text-[1.35rem] font-medium leading-tight tracking-[-.05em] md:text-[1.25rem] lg:text-[1.55rem] xl:text-[2rem]">
-                    {activeHero.assistantTitle}
-                  </strong>
-                  <p className="mt-2 break-words text-xs leading-5 text-white/78 lg:text-sm lg:leading-6">
-                    {activeHero.assistantText}
-                  </p>
-                </div>
-                <div className="grid min-w-0 grid-cols-1 gap-2 min-[420px]:grid-cols-2">
-                  {activeHero.assistantChips.map((chip) => (
-                    <span key={chip} className="min-w-0 break-words rounded-xl border border-white/18 bg-white/10 p-3 text-xs text-white/90 backdrop-blur-xl">
-                      {chip}
-                    </span>
+                <span className="block break-words text-[11px] font-bold uppercase tracking-[.12em] text-white/75">{activeHero.systemsLabel}</span>
+                <div className="mt-3 grid gap-1.5">
+                  {activeHero.systems.map((item) => (
+                    <div key={item} className="flex min-w-0 items-center gap-2 text-xs text-white/90">
+                      <span className="shrink-0">↗</span>
+                      <span className="min-w-0 break-words">{item}</span>
+                    </div>
                   ))}
-                </div>
-              </div>
-
-              <div className="mt-4 grid gap-2.5 sm:grid-cols-2 md:absolute md:inset-x-4 md:bottom-4 md:mt-0 md:grid-cols-1 lg:inset-x-5 lg:bottom-5 lg:grid-cols-2 xl:inset-x-6 xl:bottom-6 xl:gap-3">
-                <div
-                  data-hero-float
-                  className="min-w-0 rounded-[18px] border border-white/28 bg-slate-950/28 p-3.5 text-left shadow-[0_18px_48px_rgba(15,23,42,.2)] backdrop-blur-2xl lg:p-4"
-                >
-                  <span className="block break-words text-[11px] font-bold uppercase tracking-[.12em] text-white/75">{activeHero.progressLabel}</span>
-                  <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/12">
-                    <div
-                      className={`h-full rounded-full bg-gradient-to-r from-fuchsia-300 to-violet-300 transition-[width] duration-700 ${activeHero.progressClass}`}
-                    />
-                  </div>
-                  <div className="mt-3 flex min-w-0 items-center justify-between gap-3 text-xs">
-                    <span className="min-w-0 break-words text-white/75">{activeHero.progressText}</span>
-                    <strong className="shrink-0 text-white">{activeHero.progressValue}%</strong>
-                  </div>
-                </div>
-
-                <div
-                  data-hero-float
-                  className="min-w-0 rounded-[20px] border border-white/28 bg-slate-950/28 p-4 text-left shadow-[0_18px_48px_rgba(15,23,42,.2)] backdrop-blur-2xl"
-                >
-                  <span className="block break-words text-[11px] font-bold uppercase tracking-[.12em] text-white/75">{activeHero.systemsLabel}</span>
-                  <div className="mt-3 grid gap-1.5">
-                    {activeHero.systems.map((item) => (
-                      <div key={item} className="flex min-w-0 items-center gap-2 text-xs text-white/90">
-                        <span className="shrink-0">↗</span>
-                        <span className="min-w-0 break-words">{item}</span>
-                      </div>
-                    ))}
-                  </div>
                 </div>
               </div>
             </div>

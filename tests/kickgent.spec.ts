@@ -392,12 +392,12 @@ for (const viewport of fullSiteResponsiveViewports) {
   });
 }
 
-test("desktop right-side hero elements stay inside the marked visual stage", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== "chromium", "Desktop stage geometry runs once in Chromium");
+test("desktop right-side hero elements stay inside the right hero container", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Right hero geometry runs once in Chromium");
   await page.setViewportSize({ width: 1648, height: 870 });
   await page.goto("/");
 
-  const stage = page.locator("[data-hero-right-stage]");
+  const stage = page.locator("[data-hero-right]");
   const floats = stage.locator("[data-hero-float]");
   await expect(floats).toHaveCount(3);
 
@@ -471,3 +471,20 @@ for (const viewport of [
     expect(Math.abs(leftBox!.y - rightBox!.y)).toBeLessThanOrEqual(40);
   });
 }
+
+test("right hero is flattened and borderless", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Right hero structure check runs once in Chromium");
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+
+  const right = page.locator("[data-hero-right]");
+  await expect(right).toBeVisible();
+  await expect(page.locator("[data-hero-right-stage]")).toHaveCount(0);
+  await expect(right).toHaveCSS("border-top-width", "0px");
+
+  const floats = right.locator("[data-hero-float]");
+  await expect(floats).toHaveCount(3);
+  for (let index = 0; index < 3; index += 1) {
+    await expect(floats.nth(index)).toHaveCSS("border-top-width", "0px");
+  }
+});
