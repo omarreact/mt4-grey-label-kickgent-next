@@ -791,6 +791,15 @@ test("mobile banner shows only left content without an inner border and keeps co
   );
   expect(innerBorderWidth).toBe(0);
 
+  const [frameBackground, frameBackdropFilter, leftBackground] = await Promise.all([
+    page.locator("[data-hero-frame]").evaluate((element) => getComputedStyle(element).backgroundColor),
+    page.locator("[data-hero-frame]").evaluate((element) => getComputedStyle(element).backdropFilter),
+    page.locator("[data-hero-left]").evaluate((element) => getComputedStyle(element).backgroundColor),
+  ]);
+  expect(frameBackground).toBe("rgba(0, 0, 0, 0)");
+  expect(frameBackdropFilter === "none" || frameBackdropFilter === "").toBeTruthy();
+  expect(leftBackground).toBe("rgba(0, 0, 0, 0)");
+
   const bottomPadding = await page.locator("[data-hero-banner]").evaluate((element) =>
     parseFloat(getComputedStyle(element).paddingBottom)
   );
@@ -849,4 +858,9 @@ test("desktop banner keeps zero outside bottom spacing", async ({ page }, testIn
     parseFloat(getComputedStyle(element).paddingBottom)
   );
   expect(bottomPadding).toBe(0);
+
+  const desktopFrameBackground = await page.locator("[data-hero-frame]").evaluate(
+    (element) => getComputedStyle(element).backgroundColor
+  );
+  expect(desktopFrameBackground).not.toBe("rgba(0, 0, 0, 0)");
 });
