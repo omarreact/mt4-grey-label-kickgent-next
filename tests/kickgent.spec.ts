@@ -27,6 +27,32 @@ test("homepage tabs and FAQ work", async ({ page }) => {
   await expect(faq).toHaveAttribute("open", "");
 });
 
+test("navigation submenu uses a blurred glass surface and route entry is smooth", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Navigation glass and route motion run once in Chromium");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  await page.locator(".kg-global-menu").click();
+  const solutions = page.locator("#kg-primary-navigation").getByRole("button", { name: "Solutions" });
+  await solutions.click();
+  const menu = page.locator("#kg-solutions-menu");
+  await expect(menu).toBeVisible();
+
+  const [bg, blur] = await Promise.all([
+    menu.evaluate((element) => getComputedStyle(element).backgroundColor),
+    menu.evaluate((element) => getComputedStyle(element).backdropFilter),
+  ]);
+  expect(bg).not.toBe("rgb(255, 255, 255)");
+  expect(blur === "none" || blur === "").toBeFalsy();
+
+  await menu.getByRole("link", { name: "MT4 Grey Label" }).click();
+  await expect(page).toHaveURL(/\/mt4-grey-label\/?$/);
+  const main = page.locator("#main-content");
+  await expect(main).toHaveClass(/route-entered/);
+  const transitionDuration = await main.evaluate((element) => getComputedStyle(element).transitionDuration);
+  expect(transitionDuration).not.toBe("0s");
+});
+
 test("mobile global navigation and submenu are usable", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "mobile-chromium", "Mobile-only touch-target check");
   await page.goto("/");
