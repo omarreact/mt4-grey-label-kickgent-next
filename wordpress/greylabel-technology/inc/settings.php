@@ -33,10 +33,10 @@ function pintheme_greylabel_defaults() {
         'alternative_logo_url' => '',
         'footer_logo_url' => '',
         'footer_text' => '© 2026 GreyLabel Technology. Technology services only — not investment advice.',
-        'contact_email' => 'support@fxgreylabel.com',
-        'contact_phone' => '+447452191901',
-        'social_whatsapp' => 'https://wa.me/447452191901',
-        'social_telegram' => 'https://t.me/+447452191901',
+        'contact_email' => '',
+        'contact_phone' => '+44 7988 028424',
+        'social_whatsapp' => 'https://wa.me/447988028424',
+        'social_telegram' => 'https://t.me/forexbrokertech',
     ];
 }
 
@@ -164,7 +164,6 @@ function pintheme_greylabel_settings_page() {
 
         <h2><?php esc_html_e('Footer', 'greylabel-technology'); ?></h2>
         <table class="form-table" role="presentation">
-          <?php pintheme_greylabel_field($s, 'contact_email', 'Contact email', 'email'); ?>
           <?php pintheme_greylabel_field($s, 'contact_phone', 'Primary phone'); ?>
           <?php pintheme_greylabel_field($s, 'social_whatsapp', 'WhatsApp URL', 'url'); ?>
           <?php pintheme_greylabel_field($s, 'social_telegram', 'Telegram URL', 'url'); ?>
