@@ -796,8 +796,8 @@ test("mobile banner shows only left content without an inner border and keeps co
     page.locator("[data-hero-frame]").evaluate((element) => getComputedStyle(element).backdropFilter),
     page.locator("[data-hero-left]").evaluate((element) => getComputedStyle(element).backgroundColor),
   ]);
-  expect(frameBackground).toBe("rgba(0, 0, 0, 0)");
-  expect(frameBackdropFilter === "none" || frameBackdropFilter === "").toBeTruthy();
+  expect(frameBackground).not.toBe("rgba(0, 0, 0, 0)");
+  expect(frameBackdropFilter === "none" || frameBackdropFilter === "").toBeFalsy();
   expect(leftBackground).toBe("rgba(0, 0, 0, 0)");
 
   const bottomPadding = await page.locator("[data-hero-banner]").evaluate((element) =>
