@@ -560,6 +560,46 @@ test("solution carousel uses icons instead of numeric indicators", async ({ page
   }
 });
 
+test("contact page is complete and linked from the primary navigation", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Contact route check runs once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/");
+
+  const header = page.locator("[data-site-header]");
+  await expect(header.getByRole("link", { name: "Contact" })).toHaveAttribute("href", "/contact");
+  await expect(page.locator("[data-get-started]")).toHaveAttribute("href", "/contact");
+
+  await page.goto("/contact");
+  await expect(page).toHaveTitle(/Contact MT4 Grey Label/);
+  await expect(header.getByRole("link", { name: "Contact" })).toHaveAttribute("aria-current", "page");
+
+  const form = page.locator("[data-contact-form]");
+  await expect(form).toBeVisible();
+  await expect(form).toHaveAttribute("action", /mailto:admin@pincodeit\.com/);
+  await expect(page.locator("[data-contact-email]")).toHaveAttribute("href", /mailto:admin@pincodeit\.com/);
+
+  await expect(page.locator("#contact-name")).toHaveAttribute("required", "");
+  await expect(page.locator("#contact-email")).toHaveAttribute("required", "");
+  await expect(page.locator("#contact-solution")).toHaveAttribute("required", "");
+  await expect(page.locator("#contact-stage")).toHaveAttribute("required", "");
+  await expect(page.locator("#contact-message")).toHaveAttribute("required", "");
+});
+
+test("contact page remains responsive and Contact is available in the mobile menu", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Mobile contact check runs once in Chromium");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/contact");
+
+  await page.getByRole("button", { name: "Open navigation" }).click();
+  const contactLink = page.locator("[data-site-header]").getByRole("link", { name: "Contact" });
+  await expect(contactLink).toBeVisible();
+  await expect(contactLink).toHaveAttribute("aria-current", "page");
+
+  await expect(page.locator("[data-contact-form]")).toBeVisible();
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+  expect(overflow).toBeLessThanOrEqual(1);
+});
+
 test("global How It Works CTA and footer render once on homepage and inner pages", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Global closing-system check runs once in Chromium");
 
