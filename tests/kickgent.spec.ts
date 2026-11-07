@@ -488,3 +488,15 @@ test("right hero is flattened and borderless", async ({ page }, testInfo) => {
     await expect(floats.nth(index)).toHaveCSS("border-top-width", "0px");
   }
 });
+
+test("right hero parent has no extra overlay", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Right hero parent overlay check runs once in Chromium");
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+
+  const right = page.locator("[data-hero-right]");
+  await expect(right).toBeVisible();
+  await expect(right).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  await expect(right).toHaveCSS("backdrop-filter", "none");
+  await expect(right).toHaveCSS("box-shadow", "none");
+});

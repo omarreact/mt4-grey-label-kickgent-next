@@ -343,9 +343,8 @@ export function HomePageTailwind() {
           <div
             data-hero-right
             data-hero-scene={activeHero.id}
-            className={`relative mt-5 min-w-0 overflow-hidden rounded-[28px] bg-white/[.07] p-4 shadow-[0_28px_80px_rgba(15,23,42,.24)] backdrop-blur-2xl transition-all duration-500 sm:p-5 md:absolute md:bottom-5 md:right-5 md:top-5 md:mt-0 md:w-[43%] md:p-0 xl:bottom-7 xl:right-7 xl:top-7 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
+            className={`relative mt-5 min-w-0 p-4 transition-all duration-500 sm:p-5 md:absolute md:bottom-5 md:right-5 md:top-5 md:mt-0 md:w-[43%] md:p-0 xl:bottom-7 xl:right-7 xl:top-7 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
           >
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(255,255,255,.12),transparent_58%)]" />
             <div className="pointer-events-none absolute right-4 top-4 grid size-10 place-items-center rounded-full bg-white/12 text-base shadow-[0_10px_30px_rgba(15,23,42,.16)] backdrop-blur-xl lg:right-6 lg:top-6 lg:size-12 lg:text-lg xl:right-7 xl:top-7 xl:size-14 xl:text-xl">
               ✦
             </div>
