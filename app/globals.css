@@ -23,3 +23,8 @@
 
 html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--color-background); color: var(--color-foreground); }
+
+#main-content{will-change:opacity,transform}
+#main-content.route-entering{opacity:0;transform:translateY(8px)}
+#main-content.route-entered{opacity:1;transform:translateY(0);transition:opacity .24s ease,transform .24s ease}
+@media(prefers-reduced-motion:reduce){#main-content.route-entering,#main-content.route-entered{opacity:1;transform:none;transition:none}}
