@@ -289,7 +289,7 @@ export function HomePageTailwind() {
         <div className="pointer-events-none absolute inset-0 -z-20 bg-slate-950/42 backdrop-blur-[1.5px]" />
         <div className="pointer-events-none absolute inset-x-[5%] top-[15%] -z-10 hidden h-[68%] rounded-[50%] border border-white/20 xl:block" />
 
-        <div className="mx-auto grid w-full max-w-[1180px] gap-7 xl:h-full xl:grid-cols-[0.94fr_1.06fr] xl:items-center xl:gap-12">
+        <div className="mx-auto grid w-full max-w-[1480px] gap-7 xl:h-full xl:grid-cols-[1.02fr_.98fr] xl:items-center xl:gap-10 2xl:gap-12">
           <div
             data-hero-left
             data-hero-scene={activeHero.id}
@@ -343,18 +343,21 @@ export function HomePageTailwind() {
           <div
             data-hero-right
             data-hero-scene={activeHero.id}
-            className={`relative min-w-0 rounded-[32px] border border-white/20 bg-white/10 p-4 shadow-[0_28px_80px_rgba(15,23,42,.24)] backdrop-blur-2xl transition-all duration-500 sm:p-5 xl:h-[470px] xl:p-6 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
+            className={`relative min-w-0 rounded-[32px] border border-white/20 bg-white/10 p-4 shadow-[0_28px_80px_rgba(15,23,42,.24)] backdrop-blur-2xl transition-all duration-500 sm:p-5 xl:h-[500px] xl:p-0 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
           >
-            <div className="pointer-events-none absolute inset-4 rounded-[28px] border border-white/15" />
-            <div className="pointer-events-none absolute left-1/2 top-1/2 h-[72%] w-[78%] -translate-x-1/2 -translate-y-1/2 rounded-[50%] border border-white/20" />
-            <div className="pointer-events-none absolute right-7 top-7 grid size-14 place-items-center rounded-full border border-white/25 bg-white/10 text-xl backdrop-blur-xl">
-              ✦
-            </div>
+            <div
+              data-hero-right-stage
+              className="relative z-10 min-h-[440px] xl:h-full xl:min-h-0"
+            >
+              <div className="pointer-events-none absolute inset-4 rounded-[28px] border border-white/15 xl:inset-5" />
+              <div className="pointer-events-none absolute left-1/2 top-1/2 h-[72%] w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-[50%] border border-white/20" />
+              <div className="pointer-events-none absolute right-7 top-7 grid size-14 place-items-center rounded-full border border-white/25 bg-white/10 text-xl backdrop-blur-xl">
+                ✦
+              </div>
 
-            <div className="relative z-10 grid h-full min-h-[440px] grid-rows-[auto_auto] gap-4 xl:min-h-0 xl:grid-rows-[1fr_auto]">
               <div
                 data-hero-float
-                className="mx-auto flex w-full max-w-[390px] min-w-0 flex-col justify-between rounded-[26px] border border-white/28 bg-slate-950/24 p-5 text-left shadow-[0_24px_65px_rgba(15,23,42,.22)] backdrop-blur-2xl sm:p-6"
+                className="mx-auto flex w-full max-w-[420px] min-w-0 flex-col justify-between rounded-[26px] border border-white/28 bg-slate-950/28 p-5 text-left shadow-[0_24px_65px_rgba(15,23,42,.22)] backdrop-blur-2xl sm:p-6 xl:absolute xl:left-1/2 xl:top-7 xl:w-[72%] xl:-translate-x-1/2"
               >
                 <div className="flex min-w-0 items-center justify-between gap-3">
                   <span className="grid size-10 shrink-0 place-items-center rounded-full border border-white/20 bg-white/14">☰</span>
@@ -378,10 +381,10 @@ export function HomePageTailwind() {
                 </div>
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-2">
+              <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:absolute xl:inset-x-6 xl:bottom-6 xl:mt-0">
                 <div
                   data-hero-float
-                  className="min-w-0 rounded-[20px] border border-white/28 bg-slate-950/24 p-4 text-left shadow-[0_18px_48px_rgba(15,23,42,.2)] backdrop-blur-2xl"
+                  className="min-w-0 rounded-[20px] border border-white/28 bg-slate-950/28 p-4 text-left shadow-[0_18px_48px_rgba(15,23,42,.2)] backdrop-blur-2xl"
                 >
                   <span className="block break-words text-[11px] font-bold uppercase tracking-[.12em] text-white/75">{activeHero.progressLabel}</span>
                   <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/12">
@@ -397,7 +400,7 @@ export function HomePageTailwind() {
 
                 <div
                   data-hero-float
-                  className="min-w-0 rounded-[20px] border border-white/28 bg-slate-950/24 p-4 text-left shadow-[0_18px_48px_rgba(15,23,42,.2)] backdrop-blur-2xl"
+                  className="min-w-0 rounded-[20px] border border-white/28 bg-slate-950/28 p-4 text-left shadow-[0_18px_48px_rgba(15,23,42,.2)] backdrop-blur-2xl"
                 >
                   <span className="block break-words text-[11px] font-bold uppercase tracking-[.12em] text-white/75">{activeHero.systemsLabel}</span>
                   <div className="mt-3 grid gap-1.5">

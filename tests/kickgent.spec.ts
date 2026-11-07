@@ -302,6 +302,7 @@ const bannerViewports = [
   { width: 1280, height: 720 },
   { width: 1366, height: 768 },
   { width: 1440, height: 900 },
+  { width: 1648, height: 870 },
   { width: 1920, height: 1080 },
 ];
 
@@ -390,3 +391,27 @@ for (const viewport of fullSiteResponsiveViewports) {
     }
   });
 }
+
+test("desktop right-side hero elements stay inside the marked visual stage", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Desktop stage geometry runs once in Chromium");
+  await page.setViewportSize({ width: 1648, height: 870 });
+  await page.goto("/");
+
+  const stage = page.locator("[data-hero-right-stage]");
+  const floats = stage.locator("[data-hero-float]");
+  await expect(floats).toHaveCount(3);
+
+  const stageBox = await stage.boundingBox();
+  expect(stageBox).not.toBeNull();
+
+  const boxes = await Promise.all([0, 1, 2].map((index) => floats.nth(index).boundingBox()));
+  boxes.forEach((box) => {
+    expect(box).not.toBeNull();
+    expect(box!.x).toBeGreaterThanOrEqual(stageBox!.x);
+    expect(box!.y).toBeGreaterThanOrEqual(stageBox!.y);
+    expect(box!.x + box!.width).toBeLessThanOrEqual(stageBox!.x + stageBox!.width + 1);
+    expect(box!.y + box!.height).toBeLessThanOrEqual(stageBox!.y + stageBox!.height + 1);
+  });
+
+  expect(boxes[0]!.y + boxes[0]!.height).toBeLessThanOrEqual(Math.min(boxes[1]!.y, boxes[2]!.y) + 1);
+});
