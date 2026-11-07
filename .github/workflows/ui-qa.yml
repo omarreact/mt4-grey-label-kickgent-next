@@ -23,6 +23,7 @@ jobs:
           fi
       - run: npx playwright install --with-deps chromium
       - run: npm run check
+      - run: npm run build:single-html
       - run: npm run test:ui
       - name: Upload Playwright evidence
         if: always()
