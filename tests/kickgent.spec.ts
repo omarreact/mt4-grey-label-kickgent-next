@@ -211,7 +211,7 @@ test("inner-page supporting surfaces receive the global glass treatment", async 
 });
 
 
-test("fixed floating header and image-backed hero are preserved", async ({ page }, testInfo) => {
+test("fixed floating header and centered image-backed hero are preserved", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Visual shell check runs once in Chromium");
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/");
@@ -221,18 +221,17 @@ test("fixed floating header and image-backed hero are preserved", async ({ page 
 
   const hero = page.locator("[data-hero-banner]");
   await expect(hero).toBeVisible();
-  const image = hero.locator("img").first();
-  await expect(image).toHaveAttribute("src", /images\.unsplash\.com\/photo-1556761175-4b46a572b786/);
+  const images = hero.locator("[data-hero-background]");
+  await expect(images).toHaveCount(3);
+  await expect(images.first()).toHaveAttribute("src", /images\.unsplash\.com\/photo-1556761175-4b46a572b786/);
 
-  const floats = hero.locator("[data-hero-float]");
-  await expect(floats).toHaveCount(3);
-  for (let index = 0; index < 3; index += 1) {
-    await expect(floats.nth(index)).toHaveCSS("backdrop-filter", /blur/);
-  }
+  await expect(hero.locator("[data-hero-float]")).toHaveCount(0);
+  await expect(hero.locator('[data-hero-copy="launch"]')).toHaveCSS("text-align", "center");
+  await expect(hero.locator("[data-hero-actions]")).toBeVisible();
 });
 
 
-test("banner slider changes the entire scene, not only the background", async ({ page }, testInfo) => {
+test("banner slider changes the centered scene and background", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Banner slider check runs once in Chromium");
   await page.setViewportSize({ width: 1366, height: 768 });
   await page.goto("/");
@@ -242,10 +241,11 @@ test("banner slider changes the entire scene, not only the background", async ({
   await expect(controls).toHaveCount(3);
   await expect(hero).toHaveAttribute("data-active-slide", "launch");
   await expect(hero.locator('[data-hero-copy="launch"] h1')).toContainText("Launch a brokerage.");
-  await expect(hero.locator("[data-hero-right]")).toContainText("Ready to launch.");
+  await expect(hero.locator('[data-hero-copy="launch"] h1')).toContainText("Connect every system.");
 
-  const heroImages = hero.locator("img");
+  const heroImages = hero.locator("[data-hero-background]");
   await expect(heroImages).toHaveCount(3);
+  await expect(heroImages.nth(0)).toHaveCSS("opacity", "1");
 
   await controls.nth(1).click();
   await expect(hero).toHaveAttribute("data-active-slide", "operations");
@@ -253,19 +253,14 @@ test("banner slider changes the entire scene, not only the background", async ({
   await expect(heroImages.nth(1)).toHaveCSS("opacity", "1");
   await expect(hero.locator('[data-hero-copy="operations"] h1')).toContainText("Run every client journey.");
   await expect(hero.locator("[data-hero-left]")).toContainText("Explore broker CRM");
-  await expect(hero.locator("[data-hero-right]")).toContainText("Operations synchronized.");
-  await expect(hero.locator("[data-hero-right]")).toContainText("82%");
-  await expect(hero.locator("[data-hero-right]")).toContainText("KYC & payments");
 
   await controls.nth(2).click();
   await expect(hero).toHaveAttribute("data-active-slide", "scale");
+  await expect(heroImages.nth(2)).toHaveCSS("opacity", "1");
   await expect(hero.locator('[data-hero-copy="scale"] h1')).toContainText("Add products and capacity.");
   await expect(hero.locator("[data-hero-left]")).toContainText("Scale your brokerage");
-  await expect(hero.locator("[data-hero-right]")).toContainText("Ready to scale.");
-  await expect(hero.locator("[data-hero-right]")).toContainText("91%");
-  await expect(hero.locator("[data-hero-right]")).toContainText("Managed accounts");
 
-  await expect(hero.locator('[data-hero-copy="scale"] h1')).toHaveCSS("color", "rgb(255, 255, 255)");
+  await expect(hero.locator('[data-hero-copy="scale"] h1')).toHaveCSS("color", "rgb(37, 16, 57)");
 });
 
 test("requested homepage section backgrounds and glass overlays are applied", async ({ page }, testInfo) => {
