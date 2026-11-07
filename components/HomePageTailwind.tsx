@@ -266,7 +266,7 @@ export function HomePageTailwind() {
             data-hero-left
             data-hero-scene={activeHero.id}
             aria-live="polite"
-            className="grid min-h-[820px] min-w-0 place-items-center rounded-[28px] bg-transparent p-5 text-left sm:min-h-[720px] sm:p-7 md:min-h-[580px] md:w-[52%] md:place-items-stretch md:p-5 lg:min-h-[540px] lg:p-7 xl:min-h-[520px] xl:p-8"
+            className="grid h-fit min-w-0 rounded-[28px] bg-transparent p-5 text-left sm:p-7 md:min-h-[580px] md:w-[52%] md:p-5 lg:min-h-[540px] lg:p-7 xl:min-h-[520px] xl:p-8"
           >
             {heroSlides.map((slide, index) => {
               const isActive = heroSlide === index;
