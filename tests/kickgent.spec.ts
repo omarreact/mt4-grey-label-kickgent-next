@@ -713,6 +713,57 @@ test("solution carousel uses icons instead of numeric indicators", async ({ page
   }
 });
 
+test("navigation and submenu typography are uniform", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Navigation typography audit runs once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/");
+
+  const nav = page.locator("#kg-primary-navigation");
+  const home = nav.getByRole("link", { name: "Home" });
+  const solutions = nav.getByRole("button", { name: "Solutions" });
+  const guides = nav.getByRole("button", { name: "Guides" });
+  const about = nav.getByRole("link", { name: "About" });
+  const contact = nav.getByRole("link", { name: "Contact" });
+
+  const topLevel = [home, solutions, guides, about, contact];
+  const baseline = await home.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return {
+      fontFamily: style.fontFamily,
+      fontSize: style.fontSize,
+      fontWeight: style.fontWeight,
+      lineHeight: style.lineHeight,
+    };
+  });
+
+  for (const item of topLevel.slice(1)) {
+    const current = await item.evaluate((element) => {
+      const style = getComputedStyle(element);
+      return {
+        fontFamily: style.fontFamily,
+        fontSize: style.fontSize,
+        fontWeight: style.fontWeight,
+        lineHeight: style.lineHeight,
+      };
+    });
+    expect(current).toEqual(baseline);
+  }
+
+  await solutions.hover();
+  const firstSubmenu = page.locator("#kg-solutions-menu a").first();
+  await expect(firstSubmenu).toBeVisible();
+  const submenuStyle = await firstSubmenu.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return {
+      fontFamily: style.fontFamily,
+      fontSize: style.fontSize,
+      fontWeight: style.fontWeight,
+      lineHeight: style.lineHeight,
+    };
+  });
+  expect(submenuStyle).toEqual(baseline);
+});
+
 test("primary contact channels and social controls use the approved details", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Contact channel audit runs once in Chromium");
   await page.setViewportSize({ width: 1280, height: 900 });
