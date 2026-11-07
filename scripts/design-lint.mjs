@@ -39,7 +39,7 @@ if (!chrome.includes("backdrop-blur-2xl") || !chrome.includes("onMouseEnter")) f
 if (!chrome.includes("max-[880px]")) failures.push("Shared responsive navigation must retain the approved breakpoint behavior.");
 if (home.includes("<style>") || home.includes("style={{")) failures.push("Homepage upgrades must use Tailwind utilities rather than embedded or inline CSS.");
 if (!home.includes("backdrop-blur-2xl")) failures.push("Homepage glass overlay treatment is required.");
-if (!home.includes("GreyLabel solution carousel") || !home.includes("data-hero-float")) failures.push("Homepage carousel and banner overflow guardrails are required.");
+if (!home.includes("GreyLabel solution carousel") || !home.includes("data-hero-indicators") || !home.includes("data-hero-background")) failures.push("Homepage solution carousel and banner slider guardrails are required.");
 if (!closing.includes("data-global-how-it-works") || !closing.includes("data-global-cta")) failures.push("Shared How It Works and CTA sections are required.");
 if (!chrome.includes("MT4 Grey Label") || chrome.includes("Built by PINCODE IT")) failures.push("Header/footer must use MT4 Grey Label branding without agency credit.");
 if (/(?:md|lg|xl|2xl):h-\[[^\]]+\]/.test(home)) failures.push("Responsive homepage layout must not use fixed Tailwind height values.");
