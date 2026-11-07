@@ -268,37 +268,57 @@ export function HomePageTailwind() {
             data-hero-left
             data-hero-scene={activeHero.id}
             aria-live="polite"
-            className={`h-fit min-w-0 rounded-[28px] bg-white/[.045] p-5 text-left transition-all duration-500 sm:p-7 md:flex md:min-h-[580px] md:w-[52%] md:flex-col md:justify-center md:bg-transparent md:p-5 lg:min-h-[540px] lg:p-7 xl:min-h-[520px] xl:p-8 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
+            className="grid h-fit min-w-0 rounded-[28px] bg-white/[.045] p-5 text-left sm:p-7 md:min-h-[580px] md:w-[52%] md:bg-transparent md:p-5 lg:min-h-[540px] lg:p-7 xl:min-h-[520px] xl:p-8"
           >
-            <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/35 bg-white/14 px-3.5 py-2 text-[.68rem] font-bold tracking-[.1em] text-white shadow-[0_10px_30px_rgba(15,23,42,.18)] backdrop-blur-2xl sm:text-xs">
-              <span className="grid size-5 shrink-0 place-items-center rounded-full border border-white/40 bg-white/20">✦</span>
-              <span className="min-w-0 break-words">{activeHero.badge}</span>
-            </span>
+            {heroSlides.map((slide, index) => {
+              const isActive = heroSlide === index;
 
-            <h1 className="mt-6 max-w-[620px] text-balance text-[clamp(2.1rem,4.6vw,4.65rem)] font-semibold leading-[.96] tracking-[-.06em] text-white drop-shadow-[0_4px_22px_rgba(15,23,42,.48)] md:mt-4">
-              {activeHero.title}
-              <span className="block">{activeHero.titleAccent}</span>
-            </h1>
+              return (
+                <div
+                  key={slide.id}
+                  data-hero-copy={slide.id}
+                  aria-hidden={!isActive}
+                  className={`col-start-1 row-start-1 min-w-0 self-start transition-all duration-500 md:self-center ${
+                    isActive
+                      ? heroVisible
+                        ? "visible translate-y-0 opacity-100"
+                        : "visible translate-y-2 opacity-0"
+                      : "invisible pointer-events-none translate-y-2 opacity-0"
+                  }`}
+                >
+                  <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/35 bg-white/14 px-3.5 py-2 text-[.68rem] font-bold tracking-[.1em] text-white shadow-[0_10px_30px_rgba(15,23,42,.18)] backdrop-blur-2xl sm:text-xs">
+                    <span className="grid size-5 shrink-0 place-items-center rounded-full border border-white/40 bg-white/20">✦</span>
+                    <span className="min-w-0 break-words">{slide.badge}</span>
+                  </span>
 
-            <p className="mt-5 max-w-[590px] text-pretty text-[.92rem] font-medium leading-7 text-white/88 drop-shadow-[0_3px_18px_rgba(15,23,42,.45)] sm:text-[1.03rem] md:mt-4 md:text-[.9rem] md:leading-6 lg:text-[1rem] lg:leading-7">
-              {activeHero.description}
-            </p>
+                  <h1 className="mt-6 max-w-[620px] text-balance text-[clamp(2.1rem,4.6vw,4.65rem)] font-semibold leading-[.96] tracking-[-.06em] text-white drop-shadow-[0_4px_22px_rgba(15,23,42,.48)] md:mt-4">
+                    {slide.title}
+                    <span className="block">{slide.titleAccent}</span>
+                  </h1>
 
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap md:mt-5 md:gap-2.5">
-              <Link
-                href={activeHero.primary.href}
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/35 bg-white/18 px-5 text-sm font-extrabold text-white shadow-[0_15px_38px_rgba(15,23,42,.22)] backdrop-blur-2xl transition hover:-translate-y-0.5 hover:bg-white/24"
-              >
-                {activeHero.primary.label} <ArrowIcon />
-              </Link>
-              <Link
-                href={activeHero.secondary.href}
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/30 bg-white/12 px-5 text-sm font-bold text-white shadow-[0_12px_34px_rgba(15,23,42,.18)] backdrop-blur-2xl transition hover:-translate-y-0.5 hover:bg-white/20"
-              >
-                {activeHero.secondary.label} <ArrowIcon />
-              </Link>
-            </div>
+                  <p className="mt-5 max-w-[590px] text-pretty text-[.92rem] font-medium leading-7 text-white/88 drop-shadow-[0_3px_18px_rgba(15,23,42,.45)] sm:text-[1.03rem] md:mt-4 md:text-[.9rem] md:leading-6 lg:text-[1rem] lg:leading-7">
+                    {slide.description}
+                  </p>
 
+                  <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap md:mt-5 md:gap-2.5">
+                    <Link
+                      href={slide.primary.href}
+                      tabIndex={isActive ? undefined : -1}
+                      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/35 bg-white/18 px-5 text-sm font-extrabold text-white shadow-[0_15px_38px_rgba(15,23,42,.22)] backdrop-blur-2xl transition hover:-translate-y-0.5 hover:bg-white/24"
+                    >
+                      {slide.primary.label} <ArrowIcon />
+                    </Link>
+                    <Link
+                      href={slide.secondary.href}
+                      tabIndex={isActive ? undefined : -1}
+                      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/30 bg-white/12 px-5 text-sm font-bold text-white shadow-[0_12px_34px_rgba(15,23,42,.18)] backdrop-blur-2xl transition hover:-translate-y-0.5 hover:bg-white/20"
+                    >
+                      {slide.secondary.label} <ArrowIcon />
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
           <div

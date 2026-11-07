@@ -796,6 +796,21 @@ test("mobile banner shows only left content without an inner border and keeps co
   );
   expect(bottomPadding).toBeGreaterThanOrEqual(16);
   expect(bottomPadding).toBeLessThanOrEqual(20);
+
+  const banner = page.locator("[data-hero-banner]");
+  const initialHeight = await banner.evaluate((element) => element.getBoundingClientRect().height);
+
+  const tabs = page.locator("[data-hero-indicators] button");
+  await tabs.nth(1).click();
+  await expect(banner).toHaveAttribute("data-active-slide", "operations");
+  const operationsHeight = await banner.evaluate((element) => element.getBoundingClientRect().height);
+
+  await tabs.nth(2).click();
+  await expect(banner).toHaveAttribute("data-active-slide", "scale");
+  const scaleHeight = await banner.evaluate((element) => element.getBoundingClientRect().height);
+
+  expect(Math.abs(operationsHeight - initialHeight)).toBeLessThanOrEqual(1);
+  expect(Math.abs(scaleHeight - initialHeight)).toBeLessThanOrEqual(1);
 });
 
 test("desktop banner keeps zero outside bottom spacing", async ({ page }, testInfo) => {
