@@ -671,3 +671,35 @@ test("How It Works icons live inside their timeline cards", async ({ page }, tes
     expect(iconBox!.y + iconBox!.height).toBeLessThanOrEqual(cardBox!.y + cardBox!.height + 1);
   }
 });
+
+test("How It Works timeline alternates cards left and right", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Alternating timeline geometry runs once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 1000 });
+  await page.goto("/");
+
+  const section = page.locator("[data-global-how-it-works]");
+  const rows = section.locator("[data-timeline-side]");
+  await expect(rows).toHaveCount(5);
+
+  const expectedSides = ["left", "right", "left", "right", "left"];
+  const sectionBox = await section.boundingBox();
+  expect(sectionBox).not.toBeNull();
+  const centerX = sectionBox!.x + sectionBox!.width / 2;
+
+  for (let index = 0; index < expectedSides.length; index += 1) {
+    const row = rows.nth(index);
+    await expect(row).toHaveAttribute("data-timeline-side", expectedSides[index]);
+
+    const card = row.locator("[data-timeline-card]");
+    const cardBox = await card.boundingBox();
+    expect(cardBox).not.toBeNull();
+
+    if (expectedSides[index] === "left") {
+      expect(cardBox!.x + cardBox!.width).toBeLessThan(centerX);
+    } else {
+      expect(cardBox!.x).toBeGreaterThan(centerX);
+    }
+
+    await expect(card.locator("[data-timeline-icon]")).toHaveCount(1);
+  }
+});

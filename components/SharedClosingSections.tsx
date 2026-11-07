@@ -76,26 +76,51 @@ export function SharedClosingSections() {
           </div>
 
           <div className="relative mt-14">
-            <div className="absolute left-7 top-0 bottom-0 hidden border-l border-fuchsia-200/25 sm:block lg:left-0 lg:right-0 lg:top-7 lg:bottom-auto lg:border-l-0 lg:border-t" aria-hidden="true" />
-            <div className="grid gap-5 lg:grid-cols-5 lg:gap-4">
-              {timelineSteps.map((step) => (
-                <article key={step.title} className="relative h-fit backdrop-blur-[1px]">
-                  <div
-                    data-timeline-card
-                    className="group relative h-fit overflow-hidden rounded-[22px] bg-white/[.075] p-5 shadow-[0_20px_55px_rgba(8,2,14,.18)] backdrop-blur-2xl transition duration-300 hover:-translate-y-1 hover:bg-white/[.1]"
+            <div
+              className="pointer-events-none absolute bottom-6 left-1/2 top-6 hidden -translate-x-1/2 border-l border-fuchsia-200/25 md:block"
+              aria-hidden="true"
+            />
+            <div className="grid gap-5 md:gap-7">
+              {timelineSteps.map((step, index) => {
+                const side = index % 2 === 0 ? "left" : "right";
+
+                return (
+                  <article
+                    key={step.title}
+                    data-timeline-side={side}
+                    className="relative grid h-fit md:grid-cols-[minmax(0,1fr)_72px_minmax(0,1fr)] md:items-center"
                   >
-                    <span
-                      data-timeline-icon
-                      className="grid size-12 place-items-center rounded-2xl bg-white/12 text-fuchsia-100 shadow-[0_14px_38px_rgba(10,3,20,.2)] backdrop-blur-2xl"
+                    <div
+                      data-timeline-card
+                      className={[
+                        "group relative h-fit w-full overflow-hidden rounded-[24px] bg-white/[.075] p-5 shadow-[0_20px_55px_rgba(8,2,14,.18)] backdrop-blur-2xl transition duration-300 hover:-translate-y-1 hover:bg-white/[.1] sm:p-6",
+                        side === "left"
+                          ? "md:col-start-1 md:justify-self-end"
+                          : "md:col-start-3 md:justify-self-start",
+                      ].join(" ")}
                     >
-                      <TimelineIcon name={step.icon} />
-                    </span>
-                    <h3 className="mt-5 text-lg font-bold tracking-[-.03em]">{step.title}</h3>
-                    <p className="mt-3 text-sm leading-6 text-violet-100/72">{step.text}</p>
-                    <p className="mt-5 text-xs font-semibold leading-5 text-fuchsia-100/75">{step.detail}</p>
-                  </div>
-                </article>
-              ))}
+                      <span
+                        data-timeline-icon
+                        className="grid size-12 place-items-center rounded-2xl bg-white/12 text-fuchsia-100 shadow-[0_14px_38px_rgba(10,3,20,.2)] backdrop-blur-2xl"
+                      >
+                        <TimelineIcon name={step.icon} />
+                      </span>
+                      <h3 className="mt-5 text-xl font-bold tracking-[-.035em]">{step.title}</h3>
+                      <p className="mt-3 text-sm leading-6 text-violet-100/72">{step.text}</p>
+                      <p className="mt-5 text-xs font-semibold leading-5 text-fuchsia-100/75">{step.detail}</p>
+                    </div>
+
+                    <div
+                      className="pointer-events-none hidden items-center justify-center md:col-start-2 md:row-start-1 md:flex"
+                      aria-hidden="true"
+                    >
+                      <span className="grid size-5 place-items-center rounded-full bg-fuchsia-200 shadow-[0_0_0_7px_rgba(255,255,255,.08),0_0_30px_rgba(240,171,252,.28)]">
+                        <span className="size-1.5 rounded-full bg-violet-950" />
+                      </span>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           </div>
         </div>
