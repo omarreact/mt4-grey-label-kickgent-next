@@ -146,10 +146,10 @@ export function SharedClosingSections() {
           </div>
           <a
             data-bottom-cta-button
-            href="mailto:support@fxgreylabel.com?subject=MT4%20Grey%20Label%20Technology%20Consultation"
+            href="https://wa.me/447988028424" target="_blank" rel="noreferrer"
             className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-[#4a1f5f] px-5 text-sm font-extrabold !text-white shadow-[0_14px_34px_rgba(74,31,95,.2)] transition hover:-translate-y-0.5 hover:bg-[#351445]"
           >
-            Talk to our team <ArrowIcon />
+            Talk on WhatsApp <ArrowIcon />
           </a>
         </div>
       </section>
