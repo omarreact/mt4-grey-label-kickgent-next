@@ -25,6 +25,21 @@ const guides: readonly NavItem[] = [
 const navItem =
   "inline-flex min-h-11 items-center gap-1.5 rounded-xl px-3 py-2 text-[.84rem] font-semibold leading-none text-slate-700 no-underline transition hover:bg-white/70 hover:text-slate-950 focus-visible:bg-white/80 focus-visible:text-slate-950";
 
+const SUPPORT_EMAIL = "support@fxgreylabel.com";
+const SUPPORT_PHONE = "+447452191901";
+const WHATSAPP_URL = "https://wa.me/447452191901";
+const TELEGRAM_URL = "https://t.me/+447452191901";
+
+function WhatsAppIcon() {
+  return <svg viewBox="0 0 24 24" aria-hidden="true" className="size-4.5" fill="none"><path d="M20 11.6a8 8 0 0 1-11.8 7l-4.2 1.1 1.1-4.1A8 8 0 1 1 20 11.6Z" stroke="currentColor" strokeWidth="1.8"/><path d="M8.3 7.7c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.5l.7 1.7c.1.3.1.5-.1.7l-.5.7c-.2.2-.1.4 0 .6.5.9 1.2 1.7 2.1 2.3.3.2.5.2.7 0l.8-1c.2-.2.4-.3.7-.2l1.7.8c.3.2.5.3.5.5 0 .5-.2 1.3-.6 1.8-.5.6-1.3.9-2.1.9-1 0-2.3-.4-4-1.5-2.1-1.4-3.5-3.5-3.9-4.2-.4-.8-1-2.1-1-3.4 0-1.2.6-1.8 1-2.2.2-.2.5-.3.7-.3" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/></svg>;
+}
+function TelegramIcon() {
+  return <svg viewBox="0 0 24 24" aria-hidden="true" className="size-4.5" fill="none"><path d="m20.4 4.2-3 15.1c-.2 1-1 1.2-1.8.8l-4.6-3.4-2.2 2.1c-.2.2-.5.5-.9.5l.3-4.7 8.6-7.8c.4-.3-.1-.5-.6-.2L5.6 13.3 1 11.9c-1-.3-1-1 .2-1.5l18-6.9c.8-.3 1.5.2 1.2.7Z" stroke="currentColor" strokeWidth="1.55" strokeLinejoin="round"/></svg>;
+}
+function ArrowUpIcon() {
+  return <svg viewBox="0 0 20 20" aria-hidden="true" className="size-4.5" fill="none"><path d="M10 16V4m0 0L5.5 8.5M10 4l4.5 4.5" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"/></svg>;
+}
+
 function ChevronIcon({ open }: { open: boolean }) {
   return (
     <svg
@@ -233,6 +248,10 @@ export function SharedSiteHeader() {
           >
             Contact
           </Link>
+          <div data-header-social className="ml-1 flex items-center gap-1.5 max-[880px]:mt-2 max-[880px]:w-full max-[880px]:border-t max-[880px]:border-slate-200/70 max-[880px]:pt-3">
+            <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" aria-label="WhatsApp +447452191901" className="grid size-9 place-items-center rounded-xl border border-emerald-200/80 bg-emerald-50 text-emerald-700 no-underline transition hover:-translate-y-0.5 hover:bg-emerald-100 max-[880px]:flex-1"><WhatsAppIcon /></a>
+            <a href={TELEGRAM_URL} target="_blank" rel="noreferrer" aria-label="Telegram +447452191901" className="grid size-9 place-items-center rounded-xl border border-sky-200/80 bg-sky-50 text-sky-700 no-underline transition hover:-translate-y-0.5 hover:bg-sky-100 max-[880px]:flex-1"><TelegramIcon /></a>
+          </div>
         </nav>
 
         <Link
@@ -252,14 +271,14 @@ export function SharedSiteHeader() {
 
 export function SharedSiteFooter() {
   return (
-    <footer className="h-fit border-t border-white/10 bg-[#0d0312] pb-7 pt-14 text-white">
+    <footer className="h-fit border-t border-white/10 bg-[#0d0312] pb-6 pt-10 text-white">
       <div className="mx-auto w-[min(1180px,calc(100%_-_32px))]">
-        <div data-site-footer-grid className="grid grid-cols-[1.35fr_1fr_1fr] gap-10 max-[720px]:grid-cols-2 max-[720px]:gap-x-5 max-[720px]:gap-y-7">
-          <div className="max-[720px]:col-span-2">
+        <div data-site-footer-grid className="grid grid-cols-[1.25fr_.8fr_.8fr_1fr] gap-7 max-[900px]:grid-cols-2 max-[720px]:gap-x-5 max-[720px]:gap-y-6">
+          <div className="max-[900px]:col-span-2">
             <Link href="/" className="inline-block text-white no-underline" aria-label="MT4 Grey Label home">
               <BrandLogo tone="light" className="h-12 w-[230px]" />
             </Link>
-            <p className="mt-5 max-w-[390px] text-sm leading-7 text-violet-100/70">
+            <p className="mt-4 max-w-[390px] text-sm leading-[1.55] text-violet-100/70">
               MT4 & MT5 grey label solutions, CRM, PAMM/MAM plugins, liquidity connectivity and broker websites.
             </p>
           </div>
@@ -299,12 +318,34 @@ export function SharedSiteFooter() {
               </Link>
             </div>
           </div>
+          <div data-footer-contact className="min-w-0 max-[720px]:col-span-2">
+            <strong className="mb-4 block text-sm font-extrabold">Contact</strong>
+            <div className="grid gap-2.5 text-sm">
+              <a href={`mailto:${SUPPORT_EMAIL}`} className="w-fit break-all font-medium text-violet-100/70 no-underline transition hover:text-white">{SUPPORT_EMAIL}</a>
+              <a href={`tel:${SUPPORT_PHONE}`} className="w-fit font-medium text-violet-100/70 no-underline transition hover:text-white">{SUPPORT_PHONE}</a>
+              <div className="mt-1 flex gap-2">
+                <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" aria-label="WhatsApp +447452191901" className="grid size-9 place-items-center rounded-xl border border-white/10 bg-white/6 text-emerald-300 no-underline transition hover:bg-white/10 hover:text-emerald-200"><WhatsAppIcon /></a>
+                <a href={TELEGRAM_URL} target="_blank" rel="noreferrer" aria-label="Telegram +447452191901" className="grid size-9 place-items-center rounded-xl border border-white/10 bg-white/6 text-sky-300 no-underline transition hover:bg-white/10 hover:text-sky-200"><TelegramIcon /></a>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="mt-12 border-t border-white/10 pt-5 text-xs leading-5 text-violet-100/55">
+        <div className="mt-8 border-t border-white/10 pt-4 text-xs leading-5 text-violet-100/55">
           <span>© 2026 MT4 Grey Label. Technology services only — not investment advice.</span>
         </div>
       </div>
     </footer>
   );
+}
+
+export function ScrollToTopButton() {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const update = () => setVisible(window.scrollY > 520);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+  return <button data-scroll-top type="button" aria-label="Scroll to top" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className={`fixed bottom-5 right-4 z-[9998] grid size-11 place-items-center rounded-full border border-white/70 bg-white/88 text-violet-800 shadow-[0_16px_45px_rgba(39,17,55,.22)] backdrop-blur-xl transition duration-200 hover:-translate-y-1 hover:bg-white sm:right-5 ${visible ? "visible translate-y-0 opacity-100" : "invisible translate-y-3 opacity-0"}`}><ArrowUpIcon /></button>;
 }
