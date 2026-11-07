@@ -621,6 +621,31 @@ test("footer uses MT4 Grey Label branding and removes agency credit", async ({ p
   await expect(footer).not.toContainText("© 2026 GreyLabel Technology");
 });
 
+test("mobile footer splits Solutions and Explore into two columns", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Mobile footer geometry check runs once in Chromium");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const grid = page.locator("[data-site-footer-grid]");
+  const solutionsMenu = page.locator('[data-footer-menu="solutions"]');
+  const exploreMenu = page.locator('[data-footer-menu="explore"]');
+
+  await expect(solutionsMenu).toBeVisible();
+  await expect(exploreMenu).toBeVisible();
+
+  const templateColumns = await grid.evaluate((element) => getComputedStyle(element).gridTemplateColumns);
+  expect(templateColumns.trim().split(/\\s+/)).toHaveLength(2);
+
+  const [solutionsBox, exploreBox] = await Promise.all([
+    solutionsMenu.boundingBox(),
+    exploreMenu.boundingBox(),
+  ]);
+  expect(solutionsBox).not.toBeNull();
+  expect(exploreBox).not.toBeNull();
+  expect(Math.abs(solutionsBox!.y - exploreBox!.y)).toBeLessThanOrEqual(2);
+  expect(exploreBox!.x).toBeGreaterThan(solutionsBox!.x + solutionsBox!.width - 2);
+});
+
 test("homepage does not render duplicate local How It Works or CTA sections", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Closing-section duplication check runs once in Chromium");
   await page.goto("/");
