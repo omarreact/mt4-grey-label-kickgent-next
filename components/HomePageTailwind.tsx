@@ -245,11 +245,11 @@ export function HomePageTailwind() {
       <section
         data-hero-banner
         data-active-slide={activeHero.id}
-        className="relative isolate h-fit min-h-[690px] overflow-hidden px-2 pb-2 pt-2 text-center sm:px-3 sm:pb-3 sm:pt-3 md:min-h-[760px] xl:min-h-[690px]"
+        className="relative isolate h-fit min-h-[690px] overflow-hidden bg-[#f3e7fb] p-0 text-center md:min-h-[760px] xl:min-h-[690px]"
       >
         <div
           data-hero-frame
-          className="relative isolate min-h-[674px] w-full overflow-hidden rounded-[18px] bg-[#f3e7fb] md:min-h-[736px] xl:min-h-[666px]"
+          className="relative isolate min-h-[690px] w-full overflow-hidden bg-[#f3e7fb] md:min-h-[760px] xl:min-h-[690px]"
         >
           <div className="pointer-events-none absolute inset-0 -z-30" aria-hidden="true">
             {heroSlides.map((slide, index) => (
@@ -281,7 +281,7 @@ export function HomePageTailwind() {
             data-hero-left
             data-hero-scene={activeHero.id}
             aria-live="polite"
-            className="relative grid min-h-[674px] place-items-center px-5 pb-14 pt-12 text-center sm:px-7 md:min-h-[736px] md:px-10 md:pb-16 md:pt-14 xl:min-h-[666px] xl:pb-14 xl:pt-12"
+            className="relative grid min-h-[690px] place-items-center px-5 pb-14 pt-12 text-center sm:px-7 md:min-h-[760px] md:px-10 md:pb-16 md:pt-14 xl:min-h-[690px] xl:pb-14 xl:pt-12"
           >
             {heroSlides.map((slide, index) => {
               const isActive = heroSlide === index;
