@@ -25,10 +25,9 @@ const guides: readonly NavItem[] = [
 const navItem =
   "inline-flex min-h-11 items-center gap-1.5 rounded-xl px-3 py-2 [font-family:inherit] text-[.84rem] font-semibold leading-none text-slate-700 no-underline transition hover:bg-white/70 hover:text-slate-950 focus-visible:bg-white/80 focus-visible:text-slate-950";
 
-const SUPPORT_EMAIL = "support@fxgreylabel.com";
-const SUPPORT_PHONE = "+447452191901";
-const WHATSAPP_URL = "https://wa.me/447452191901";
-const TELEGRAM_URL = "https://t.me/+447452191901";
+const SUPPORT_PHONE = "+44 7988 028424";
+const WHATSAPP_URL = "https://wa.me/447988028424";
+const TELEGRAM_URL = "https://t.me/forexbrokertech";
 
 function WhatsAppIcon() {
   return <svg viewBox="0 0 24 24" aria-hidden="true" className="size-4.5" fill="none"><path d="M20 11.6a8 8 0 0 1-11.8 7l-4.2 1.1 1.1-4.1A8 8 0 1 1 20 11.6Z" stroke="currentColor" strokeWidth="1.8"/><path d="M8.3 7.7c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.5l.7 1.7c.1.3.1.5-.1.7l-.5.7c-.2.2-.1.4 0 .6.5.9 1.2 1.7 2.1 2.3.3.2.5.2.7 0l.8-1c.2-.2.4-.3.7-.2l1.7.8c.3.2.5.3.5.5 0 .5-.2 1.3-.6 1.8-.5.6-1.3.9-2.1.9-1 0-2.3-.4-4-1.5-2.1-1.4-3.5-3.5-3.9-4.2-.4-.8-1-2.1-1-3.4 0-1.2.6-1.8 1-2.2.2-.2.5-.3.7-.3" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/></svg>;
@@ -249,8 +248,8 @@ export function SharedSiteHeader() {
             Contact
           </Link>
           <div data-header-social className="ml-1 flex items-center gap-1.5 max-[880px]:ml-0 max-[880px]:mt-2 max-[880px]:w-full max-[880px]:border-t max-[880px]:border-slate-200/80 max-[880px]:px-1 max-[880px]:pt-3">
-            <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" aria-label="WhatsApp +447452191901" className="grid size-9 place-items-center rounded-xl border border-emerald-200/80 bg-emerald-50 text-emerald-700 no-underline transition hover:-translate-y-0.5 hover:bg-emerald-100 max-[880px]:flex-1"><WhatsAppIcon /></a>
-            <a href={TELEGRAM_URL} target="_blank" rel="noreferrer" aria-label="Telegram +447452191901" className="grid size-9 place-items-center rounded-xl border border-sky-200/80 bg-sky-50 text-sky-700 no-underline transition hover:-translate-y-0.5 hover:bg-sky-100 max-[880px]:flex-1"><TelegramIcon /></a>
+            <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" aria-label="WhatsApp +44 7988 028424" className="grid size-9 place-items-center rounded-xl border border-emerald-200/80 bg-emerald-50 text-emerald-700 no-underline transition hover:-translate-y-0.5 hover:bg-emerald-100 max-[880px]:flex-1"><WhatsAppIcon /></a>
+            <a href={TELEGRAM_URL} target="_blank" rel="noreferrer" aria-label="Telegram @forexbrokertech" className="grid size-9 place-items-center rounded-xl border border-sky-200/80 bg-sky-50 text-sky-700 no-underline transition hover:-translate-y-0.5 hover:bg-sky-100 max-[880px]:flex-1"><TelegramIcon /></a>
           </div>
         </nav>
 
@@ -321,11 +320,10 @@ export function SharedSiteFooter() {
           <div data-footer-contact className="min-w-0 max-[720px]:col-span-2">
             <strong className="mb-4 block text-sm font-extrabold">Contact</strong>
             <div className="grid gap-2.5 text-sm">
-              <a href={`mailto:${SUPPORT_EMAIL}`} className="w-fit break-all font-medium text-violet-100/70 no-underline transition hover:text-white">{SUPPORT_EMAIL}</a>
-              <a href={`tel:${SUPPORT_PHONE}`} className="w-fit font-medium text-violet-100/70 no-underline transition hover:text-white">{SUPPORT_PHONE}</a>
+              <a href="tel:+447988028424" className="w-fit font-medium text-violet-100/70 no-underline transition hover:text-white">{SUPPORT_PHONE}</a>
               <div className="mt-1 flex gap-2">
-                <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" aria-label="WhatsApp +447452191901" className="grid size-9 place-items-center rounded-xl border border-white/10 bg-white/6 text-emerald-300 no-underline transition hover:bg-white/10 hover:text-emerald-200"><WhatsAppIcon /></a>
-                <a href={TELEGRAM_URL} target="_blank" rel="noreferrer" aria-label="Telegram +447452191901" className="grid size-9 place-items-center rounded-xl border border-white/10 bg-white/6 text-sky-300 no-underline transition hover:bg-white/10 hover:text-sky-200"><TelegramIcon /></a>
+                <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" aria-label="WhatsApp +44 7988 028424" className="grid size-9 place-items-center rounded-xl border border-white/10 bg-white/6 text-emerald-300 no-underline transition hover:bg-white/10 hover:text-emerald-200"><WhatsAppIcon /></a>
+                <a href={TELEGRAM_URL} target="_blank" rel="noreferrer" aria-label="Telegram @forexbrokertech" className="grid size-9 place-items-center rounded-xl border border-white/10 bg-white/6 text-sky-300 no-underline transition hover:bg-white/10 hover:text-sky-200"><TelegramIcon /></a>
               </div>
             </div>
           </div>
