@@ -23,7 +23,7 @@ const guides: readonly NavItem[] = [
 ];
 
 const navItem =
-  "inline-flex min-h-11 items-center gap-1.5 rounded-xl px-3 py-2 text-[.84rem] font-semibold leading-none text-slate-700 no-underline transition hover:bg-white/70 hover:text-slate-950 focus-visible:bg-white/80 focus-visible:text-slate-950";
+  "inline-flex min-h-11 items-center gap-1.5 rounded-xl px-3 py-2 [font-family:inherit] text-[.84rem] font-semibold leading-none text-slate-700 no-underline transition hover:bg-white/70 hover:text-slate-950 focus-visible:bg-white/80 focus-visible:text-slate-950";
 
 const SUPPORT_EMAIL = "support@fxgreylabel.com";
 const SUPPORT_PHONE = "+447452191901";
@@ -132,7 +132,7 @@ function MenuGroup({
             href={`/${slug}`}
             key={slug}
             onClick={onNavigate}
-            className="flex min-h-11 items-center justify-between rounded-xl bg-white/20 px-3.5 py-3 text-[.82rem] font-semibold text-slate-800 no-underline transition hover:bg-violet-50 hover:text-violet-800 focus-visible:bg-violet-50 focus-visible:text-violet-800"
+            className="flex min-h-11 items-center justify-between rounded-xl bg-white/20 px-3.5 py-3 [font-family:inherit] text-[.84rem] font-semibold leading-none text-slate-800 no-underline transition hover:bg-violet-50 hover:text-violet-800 focus-visible:bg-violet-50 focus-visible:text-violet-800"
           >
             <span>{name}</span>
             <svg viewBox="0 0 20 20" aria-hidden="true" className="size-4 text-violet-500" fill="none">
