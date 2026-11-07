@@ -68,3 +68,7 @@ npm run test:ui
 - `pages.yml` builds the base-path-aware standalone HTML view and deploys it to GitHub Pages.
 - `ui-qa.yml` runs browser interaction and responsive smoke tests.
 - `release.yml` publishes versioned artifacts only when an explicit `v*` tag is pushed.
+
+## Auto-generated all-pages single HTML
+
+Run `npm run export:single-html` to build the whole Next.js site into **`template/website.html`**. The exporter uses the same 12 static route outputs, embeds the compiled Tailwind CSS, retains all 12 rendered pages in HTML `<template>` blocks, and provides hash URLs such as `website.html#/mt4-grey-label`. All content is generated from the Next.js source, not maintained separately. The existing PinTheme distribution workflow regenerates and commits the file when source changes on `main`. External photo URLs still require a connection; compiled Next.js JavaScript is replaced by lightweight native controls for the template view. Keep this generated file read-only and update source components/content instead.
