@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "./site-pages.css";
 import { SharedSiteFooter, SharedSiteHeader } from "@/components/SharedSiteChrome";
+import { SharedClosingSections } from "@/components/SharedClosingSections";
 import { SiteMotion } from "@/components/SiteMotion";
 
 export const metadata: Metadata = {
-  title: { default: "MT4 & MT5 Grey Label Solutions", template: "%s | GreyLabel" },
+  title: { default: "MT4 & MT5 Grey Label Solutions", template: "%s | MT4 Grey Label" },
   description: "MT4 and MT5 Grey Label solutions, broker CRM, PAMM/MAM and liquidity connectivity.",
-  applicationName: "GreyLabel Technology",
+  applicationName: "MT4 Grey Label",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <SharedSiteHeader />
       <SiteMotion />
       <div id="main-content">{children}</div>
+      <SharedClosingSections />
       <SharedSiteFooter />
     </body>
   </html>;

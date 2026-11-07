@@ -23,7 +23,7 @@ export function SiteMotion() {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const targets = Array.from(
       document.querySelectorAll<HTMLElement>(
-        "#main-content section, #main-content .content-section, #main-content .related-card, #main-content .page-sidebar, footer > div"
+        "#main-content section, #main-content .content-section, #main-content .related-card, #main-content .page-sidebar, [data-global-how-it-works], [data-global-cta], footer > div"
       )
     );
 

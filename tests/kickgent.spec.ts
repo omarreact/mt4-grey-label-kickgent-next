@@ -123,8 +123,10 @@ test("homepage branding, portraits, carousel and glass overlays render", async (
   await page.getByRole("button", { name: "Next solutions" }).click();
   await expect.poll(() => slider.evaluate((element) => element.scrollLeft)).toBeGreaterThan(before);
 
-  const platformOverlay = page.locator("#solutions article").first().locator("div").last();
-  await expect(platformOverlay).toHaveCSS("backdrop-filter", /blur/);
+  const platformCards = page.locator("[data-platform-card]");
+  await expect(platformCards).toHaveCount(5);
+  await expect(platformCards.first().locator("svg")).toHaveCount(2);
+  await expect(platformCards.first()).not.toContainText("01");
 });
 
 test("inner-page supporting surfaces receive the global glass treatment", async ({ page }, testInfo) => {
@@ -210,7 +212,7 @@ test("requested homepage section backgrounds and glass overlays are applied", as
   await expect(journey.locator("img").first()).toHaveAttribute("src", /images\.unsplash\.com/);
   await expect(journey.locator("article").first()).toHaveCSS("backdrop-filter", /blur/);
 
-  const how = page.locator("[data-how-it-works]");
+  const how = page.locator("[data-global-how-it-works]");
   await expect(how.locator("img").first()).toHaveAttribute("src", /images\.unsplash\.com/);
   await expect(how.locator("article").first()).toHaveCSS("backdrop-filter", /blur/);
 });
@@ -525,4 +527,106 @@ test("right hero contains only independent floating elements", async ({ page }, 
     expect(box!.y).toBeGreaterThanOrEqual(parent!.y - 1);
     expect(box!.y + box!.height).toBeLessThanOrEqual(parent!.y + parent!.height + 1);
   }
+});
+
+test("premium platform cards use flex layout with three cards on the first desktop row", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Platform-card geometry runs once in Chromium");
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/");
+
+  const cards = page.locator("[data-platform-card]");
+  await expect(cards).toHaveCount(5);
+
+  const boxes = await Promise.all([0,1,2,3,4].map((index) => cards.nth(index).boundingBox()));
+  boxes.forEach((box) => expect(box).not.toBeNull());
+
+  expect(Math.abs(boxes[0]!.y - boxes[1]!.y)).toBeLessThanOrEqual(2);
+  expect(Math.abs(boxes[1]!.y - boxes[2]!.y)).toBeLessThanOrEqual(2);
+  expect(boxes[3]!.y).toBeGreaterThan(boxes[0]!.y + 20);
+  expect(Math.abs(boxes[3]!.y - boxes[4]!.y)).toBeLessThanOrEqual(2);
+  expect(boxes[3]!.width).toBeGreaterThan(boxes[0]!.width);
+});
+
+test("solution carousel uses icons instead of numeric indicators", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Solution-card icon audit runs once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/");
+
+  const cards = page.locator("[data-solution-card]");
+  await expect(cards).toHaveCount(10);
+  await expect(cards.first().locator("svg")).toHaveCount(3);
+  for (const marker of ["01","02","03","04","05","06","07","08","09","10"]) {
+    await expect(page.locator("[data-solution-card]", { hasText: marker })).toHaveCount(0);
+  }
+});
+
+test("global How It Works CTA and footer render once on homepage and inner pages", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Global closing-system check runs once in Chromium");
+
+  for (const route of ["/", "/mt4-grey-label", "/about"]) {
+    await page.goto(route);
+    await expect(page.locator("[data-global-how-it-works]")).toHaveCount(1);
+    await expect(page.locator("[data-global-cta]")).toHaveCount(1);
+    await expect(page.locator("body > footer")).toHaveCount(1);
+    await expect(page.locator(".kg-page-content .site-footer")).toBeHidden();
+    await expect(page.locator(".kg-page-content .bottom-cta")).toBeHidden();
+  }
+});
+
+test("global How It Works is a timeline with icons and no numbered step badges", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Global timeline check runs once in Chromium");
+  await page.goto("/");
+
+  const how = page.locator("[data-global-how-it-works]");
+  await expect(how.locator("article")).toHaveCount(5);
+  await expect(how.locator("article svg")).toHaveCount(5);
+  for (const marker of ["01","02","03","04","05"]) {
+    await expect(how).not.toContainText(marker);
+  }
+});
+
+test("mobile inner pages hide On this page and chapter number indicators", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Mobile inner-page content check runs once in Chromium");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/mt4-grey-label");
+
+  await expect(page.locator(".page-sidebar")).toBeHidden();
+  await expect(page.locator(".content-article")).toBeVisible();
+  await expect(page.locator(".chapter-tag").first()).toBeHidden();
+
+  const title = page.locator(".page-hero h1");
+  const fontSize = await title.evaluate((element) => parseFloat(getComputedStyle(element).fontSize));
+  expect(fontSize).toBeLessThanOrEqual(38);
+});
+
+test("inner-page connected-solution card keeps readable contrast", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Sidebar CTA contrast check runs once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/mt4-grey-label");
+
+  const help = page.locator(".sidebar-help");
+  await expect(help).toBeVisible();
+  await expect(help).toHaveCSS("background-color", "rgb(50, 21, 67)");
+  await expect(help.locator("b")).toHaveCSS("color", "rgb(255, 255, 255)");
+  await expect(help.locator("a")).toHaveCSS("color", "rgb(255, 255, 255)");
+});
+
+test("footer uses MT4 Grey Label branding and removes agency credit", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Footer branding check runs once in Chromium");
+  await page.goto("/");
+
+  const footer = page.locator("footer");
+  await expect(footer).toContainText("MT4 Grey Label");
+  await expect(footer).not.toContainText("Built by PINCODE IT");
+  await expect(footer).not.toContainText("© 2026 GreyLabel Technology");
+});
+
+test("homepage does not render duplicate local How It Works or CTA sections", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Closing-section duplication check runs once in Chromium");
+  await page.goto("/");
+
+  await expect(page.locator("#main-content [data-global-how-it-works]")).toHaveCount(0);
+  await expect(page.locator("#main-content [data-bottom-cta-button]")).toHaveCount(0);
+  await expect(page.locator("[data-global-how-it-works]")).toHaveCount(1);
+  await expect(page.locator("[data-global-cta] [data-bottom-cta-button]")).toHaveCount(1);
 });

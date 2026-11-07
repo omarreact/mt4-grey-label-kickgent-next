@@ -51,7 +51,7 @@ export function KickgentExperience({ page }: Props) {
     });
 
     const overlayTargets = root.querySelectorAll<HTMLElement>(
-      ".art-bubble,.float,.runtime,.sidebar-help,.hero-ui .progress,.hero-ui .files,.related-card"
+      ".art-bubble,.float,.runtime,.hero-ui .progress,.hero-ui .files,.related-card"
     );
     overlayTargets.forEach((element) => element.classList.add(...glassOverlayClasses));
 
@@ -104,8 +104,10 @@ export function KickgentExperience({ page }: Props) {
         "!m-0",
         "!max-w-[900px]",
         "!text-white",
-        "!text-[clamp(2.35rem,5vw,4.55rem)]",
+        "!text-[clamp(2.2rem,5vw,4.4rem)]",
         "!leading-[1.02]",
+        "max-[640px]:!text-[clamp(1.8rem,8vw,2.35rem)]",
+        "max-[640px]:!leading-[1.08]",
         "drop-shadow-[0_3px_18px_rgba(15,23,42,.5)]"
       );
 
@@ -119,6 +121,8 @@ export function KickgentExperience({ page }: Props) {
         "!leading-7",
         "!text-white/86",
         "sm:!text-lg",
+        "max-[640px]:!text-[.94rem]",
+        "max-[640px]:!leading-6",
         "drop-shadow-[0_3px_18px_rgba(15,23,42,.45)]"
       );
 
@@ -158,8 +162,27 @@ export function KickgentExperience({ page }: Props) {
       }
     }
 
-    root.querySelectorAll<HTMLElement>(".bottom-cta .cta-layout")
-      .forEach((element) => element.classList.add(...glassOverlayClasses));
+    const pageSidebar = root.querySelector<HTMLElement>(".page-sidebar");
+    pageSidebar?.classList.add("max-[880px]:!hidden");
+
+    root.querySelectorAll<HTMLElement>(".chapter-tag")
+      .forEach((element) => element.classList.add("!hidden"));
+
+    const sidebarHelp = root.querySelector<HTMLElement>(".sidebar-help");
+    if (sidebarHelp) {
+      sidebarHelp.classList.add(
+        "!bg-[#321543]",
+        "!text-white",
+        "!shadow-[0_16px_42px_rgba(50,21,67,.22)]",
+        "!backdrop-blur-xl"
+      );
+      sidebarHelp.querySelector<HTMLElement>("p")?.classList.add("!text-violet-100/80");
+      sidebarHelp.querySelector<HTMLElement>("a")?.classList.add("!text-white", "!font-extrabold");
+      sidebarHelp.querySelector<HTMLElement>("b")?.classList.add("!text-white");
+    }
+
+    root.querySelectorAll<HTMLElement>(".bottom-cta")
+      .forEach((element) => element.classList.add("!hidden"));
 
     return () => {
       injected.forEach((script) => script.remove());

@@ -242,12 +242,13 @@ export function SharedSiteHeader() {
 
 export function SharedSiteFooter() {
   return (
-    <footer className="border-t border-white/10 bg-[#0d0312] pb-7 pt-14 text-white">
+    <footer className="h-fit border-t border-white/10 bg-[#0d0312] pb-7 pt-14 text-white">
       <div className="mx-auto w-[min(1180px,calc(100%_-_32px))]">
         <div className="grid grid-cols-[1.35fr_1fr_1fr] gap-10 max-[720px]:grid-cols-1 max-[720px]:gap-7">
           <div>
-            <Link href="/" className="inline-block text-white" aria-label="GreyLabel Technology home">
-              <BrandLogo className="h-12 w-[205px]" />
+            <Link href="/" className="inline-flex items-center gap-3 text-white no-underline" aria-label="MT4 Grey Label home">
+              <BrandLogo compact className="size-12" />
+              <span className="text-xl font-extrabold tracking-[-.04em]">MT4 Grey Label</span>
             </Link>
             <p className="mt-5 max-w-[390px] text-sm leading-7 text-violet-100/70">
               MT4 & MT5 grey label solutions, CRM, PAMM/MAM plugins, liquidity connectivity and broker websites.
@@ -288,9 +289,8 @@ export function SharedSiteFooter() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-5 text-xs leading-5 text-violet-100/55">
-          <span>© 2026 GreyLabel Technology. Technology services only — not investment advice.</span>
-          <span>Built by PINCODE IT</span>
+        <div className="mt-12 border-t border-white/10 pt-5 text-xs leading-5 text-violet-100/55">
+          <span>© 2026 MT4 Grey Label. Technology services only — not investment advice.</span>
         </div>
       </div>
     </footer>
