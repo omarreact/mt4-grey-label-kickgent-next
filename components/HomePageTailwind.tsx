@@ -274,7 +274,7 @@ export function HomePageTailwind() {
       <section
         data-hero-banner
         data-active-slide={activeHero.id}
-        className="relative isolate overflow-hidden px-4 pb-10 pt-[112px] text-white sm:px-6 sm:pt-[122px] xl:h-[min(100svh,820px)] xl:min-h-[690px] xl:py-[104px]"
+        className="relative isolate overflow-hidden px-4 pb-10 pt-[112px] text-white sm:px-6 sm:pt-[122px] md:min-h-[760px] md:py-[104px] xl:h-[min(100svh,820px)] xl:min-h-[690px]"
       >
         <div className="pointer-events-none absolute inset-0 -z-30" aria-hidden="true">
           {heroSlides.map((slide, index) => (
@@ -287,30 +287,30 @@ export function HomePageTailwind() {
           ))}
         </div>
         <div className="pointer-events-none absolute inset-0 -z-20 bg-slate-950/42 backdrop-blur-[1.5px]" />
-        <div className="pointer-events-none absolute inset-x-[5%] top-[15%] -z-10 hidden h-[68%] rounded-[50%] border border-white/20 xl:block" />
+        <div className="pointer-events-none absolute inset-x-[5%] top-[15%] -z-10 hidden h-[68%] rounded-[50%] border border-white/20 md:block" />
 
-        <div data-hero-frame className="relative mx-auto w-full max-w-[1480px] overflow-hidden rounded-[38px] border border-white/20 bg-slate-950/30 p-4 shadow-[0_30px_90px_rgba(15,23,42,.24)] backdrop-blur-xl sm:p-6 xl:h-[560px] xl:p-7">
+        <div data-hero-frame className="relative mx-auto w-full max-w-[1480px] overflow-hidden rounded-[38px] border border-white/20 bg-slate-950/30 p-4 shadow-[0_30px_90px_rgba(15,23,42,.24)] backdrop-blur-xl sm:p-6 md:h-[620px] md:p-5 lg:h-[580px] xl:h-[560px] xl:p-7">
           <div
             data-hero-left
             data-hero-scene={activeHero.id}
             aria-live="polite"
-            className={`min-w-0 rounded-[28px] border border-white/14 bg-white/[.045] p-5 text-left transition-all duration-500 sm:p-7 xl:flex xl:h-full xl:w-[52%] xl:flex-col xl:justify-center xl:border-0 xl:bg-transparent xl:p-8 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
+            className={`min-w-0 rounded-[28px] border border-white/14 bg-white/[.045] p-5 text-left transition-all duration-500 sm:p-7 md:flex md:h-full md:w-[52%] md:flex-col md:justify-center md:border-0 md:bg-transparent md:p-5 lg:p-7 xl:p-8 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
           >
             <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/35 bg-white/14 px-3.5 py-2 text-[.68rem] font-bold tracking-[.1em] text-white shadow-[0_10px_30px_rgba(15,23,42,.18)] backdrop-blur-2xl sm:text-xs">
               <span className="grid size-5 shrink-0 place-items-center rounded-full border border-white/40 bg-white/20">✦</span>
               <span className="min-w-0 break-words">{activeHero.badge}</span>
             </span>
 
-            <h1 className="mt-6 max-w-[620px] text-balance text-[clamp(2.45rem,5vw,4.65rem)] font-semibold leading-[.96] tracking-[-.06em] text-white drop-shadow-[0_4px_22px_rgba(15,23,42,.48)]">
+            <h1 className="mt-6 max-w-[620px] text-balance text-[clamp(2.1rem,4.6vw,4.65rem)] font-semibold leading-[.96] tracking-[-.06em] text-white drop-shadow-[0_4px_22px_rgba(15,23,42,.48)] md:mt-4">
               {activeHero.title}
               <span className="block">{activeHero.titleAccent}</span>
             </h1>
 
-            <p className="mt-5 max-w-[590px] text-pretty text-[.95rem] font-medium leading-7 text-white/88 drop-shadow-[0_3px_18px_rgba(15,23,42,.45)] sm:text-[1.03rem]">
+            <p className="mt-5 max-w-[590px] text-pretty text-[.92rem] font-medium leading-7 text-white/88 drop-shadow-[0_3px_18px_rgba(15,23,42,.45)] sm:text-[1.03rem] md:mt-4 md:text-[.9rem] md:leading-6 lg:text-[1rem] lg:leading-7">
               {activeHero.description}
             </p>
 
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap md:mt-5 md:gap-2.5">
               <Link
                 href={activeHero.primary.href}
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/35 bg-white/18 px-5 text-sm font-extrabold text-white shadow-[0_15px_38px_rgba(15,23,42,.22)] backdrop-blur-2xl transition hover:-translate-y-0.5 hover:bg-white/24"
@@ -343,32 +343,32 @@ export function HomePageTailwind() {
           <div
             data-hero-right
             data-hero-scene={activeHero.id}
-            className={`relative mt-5 min-w-0 rounded-[28px] border border-white/20 bg-white/10 p-4 shadow-[0_28px_80px_rgba(15,23,42,.24)] backdrop-blur-2xl transition-all duration-500 sm:p-5 xl:absolute xl:bottom-7 xl:right-7 xl:top-7 xl:mt-0 xl:w-[43%] xl:p-0 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
+            className={`relative mt-5 min-w-0 rounded-[28px] border border-white/20 bg-white/10 p-4 shadow-[0_28px_80px_rgba(15,23,42,.24)] backdrop-blur-2xl transition-all duration-500 sm:p-5 md:absolute md:bottom-5 md:right-5 md:top-5 md:mt-0 md:w-[43%] md:p-0 xl:bottom-7 xl:right-7 xl:top-7 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
           >
             <div
               data-hero-right-stage
-              className="relative z-10 min-h-[440px] xl:h-full xl:min-h-0"
+              className="relative z-10 min-h-[440px] md:h-full md:min-h-0"
             >
-              <div className="pointer-events-none absolute inset-4 rounded-[28px] border border-white/15 xl:inset-5" />
+              <div className="pointer-events-none absolute inset-3 rounded-[24px] border border-white/15 md:inset-4 xl:inset-5" />
               <div className="pointer-events-none absolute left-1/2 top-1/2 h-[72%] w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-[50%] border border-white/20" />
-              <div className="pointer-events-none absolute right-7 top-7 grid size-14 place-items-center rounded-full border border-white/25 bg-white/10 text-xl backdrop-blur-xl">
+              <div className="pointer-events-none absolute right-4 top-4 grid size-10 place-items-center rounded-full border border-white/25 bg-white/10 text-base backdrop-blur-xl lg:right-6 lg:top-6 lg:size-12 lg:text-lg xl:right-7 xl:top-7 xl:size-14 xl:text-xl">
                 ✦
               </div>
 
               <div
                 data-hero-float
-                className="mx-auto flex w-full max-w-[420px] min-w-0 flex-col justify-between rounded-[26px] border border-white/28 bg-slate-950/28 p-5 text-left shadow-[0_24px_65px_rgba(15,23,42,.22)] backdrop-blur-2xl sm:p-6 xl:absolute xl:left-1/2 xl:top-7 xl:w-[72%] xl:-translate-x-1/2"
+                className="mx-auto flex w-full max-w-[420px] min-w-0 flex-col justify-between rounded-[24px] border border-white/28 bg-slate-950/28 p-4 text-left shadow-[0_24px_65px_rgba(15,23,42,.22)] backdrop-blur-2xl md:absolute md:left-1/2 md:top-4 md:w-[84%] md:-translate-x-1/2 lg:top-5 lg:w-[78%] lg:p-5 xl:top-7 xl:w-[72%] xl:p-6"
               >
                 <div className="flex min-w-0 items-center justify-between gap-3">
-                  <span className="grid size-10 shrink-0 place-items-center rounded-full border border-white/20 bg-white/14">☰</span>
+                  <span className="grid size-8 shrink-0 place-items-center rounded-full border border-white/20 bg-white/14 lg:size-9 xl:size-10">☰</span>
                   <span className="min-w-0 flex-1 break-words text-center text-xs font-bold tracking-[.08em] text-white/85">{activeHero.label}</span>
                   <span className="grid size-10 shrink-0 place-items-center rounded-full border border-white/20 bg-white/14">✎</span>
                 </div>
                 <div className="py-5 text-center">
-                  <strong className="block break-words text-[1.8rem] font-medium leading-tight tracking-[-.05em] sm:text-[2rem]">
+                  <strong className="block break-words text-[1.35rem] font-medium leading-tight tracking-[-.05em] md:text-[1.25rem] lg:text-[1.55rem] xl:text-[2rem]">
                     {activeHero.assistantTitle}
                   </strong>
-                  <p className="mt-2 break-words text-sm leading-6 text-white/78">
+                  <p className="mt-2 break-words text-xs leading-5 text-white/78 lg:text-sm lg:leading-6">
                     {activeHero.assistantText}
                   </p>
                 </div>
@@ -381,10 +381,10 @@ export function HomePageTailwind() {
                 </div>
               </div>
 
-              <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:absolute xl:inset-x-6 xl:bottom-6 xl:mt-0">
+              <div className="mt-4 grid gap-2.5 sm:grid-cols-2 md:absolute md:inset-x-4 md:bottom-4 md:mt-0 md:grid-cols-1 lg:inset-x-5 lg:bottom-5 lg:grid-cols-2 xl:inset-x-6 xl:bottom-6 xl:gap-3">
                 <div
                   data-hero-float
-                  className="min-w-0 rounded-[20px] border border-white/28 bg-slate-950/28 p-4 text-left shadow-[0_18px_48px_rgba(15,23,42,.2)] backdrop-blur-2xl"
+                  className="min-w-0 rounded-[18px] border border-white/28 bg-slate-950/28 p-3.5 text-left shadow-[0_18px_48px_rgba(15,23,42,.2)] backdrop-blur-2xl lg:p-4"
                 >
                   <span className="block break-words text-[11px] font-bold uppercase tracking-[.12em] text-white/75">{activeHero.progressLabel}</span>
                   <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/12">

@@ -333,7 +333,7 @@ for (const viewport of bannerViewports) {
     expect(leftBox!.y + leftBox!.height).toBeLessThanOrEqual(heroBox!.y + heroBox!.height + 1);
     expect(rightBox!.y + rightBox!.height).toBeLessThanOrEqual(heroBox!.y + heroBox!.height + 1);
 
-    if (viewport.width >= 1280) {
+    if (viewport.width >= 768) {
       const horizontalOverlap = Math.min(leftBox!.x + leftBox!.width, rightBox!.x + rightBox!.width) - Math.max(leftBox!.x, rightBox!.x);
       expect(horizontalOverlap).toBeLessThanOrEqual(0);
     } else {
@@ -448,3 +448,26 @@ test("desktop hero visual module occupies only the marked right-side area", asyn
 
   expect(leftBox!.x + leftBox!.width).toBeLessThanOrEqual(rightBox!.x - 8);
 });
+
+for (const viewport of [
+  { width: 768, height: 1024 },
+  { width: 820, height: 1180 },
+  { width: 1024, height: 768 },
+  { width: 1280, height: 800 },
+  { width: 1440, height: 900 },
+]) {
+  test(`tablet and desktop hero stays side-by-side at ${viewport.width}x${viewport.height}`, async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== "chromium", "Side-by-side hero geometry runs once in Chromium");
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+
+    const left = page.locator("[data-hero-left]");
+    const right = page.locator("[data-hero-right]");
+    const [leftBox, rightBox] = await Promise.all([left.boundingBox(), right.boundingBox()]);
+
+    expect(leftBox).not.toBeNull();
+    expect(rightBox).not.toBeNull();
+    expect(leftBox!.x + leftBox!.width).toBeLessThanOrEqual(rightBox!.x - 4);
+    expect(Math.abs(leftBox!.y - rightBox!.y)).toBeLessThanOrEqual(40);
+  });
+}
