@@ -251,12 +251,12 @@ export function HomePageTailwind() {
         <div className="pointer-events-none absolute inset-0 -z-30" aria-hidden="true">
           <img
             data-hero-background
-            src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=2200&q=88"
+            src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=1800&q=78"
             alt=""
             className="absolute inset-0 h-full w-full object-cover object-[center_46%]"
           />
         </div>
-        <div data-hero-overlay className="pointer-events-none absolute inset-0 -z-20 bg-slate-950/34 backdrop-blur-[0.5px]" />
+        <div data-hero-overlay className="pointer-events-none absolute inset-0 -z-20 bg-[linear-gradient(115deg,rgba(255,250,255,.925),rgba(238,219,255,.878)_54%,rgba(188,232,238,.816))]" />
         <div className="pointer-events-none absolute inset-x-[5%] top-[15%] -z-10 hidden h-[68%] rounded-[50%] border border-white/20 md:block" />
 
         <div data-hero-frame className="relative mx-auto h-fit w-full max-w-[1480px] overflow-hidden rounded-[38px] border border-white/20 bg-slate-950/22 p-4 pb-14 shadow-[0_30px_90px_rgba(15,23,42,.22)] backdrop-blur-[4px] sm:p-6 sm:pb-14 md:min-h-[620px] md:p-5 md:pb-14 lg:min-h-[580px] xl:min-h-[560px] xl:p-7 xl:pb-14">
