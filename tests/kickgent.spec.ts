@@ -310,6 +310,37 @@ test("inner page route pills use the branded site icon", async ({ page }, testIn
   expect(currentIcon.backgroundImage).toBe("none");
 });
 
+test("On this page sidebar follows the active section and scrolls internally", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "TOC scroll behavior runs once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 760 });
+  await page.goto("/about");
+
+  const sidebar = page.locator(".page-sidebar");
+  await expect(sidebar).toBeVisible();
+  const overflowY = await sidebar.evaluate((element) => getComputedStyle(element).overflowY);
+  expect(overflowY).toBe("auto");
+
+  const links = sidebar.locator(".toc-links a");
+  const lastLink = links.last();
+  const href = await lastLink.getAttribute("href");
+  expect(href).toBeTruthy();
+
+  await page.locator(href!).scrollIntoViewIfNeeded();
+  await expect(lastLink).toHaveClass(/active/);
+  await expect(lastLink).toHaveAttribute("aria-current", "location");
+
+  const [sidebarScrollTop, lastBox, sidebarBox] = await Promise.all([
+    sidebar.evaluate((element) => element.scrollTop),
+    lastLink.boundingBox(),
+    sidebar.boundingBox(),
+  ]);
+  expect(sidebarScrollTop).toBeGreaterThan(0);
+  expect(lastBox).not.toBeNull();
+  expect(sidebarBox).not.toBeNull();
+  expect(lastBox!.top).toBeGreaterThanOrEqual(sidebarBox!.top);
+  expect(lastBox!.bottom).toBeLessThanOrEqual(sidebarBox!.bottom + 2);
+});
+
 test("inner pages keep layout and receive image-backed glass visual system", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Inner-page visual treatment runs once in Chromium");
   await page.goto("/mt4-grey-label");
