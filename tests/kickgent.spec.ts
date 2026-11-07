@@ -789,5 +789,17 @@ test("mobile banner shows only left content and removes outside bottom spacing",
   const bottomPadding = await page.locator("[data-hero-banner]").evaluate((element) =>
     parseFloat(getComputedStyle(element).paddingBottom)
   );
+  expect(bottomPadding).toBeGreaterThanOrEqual(16);
+  expect(bottomPadding).toBeLessThanOrEqual(20);
+});
+
+test("desktop banner keeps zero outside bottom spacing", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Desktop hero spacing check runs once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/");
+
+  const bottomPadding = await page.locator("[data-hero-banner]").evaluate((element) =>
+    parseFloat(getComputedStyle(element).paddingBottom)
+  );
   expect(bottomPadding).toBe(0);
 });

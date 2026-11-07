@@ -248,7 +248,7 @@ export function HomePageTailwind() {
       <section
         data-hero-banner
         data-active-slide={activeHero.id}
-        className="relative isolate h-fit overflow-hidden px-4 pb-0 pt-[112px] text-white sm:px-6 sm:pt-[122px] md:min-h-[760px] md:pb-0 md:pt-[100px] xl:min-h-[690px]"
+        className="relative isolate h-fit overflow-hidden px-4 pb-4 pt-[112px] text-white sm:px-6 sm:pb-5 sm:pt-[122px] md:min-h-[760px] md:pb-0 md:pt-[100px] xl:min-h-[690px]"
       >
         <div className="pointer-events-none absolute inset-0 -z-30" aria-hidden="true">
           {heroSlides.map((slide, index) => (
