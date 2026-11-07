@@ -28,3 +28,7 @@ body { margin: 0; background: var(--color-background); color: var(--color-foregr
 #main-content.route-entering{opacity:0;transform:translateY(8px)}
 #main-content.route-entered{opacity:1;transform:translateY(0);transition:opacity .24s ease,transform .24s ease}
 @media(prefers-reduced-motion:reduce){#main-content.route-entering,#main-content.route-entered{opacity:1;transform:none;transition:none}}
+
+/* Hero secondary CTA must remain dark on its light surface across generated outputs. */
+.hero-secondary-cta { color: #35184d !important; }
+.hero-secondary-cta svg { color: inherit; }
