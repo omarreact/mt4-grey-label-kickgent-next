@@ -240,9 +240,6 @@ export function HomePageTailwind() {
     });
   };
 
-  const activeJourney = journeySteps[journeyIndex];
-  const journeyProgress = ["w-1/4", "w-1/2", "w-3/4", "w-full"][journeyIndex];
-
   return (
     <main className="overflow-hidden bg-[#100414] text-white">
       <section
@@ -523,68 +520,111 @@ export function HomePageTailwind() {
           </div>
 
           <div className="mt-12 grid gap-5 lg:grid-cols-[.9fr_1.1fr]">
-            <div className="grid gap-3" role="tablist" aria-label="Active client journey">
+            <div
+              data-journey-tabs
+              className="grid grid-cols-4 gap-2 md:grid-cols-2 md:gap-3 lg:grid-cols-1"
+              role="tablist"
+              aria-label="Active client journey"
+            >
               {journeySteps.map((step, index) => {
                 const selected = index === journeyIndex;
                 return (
                   <button
+                    data-journey-tab={step.title}
                     key={step.title}
                     type="button"
                     role="tab"
                     aria-selected={selected}
+                    aria-controls={`journey-panel-${index}`}
                     onClick={() => setJourneyIndex(index)}
                     className={[
-                      "tab flex min-h-24 w-full items-center gap-4 rounded-[20px] border p-4 text-left transition sm:p-5",
+                      "tab flex aspect-square min-h-0 w-full items-center justify-center rounded-[18px] border p-3 text-center transition md:aspect-auto md:min-h-24 md:justify-start md:gap-4 md:p-5 md:text-left",
                       selected
-                        ? "border-fuchsia-300/45 bg-white/12 shadow-[0_16px_45px_rgba(81,25,115,.28)] backdrop-blur-2xl"
+                        ? "border-fuchsia-300/55 bg-white/14 shadow-[0_14px_38px_rgba(81,25,115,.3)] backdrop-blur-2xl"
                         : "border-white/10 bg-white/[.045] hover:border-white/20 hover:bg-white/[.075]",
                     ].join(" ")}
                   >
-                    <span className={`grid size-11 shrink-0 place-items-center rounded-xl ${selected ? "bg-fuchsia-200 text-violet-950" : "bg-white/8 text-violet-100/70"}`}>
+                    <span className={`grid size-11 shrink-0 place-items-center rounded-xl transition md:size-11 ${
+                      selected ? "bg-fuchsia-200 text-violet-950" : "bg-white/8 text-violet-100/70"
+                    }`}>
                       <FeatureIcon name={step.icon} className="size-5" />
                     </span>
-                    <span className="min-w-0">
+                    <span className="sr-only">{step.title}: {step.label}</span>
+                    <span className="hidden min-w-0 md:block">
                       <strong className="block break-words text-base font-bold">{step.title}</strong>
                       <span className="mt-1 block break-words text-xs leading-5 text-violet-100/55">{step.label}</span>
                     </span>
-                    <span className="ml-auto hidden text-fuchsia-200 sm:block">↗</span>
+                    <span className="ml-auto hidden text-fuchsia-200 lg:block">↗</span>
                   </button>
                 );
               })}
-            </div>
+            </div>            </div>
 
             <article
-              role="tabpanel"
+              data-journey-stage
               className="relative overflow-hidden rounded-[28px] border border-white/15 bg-[radial-gradient(circle_at_78%_18%,rgba(192,132,252,.3),transparent_34%),rgba(255,255,255,.055)] p-5 shadow-[0_28px_80px_rgba(8,2,14,.28)] backdrop-blur-2xl sm:p-8"
             >
-              <div className="flex flex-wrap items-start justify-between gap-4">
-                <div className="min-w-0">
-                  <span className="inline-flex items-center gap-2 text-xs font-extrabold tracking-[.16em] text-fuchsia-200"><FeatureIcon name={activeJourney.icon} className="size-4" /> CONNECTED WORKFLOW</span>
-                  <h3 className="mt-3 break-words text-3xl font-semibold tracking-[-.05em] sm:text-4xl">{activeJourney.title}</h3>
-                  <p className="mt-4 max-w-[620px] text-sm leading-7 text-violet-100/70 sm:text-base">{activeJourney.text}</p>
-                </div>
-                <span className="rounded-full border border-emerald-200/20 bg-emerald-300/10 px-3 py-2 text-xs font-bold text-emerald-200 backdrop-blur-xl">
-                  Live workflow
-                </span>
-              </div>
+              <div data-journey-panels className="grid">
+                {journeySteps.map((step, index) => {
+                  const selected = index === journeyIndex;
+                  const progressClass = ["w-1/4", "w-1/2", "w-3/4", "w-full"][index];
+                  const nextOwner = index < 2 ? "Client operations" : "Retention & support";
+                  const automation =
+                    index === 0
+                      ? "Create client profile"
+                      : index === 1
+                        ? "Confirm funding state"
+                        : index === 2
+                          ? "Provision trading access"
+                          : "Track engagement";
 
-              <div className="mt-8 rounded-[22px] border border-white/15 bg-[#12051a]/45 p-4 backdrop-blur-2xl sm:p-5">
-                <div className="h-2 overflow-hidden rounded-full bg-white/10">
-                  <div className={`h-full rounded-full bg-gradient-to-r from-fuchsia-400 via-violet-400 to-cyan-300 transition-all duration-500 ${journeyProgress}`} />
-                </div>
-                <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                  {[
-                    ["CRM event", activeJourney.label],
-                    ["Next owner", journeyIndex < 2 ? "Client operations" : "Retention & support"],
-                    ["Automation", journeyIndex === 0 ? "Create client profile" : journeyIndex === 1 ? "Confirm funding state" : journeyIndex === 2 ? "Provision trading access" : "Track engagement"],
-                    ["Visibility", "Status shared across the connected stack"],
-                  ].map(([label, value]) => (
-                    <div key={label} className="min-w-0 rounded-xl border border-white/10 bg-white/[.055] p-4">
-                      <span className="block text-[10px] font-black uppercase tracking-[.14em] text-violet-100/45">{label}</span>
-                      <strong className="mt-2 block break-words text-sm leading-6 text-violet-50">{value}</strong>
+                  return (
+                    <div
+                      data-journey-panel={step.title}
+                      id={`journey-panel-${index}`}
+                      key={step.title}
+                      role="tabpanel"
+                      aria-hidden={!selected}
+                      className={`col-start-1 row-start-1 min-w-0 transition-all duration-300 ${
+                        selected
+                          ? "visible translate-y-0 opacity-100"
+                          : "invisible pointer-events-none translate-y-1 opacity-0"
+                      }`}
+                    >
+                      <div className="flex flex-wrap items-start justify-between gap-4">
+                        <div className="min-w-0">
+                          <span className="inline-flex items-center gap-2 text-xs font-extrabold tracking-[.16em] text-fuchsia-200">
+                            <FeatureIcon name={step.icon} className="size-4" /> CONNECTED WORKFLOW
+                          </span>
+                          <h3 className="mt-3 break-words text-3xl font-semibold tracking-[-.05em] sm:text-4xl">{step.title}</h3>
+                          <p className="mt-4 max-w-[620px] text-sm leading-7 text-violet-100/70 sm:text-base">{step.text}</p>
+                        </div>
+                        <span className="rounded-full border border-emerald-200/20 bg-emerald-300/10 px-3 py-2 text-xs font-bold text-emerald-200 backdrop-blur-xl">
+                          Live workflow
+                        </span>
+                      </div>
+
+                      <div className="mt-8 rounded-[22px] border border-white/15 bg-[#12051a]/45 p-4 backdrop-blur-2xl sm:p-5">
+                        <div className="h-2 overflow-hidden rounded-full bg-white/10">
+                          <div className={`h-full rounded-full bg-gradient-to-r from-fuchsia-400 via-violet-400 to-cyan-300 transition-all duration-500 ${progressClass}`} />
+                        </div>
+                        <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                          {[
+                            ["CRM event", step.label],
+                            ["Next owner", nextOwner],
+                            ["Automation", automation],
+                            ["Visibility", "Status shared across the connected stack"],
+                          ].map(([label, value]) => (
+                            <div key={label} className="min-w-0 rounded-xl border border-white/10 bg-white/[.055] p-4">
+                              <span className="block text-[10px] font-black uppercase tracking-[.14em] text-violet-100/45">{label}</span>
+                              <strong className="mt-2 block break-words text-sm leading-6 text-violet-50">{value}</strong>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </div>
-                  ))}
-                </div>
+                  );
+                })}
               </div>
             </article>
           </div>

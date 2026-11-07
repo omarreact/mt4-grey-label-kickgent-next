@@ -813,6 +813,33 @@ test("mobile banner shows only left content without an inner border and keeps co
   expect(Math.abs(scaleHeight - initialHeight)).toBeLessThanOrEqual(1);
 });
 
+test("mobile active client journey uses icon tabs and keeps a stable section height", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Mobile journey geometry check runs once in Chromium");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const section = page.locator("[data-active-journey]");
+  const tabs = page.locator("[data-journey-tabs] [role='tab']");
+  await section.scrollIntoViewIfNeeded();
+
+  await expect(tabs).toHaveCount(4);
+  const tabBox = await tabs.first().boundingBox();
+  expect(tabBox).not.toBeNull();
+  expect(tabBox!.width).toBeLessThan(100);
+  expect(Math.abs(tabBox!.width - tabBox!.height)).toBeLessThanOrEqual(4);
+
+  const initialHeight = await section.evaluate((element) => element.getBoundingClientRect().height);
+
+  for (let index = 1; index < 4; index += 1) {
+    await tabs.nth(index).click();
+    await expect(tabs.nth(index)).toHaveAttribute("aria-selected", "true");
+    await expect(page.locator("[data-journey-panel]").nth(index)).toBeVisible();
+
+    const currentHeight = await section.evaluate((element) => element.getBoundingClientRect().height);
+    expect(Math.abs(currentHeight - initialHeight)).toBeLessThanOrEqual(1);
+  }
+});
+
 test("desktop banner keeps zero outside bottom spacing", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Desktop hero spacing check runs once in Chromium");
   await page.setViewportSize({ width: 1280, height: 900 });
