@@ -268,7 +268,7 @@ export function HomePageTailwind() {
             data-hero-left
             data-hero-scene={activeHero.id}
             aria-live="polite"
-            className={`h-fit min-w-0 rounded-[28px] border border-white/14 bg-white/[.045] p-5 text-left transition-all duration-500 sm:p-7 md:flex md:min-h-[580px] md:w-[52%] md:flex-col md:justify-center md:border-0 md:bg-transparent md:p-5 lg:min-h-[540px] lg:p-7 xl:min-h-[520px] xl:p-8 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
+            className={`h-fit min-w-0 rounded-[28px] bg-white/[.045] p-5 text-left transition-all duration-500 sm:p-7 md:flex md:min-h-[580px] md:w-[52%] md:flex-col md:justify-center md:bg-transparent md:p-5 lg:min-h-[540px] lg:p-7 xl:min-h-[520px] xl:p-8 ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
           >
             <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/35 bg-white/14 px-3.5 py-2 text-[.68rem] font-bold tracking-[.1em] text-white shadow-[0_10px_30px_rgba(15,23,42,.18)] backdrop-blur-2xl sm:text-xs">
               <span className="grid size-5 shrink-0 place-items-center rounded-full border border-white/40 bg-white/20">✦</span>

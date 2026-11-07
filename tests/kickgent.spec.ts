@@ -777,7 +777,7 @@ test("banner indicators sit centered at the bottom inside the hero frame", async
   expect(frameBox!.y + frameBox!.height - (indicatorBox!.y + indicatorBox!.height)).toBeLessThanOrEqual(28);
 });
 
-test("mobile banner shows only left content and removes outside bottom spacing", async ({ page }, testInfo) => {
+test("mobile banner shows only left content without an inner border and keeps compact bottom spacing", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Mobile hero visibility check runs once in Chromium");
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
@@ -785,6 +785,11 @@ test("mobile banner shows only left content and removes outside bottom spacing",
   await expect(page.locator("[data-hero-left]")).toBeVisible();
   await expect(page.locator("[data-hero-right]")).toBeHidden();
   await expect(page.locator("[data-hero-indicators]")).toBeVisible();
+
+  const innerBorderWidth = await page.locator("[data-hero-left]").evaluate((element) =>
+    parseFloat(getComputedStyle(element).borderTopWidth)
+  );
+  expect(innerBorderWidth).toBe(0);
 
   const bottomPadding = await page.locator("[data-hero-banner]").evaluate((element) =>
     parseFloat(getComputedStyle(element).paddingBottom)
