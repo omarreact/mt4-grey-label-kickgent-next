@@ -408,6 +408,11 @@ test("inner page banner is compact and only shows route title and subtitle", asy
   await expect(hero.locator(".hero-actions")).toBeHidden();
   await expect(hero.locator(".hero-art")).toBeHidden();
 
+  const titleSize = await hero.locator("h1").evaluate((element) => parseFloat(getComputedStyle(element).fontSize));
+  const subtitleSize = await hero.locator(".lead-paragraph").evaluate((element) => parseFloat(getComputedStyle(element).fontSize));
+  expect(titleSize).toBeLessThanOrEqual(57);
+  expect(subtitleSize).toBeLessThanOrEqual(16);
+
   const crumbSpans = hero.locator(".breadcrumbs span");
   await expect(crumbSpans.nth(0)).toHaveText("→");
 });
@@ -1368,3 +1373,17 @@ for (const mobileWidth of [320, 390]) {
     }
   });
 }
+
+
+test("inner page hero typography stays compact on mobile", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Mobile inner hero typography runs once in Chromium");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/mt4-grey-label");
+
+  const hero = page.locator(".page-hero");
+  const titleSize = await hero.locator("h1").evaluate((element) => parseFloat(getComputedStyle(element).fontSize));
+  const subtitleSize = await hero.locator(".lead-paragraph").evaluate((element) => parseFloat(getComputedStyle(element).fontSize));
+
+  expect(titleSize).toBeLessThanOrEqual(32);
+  expect(subtitleSize).toBeLessThanOrEqual(14);
+});

@@ -113,9 +113,9 @@ export function KickgentExperience({ page }: Props) {
         "!m-0",
         "!max-w-[900px]",
         "!text-white",
-        "!text-[clamp(2.2rem,5vw,4.4rem)]",
+        "!text-[clamp(1.95rem,4vw,3.55rem)]",
         "!leading-[1.02]",
-        "max-[640px]:!text-[clamp(1.8rem,8vw,2.35rem)]",
+        "max-[640px]:!text-[clamp(1.55rem,6.5vw,1.95rem)]",
         "max-[640px]:!leading-[1.08]",
         "drop-shadow-[0_3px_18px_rgba(15,23,42,.5)]"
       );
@@ -126,11 +126,11 @@ export function KickgentExperience({ page }: Props) {
         "!mt-4",
         "!mb-0",
         "!max-w-[760px]",
-        "!text-base",
+        "!text-[.95rem]",
         "!leading-7",
         "!text-white/86",
-        "sm:!text-lg",
-        "max-[640px]:!text-[.94rem]",
+        "sm:!text-base",
+        "max-[640px]:!text-[.82rem]",
         "max-[640px]:!leading-6",
         "drop-shadow-[0_3px_18px_rgba(15,23,42,.45)]"
       );
