@@ -57,7 +57,7 @@ export function SharedClosingSections() {
     <>
       <section id="how-it-works" data-global-how-it-works className="relative isolate h-fit overflow-hidden px-4 py-20 text-white sm:px-6 sm:py-24">
         <img
-          src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=2200&q=86"
+          src="https://images.unsplash.com/photo-1788790716354-00a65a62bf58?auto=format&fit=crop&w=2200&q=86"
           alt=""
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 -z-30 size-full object-cover object-center"

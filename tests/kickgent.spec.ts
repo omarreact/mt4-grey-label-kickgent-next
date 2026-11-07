@@ -217,6 +217,37 @@ test("requested homepage section backgrounds and glass overlays are applied", as
   await expect(how.locator("[data-timeline-card]").first()).toHaveCSS("backdrop-filter", /blur/);
 });
 
+test("inner-page hero photos are unique and not reused by homepage/global surfaces", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Image uniqueness audit runs once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 900 });
+
+  await page.goto("/");
+  const homepagePhotoIds = await page.locator('img[src*="images.unsplash.com"]').evaluateAll((images) =>
+    images
+      .map((image) => (image.getAttribute("src") || "").match(/photo-[A-Za-z0-9_-]+/)?.[0] || "")
+      .filter(Boolean)
+  );
+  expect(new Set(homepagePhotoIds).size, "homepage/global image slots must not reuse a photo").toBe(homepagePhotoIds.length);
+
+  const homepageSet = new Set(homepagePhotoIds);
+  const heroSet = new Set<string>();
+  const innerRoutes = routes.filter((route) => route !== "/");
+
+  for (const route of innerRoutes) {
+    await page.goto(route);
+    const heroImage = page.locator("[data-pintheme-inner-hero]");
+    await expect(heroImage).toBeVisible();
+    const src = await heroImage.getAttribute("src");
+    const photoId = src?.match(/photo-[A-Za-z0-9_-]+/)?.[0];
+    expect(photoId, `${route} must use a verifiable Unsplash photo id`).toBeTruthy();
+    expect(homepageSet.has(photoId!), `${route} hero must not reuse a homepage/global photo`).toBeFalsy();
+    expect(heroSet.has(photoId!), `${route} hero must be unique across inner pages`).toBeFalsy();
+    heroSet.add(photoId!);
+  }
+
+  expect(heroSet.size).toBe(innerRoutes.length);
+});
+
 test("inner pages keep layout and receive image-backed glass visual system", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Inner-page visual treatment runs once in Chromium");
   await page.goto("/mt4-grey-label");

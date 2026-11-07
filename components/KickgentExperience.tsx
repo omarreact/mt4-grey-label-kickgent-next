@@ -20,17 +20,17 @@ const glassOverlayClasses = [
 ] as const;
 
 const innerPageBackgrounds: Record<string, string> = {
-  about: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=2200&q=84",
-  contact: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=2200&q=84",
-  "mt4-grey-label": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=2200&q=84",
-  "mt5-grey-label": "https://images.unsplash.com/photo-1642790106117-e829e14a795f?auto=format&fit=crop&w=2200&q=84",
-  "turnkey-grey-label": "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=2200&q=84",
-  "forex-broker-crm": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=2200&q=84",
-  "forex-broker-website": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=2200&q=84",
-  "forex-liquidity-bridge": "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=2200&q=84",
-  "pamm-mam": "https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=2200&q=84",
-  "how-to-start-forex-brokerage": "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=2200&q=84",
-  "scale-forex-brokerage": "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=2200&q=84",
+  about: "https://images.unsplash.com/photo-1781246212288-7fa538344718?auto=format&fit=crop&w=2200&q=84",
+  contact: "https://images.unsplash.com/photo-1702047129200-89734f555f38?auto=format&fit=crop&w=2200&q=84",
+  "mt4-grey-label": "https://images.unsplash.com/photo-1768055105681-7d2096c5165f?auto=format&fit=crop&w=2200&q=84",
+  "mt5-grey-label": "https://images.unsplash.com/photo-1766218331975-ecc29597ce9f?auto=format&fit=crop&w=2200&q=84",
+  "turnkey-grey-label": "https://images.unsplash.com/photo-1774600134168-b9ebd714e4e1?auto=format&fit=crop&w=2200&q=84",
+  "forex-broker-crm": "https://images.unsplash.com/photo-1771922748624-b205cf5d002d?auto=format&fit=crop&w=2200&q=84",
+  "forex-broker-website": "https://images.unsplash.com/photo-1742199009963-c028d0c5a603?auto=format&fit=crop&w=2200&q=84",
+  "forex-liquidity-bridge": "https://images.unsplash.com/photo-1768224656445-33d078c250b7?auto=format&fit=crop&w=2200&q=84",
+  "pamm-mam": "https://images.unsplash.com/photo-1758518729711-1cbacd55efdb?auto=format&fit=crop&w=2200&q=84",
+  "how-to-start-forex-brokerage": "https://images.unsplash.com/photo-1758873269811-4e62e346b4b7?auto=format&fit=crop&w=2200&q=84",
+  "scale-forex-brokerage": "https://images.unsplash.com/photo-1758691737138-7b9b1884b1db?auto=format&fit=crop&w=2200&q=84",
 };
 
 type Props = { page: KickgentPage };
