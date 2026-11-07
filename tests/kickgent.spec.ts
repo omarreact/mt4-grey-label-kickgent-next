@@ -1007,6 +1007,31 @@ test("banner indicators sit centered at the bottom inside the hero frame", async
   expect(frameBox!.y + frameBox!.height - (indicatorBox!.y + indicatorBox!.height)).toBeLessThanOrEqual(28);
 });
 
+test("mobile hero content is vertically centered and CTA buttons share one row", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Mobile hero geometry runs once in Chromium");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const left = page.locator("[data-hero-left]");
+  const activeCopy = page.locator("[data-hero-copy]:visible").first();
+  const actions = page.locator("[data-hero-actions]");
+  const [leftBox, copyBox] = await Promise.all([left.boundingBox(), activeCopy.boundingBox()]);
+  expect(leftBox).not.toBeNull();
+  expect(copyBox).not.toBeNull();
+
+  const leftCenter = leftBox!.y + leftBox!.height / 2;
+  const copyCenter = copyBox!.y + copyBox!.height / 2;
+  expect(Math.abs(leftCenter - copyCenter)).toBeLessThanOrEqual(8);
+
+  const actionButtons = actions.getByRole("link");
+  await expect(actionButtons).toHaveCount(2);
+  const [firstBox, secondBox] = await Promise.all([actionButtons.nth(0).boundingBox(), actionButtons.nth(1).boundingBox()]);
+  expect(firstBox).not.toBeNull();
+  expect(secondBox).not.toBeNull();
+  expect(Math.abs(firstBox!.y - secondBox!.y)).toBeLessThanOrEqual(2);
+  expect(secondBox!.x).toBeGreaterThan(firstBox!.x);
+});
+
 test("mobile banner shows only left content without an inner border and keeps compact bottom spacing", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Mobile hero visibility check runs once in Chromium");
   await page.setViewportSize({ width: 390, height: 844 });
