@@ -244,8 +244,8 @@ export function SharedSiteFooter() {
   return (
     <footer className="h-fit border-t border-white/10 bg-[#0d0312] pb-7 pt-14 text-white">
       <div className="mx-auto w-[min(1180px,calc(100%_-_32px))]">
-        <div className="grid grid-cols-[1.35fr_1fr_1fr] gap-10 max-[720px]:grid-cols-1 max-[720px]:gap-7">
-          <div>
+        <div data-site-footer-grid className="grid grid-cols-[1.35fr_1fr_1fr] gap-10 max-[720px]:grid-cols-2 max-[720px]:gap-x-5 max-[720px]:gap-y-7">
+          <div className="max-[720px]:col-span-2">
             <Link href="/" className="inline-block text-white no-underline" aria-label="MT4 Grey Label home">
               <BrandLogo tone="light" className="h-12 w-[230px]" />
             </Link>
@@ -254,7 +254,7 @@ export function SharedSiteFooter() {
             </p>
           </div>
 
-          <div>
+          <div data-footer-menu="solutions" className="min-w-0">
             <strong className="mb-4 block text-sm font-extrabold">Solutions</strong>
             <div className="grid gap-2.5">
               {solutions.slice(0, 4).map(([name, slug]) => (
@@ -269,7 +269,7 @@ export function SharedSiteFooter() {
             </div>
           </div>
 
-          <div>
+          <div data-footer-menu="explore" className="min-w-0">
             <strong className="mb-4 block text-sm font-extrabold">Explore</strong>
             <div className="grid gap-2.5">
               {guides.map(([name, slug]) => (
