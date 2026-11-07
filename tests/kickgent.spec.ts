@@ -366,8 +366,8 @@ test("On this page sidebar follows the active section and scrolls internally", a
   expect(sidebarScrollTop).toBeGreaterThan(0);
   expect(lastBox).not.toBeNull();
   expect(sidebarBox).not.toBeNull();
-  expect(lastBox!.top).toBeGreaterThanOrEqual(sidebarBox!.top);
-  expect(lastBox!.bottom).toBeLessThanOrEqual(sidebarBox!.bottom + 2);
+  expect(lastBox!.y).toBeGreaterThanOrEqual(sidebarBox!.y);
+  expect(lastBox!.y + lastBox!.height).toBeLessThanOrEqual(sidebarBox!.y + sidebarBox!.height + 2);
 });
 
 test("inner pages keep layout and receive image-backed glass visual system", async ({ page }, testInfo) => {
