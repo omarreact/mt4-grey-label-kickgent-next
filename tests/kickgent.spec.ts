@@ -43,6 +43,9 @@ test("navigation submenu uses a blurred glass surface and route entry is smooth"
     menu.evaluate((element) => getComputedStyle(element).backdropFilter),
   ]);
   expect(bg).not.toBe("rgb(255, 255, 255)");
+  const alphaMatch = bg.match(/rgba?\([^,]+,[^,]+,[^,]+(?:,\s*([\d.]+))?\)/);
+  const alpha = alphaMatch?.[1] ? Number(alphaMatch[1]) : 1;
+  expect(alpha).toBeGreaterThanOrEqual(0.8);
   expect(blur === "none" || blur === "").toBeFalsy();
 
   await menu.getByRole("link", { name: "MT4 Grey Label" }).click();
