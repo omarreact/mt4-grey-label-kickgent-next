@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { BrandLogo } from "./BrandLogo";
 
 const heroSlides = [
   {
@@ -300,7 +301,7 @@ export function HomePageTailwind() {
                   }`}
                 >
                   <span className="inline-flex items-center gap-[9px] rounded-full border border-violet-300/45 bg-white/45 py-2 pl-[11px] pr-4 text-[.78rem] font-medium text-[#513968] shadow-[inset_0_1px_#fff,0_8px_22px_rgba(87,48,107,.11)] backdrop-blur-sm">
-                    <span aria-hidden="true" className="grid size-5 place-items-center rounded-full bg-[#f5eaff] text-[#6a22c2]">✦</span>
+                    <span aria-hidden="true" className="grid size-5 shrink-0 place-items-center"><BrandLogo compact className="size-5" /></span>
                     <span>{slide.badge}</span>
                   </span>
 
