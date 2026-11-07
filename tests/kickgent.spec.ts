@@ -1130,6 +1130,27 @@ test("global CTA uses the approved light premium palette", async ({ page }, test
   await expect(section.locator("p")).toHaveClass(/text-slate-600/);
 });
 
+test("banner uses the approved legacy Kickgent hero background only", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Hero background check runs once in Chromium");
+  await page.goto("/");
+
+  const background = page.locator("[data-hero-background]");
+  await expect(background).toHaveCount(1);
+  await expect(background).toHaveAttribute("src", /photo-1556761175-4b46a572b786/);
+
+  const objectPosition = await background.evaluate((element) => getComputedStyle(element).objectPosition);
+  expect(objectPosition).toBe("50% 46%");
+
+  const initialSrc = await background.getAttribute("src");
+  const tabs = page.locator("[data-hero-indicators] button");
+  await tabs.nth(1).click();
+  await expect(page.locator("[data-hero-banner]")).toHaveAttribute("data-active-slide", "operations");
+  await expect(background).toHaveAttribute("src", initialSrc!);
+  await tabs.nth(2).click();
+  await expect(page.locator("[data-hero-banner]")).toHaveAttribute("data-active-slide", "scale");
+  await expect(background).toHaveAttribute("src", initialSrc!);
+});
+
 test("banner indicators sit centered at the bottom inside the hero frame", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Banner indicator geometry runs once in Chromium");
   await page.setViewportSize({ width: 1280, height: 900 });
