@@ -120,8 +120,8 @@ function MenuGroup({
       <div
         id={id}
         className={[
-          "absolute left-1/2 top-full z-[10000] grid min-w-[270px] -translate-x-1/2 gap-1 rounded-2xl border border-white/70 bg-white/62 p-2.5 shadow-[0_28px_80px_rgba(44,19,69,.22)] backdrop-blur-3xl supports-[backdrop-filter]:bg-white/48 transition duration-200",
-          "max-[880px]:static max-[880px]:mt-1 max-[880px]:min-w-0 max-[880px]:translate-x-0 max-[880px]:border-white/60 max-[880px]:bg-white/52 max-[880px]:shadow-[0_18px_55px_rgba(44,19,69,.16)] max-[880px]:backdrop-blur-3xl max-[880px]:supports-[backdrop-filter]:bg-white/42",
+          "absolute left-1/2 top-full z-[10000] grid min-w-[270px] -translate-x-1/2 gap-1 rounded-2xl border border-white/90 bg-white/[.90] p-2.5 shadow-[0_28px_80px_rgba(44,19,69,.24)] backdrop-blur-3xl supports-[backdrop-filter]:bg-white/[.84] transition duration-200",
+          "max-[880px]:static max-[880px]:mt-1 max-[880px]:min-w-0 max-[880px]:translate-x-0 max-[880px]:border-white/80 max-[880px]:bg-white/[.92] max-[880px]:shadow-[0_18px_55px_rgba(44,19,69,.18)] max-[880px]:backdrop-blur-3xl max-[880px]:supports-[backdrop-filter]:bg-white/[.86]",
           open
             ? "visible pointer-events-auto opacity-100"
             : "invisible pointer-events-none opacity-0 max-[880px]:hidden",
@@ -132,7 +132,7 @@ function MenuGroup({
             href={`/${slug}`}
             key={slug}
             onClick={onNavigate}
-            className="flex min-h-11 items-center justify-between rounded-xl px-3.5 py-3 text-[.82rem] font-semibold text-slate-700 no-underline transition hover:bg-violet-50 hover:text-violet-800 focus-visible:bg-violet-50 focus-visible:text-violet-800"
+            className="flex min-h-11 items-center justify-between rounded-xl bg-white/20 px-3.5 py-3 text-[.82rem] font-semibold text-slate-800 no-underline transition hover:bg-violet-50 hover:text-violet-800 focus-visible:bg-violet-50 focus-visible:text-violet-800"
           >
             <span>{name}</span>
             <svg viewBox="0 0 20 20" aria-hidden="true" className="size-4 text-violet-500" fill="none">
