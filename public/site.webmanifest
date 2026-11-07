@@ -1,0 +1,17 @@
+{
+  "name": "MT4 Grey Label",
+  "short_name": "MT4 Grey Label",
+  "description": "MT4 and MT5 Grey Label brokerage technology solutions.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#100414",
+  "theme_color": "#6D28D9",
+  "icons": [
+    {
+      "src": "/brand/mt4-grey-label-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

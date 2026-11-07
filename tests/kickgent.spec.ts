@@ -109,7 +109,7 @@ test("homepage branding, portraits, carousel and glass overlays render", async (
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/");
 
-  await expect(page.locator('svg[aria-label="GreyLabel Technology"]')).toHaveCount(2);
+  await expect(page.locator('svg[aria-label="MT4 Grey Label"]')).toHaveCount(2);
 
   const portraits = page.locator('img[alt*="Portrait of a"]');
   await expect(portraits).toHaveCount(4);
@@ -629,4 +629,21 @@ test("homepage does not render duplicate local How It Works or CTA sections", as
   await expect(page.locator("#main-content [data-bottom-cta-button]")).toHaveCount(0);
   await expect(page.locator("[data-global-how-it-works]")).toHaveCount(1);
   await expect(page.locator("[data-global-cta] [data-bottom-cta-button]")).toHaveCount(1);
+});
+
+
+test("MT4 Grey Label branding is applied to navigation footer and site icon", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Branding asset check runs once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/");
+
+  const logos = page.locator('svg[aria-label="MT4 Grey Label"]');
+  await expect(logos).toHaveCount(2);
+  await expect(page.locator('[data-site-header] svg[aria-label="MT4 Grey Label"]')).toBeVisible();
+  await expect(page.locator('footer svg[aria-label="MT4 Grey Label"]')).toBeVisible();
+
+  const icon = page.locator('link[rel="icon"]').first();
+  await expect(icon).toHaveAttribute("href", /mt4-grey-label-icon|icon/);
+  await expect(page.locator('link[rel="manifest"]')).toHaveAttribute("href", /site\.webmanifest/);
+  await expect(page).toHaveTitle(/MT4 Grey Label/);
 });

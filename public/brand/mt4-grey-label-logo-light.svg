@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 258 56">
+<defs>
+<linearGradient id="p" x1="7" y1="46" x2="48" y2="8" gradientUnits="userSpaceOnUse"><stop stop-color="#6D28D9"/><stop offset=".5" stop-color="#8B5CF6"/><stop offset="1" stop-color="#D8B4FE"/></linearGradient>
+<linearGradient id="a" x1="7" y1="41" x2="49" y2="21" gradientUnits="userSpaceOnUse"><stop stop-color="#F0ABFC"/><stop offset=".52" stop-color="#C084FC"/><stop offset="1" stop-color="#7C3AED"/></linearGradient>
+</defs>
+<rect x="4" y="4" width="48" height="48" rx="15" fill="#1A0A24" fill-opacity=".9"/>
+<path d="M13 36.5 21 27l6.2 5.8L36 20l7 4.5" stroke="url(#a)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M16.2 31.7V23h5.2v8.7M26 28V18.2h5.2V28M35.8 23.5V12.8H41v10.7" fill="url(#p)"/>
+<path d="M11 40c8.8 3.1 18.2 2.1 27.8-3.1 3.7-2 6.8-4.3 9.2-7" stroke="url(#a)" stroke-width="3.5" stroke-linecap="round"/>
+<text x="67" y="30" fill="#fff" font-family="Inter,Arial,sans-serif" font-size="21.5" font-weight="850" letter-spacing="-.75">MT4 Grey Label</text>
+<text x="68" y="43.5" fill="#CDB7D8" font-family="Inter,Arial,sans-serif" font-size="7.8" font-weight="750" letter-spacing="1.65">BROKERAGE TECHNOLOGY</text>
+</svg>

@@ -41,9 +41,9 @@ if (home.includes("<style>") || home.includes("style={{")) failures.push("Homepa
 if (!home.includes("backdrop-blur-2xl")) failures.push("Homepage glass overlay treatment is required.");
 if (!home.includes("GreyLabel solution carousel") || !home.includes("data-hero-float")) failures.push("Homepage carousel and banner overflow guardrails are required.");
 if (!closing.includes("data-global-how-it-works") || !closing.includes("data-global-cta")) failures.push("Shared How It Works and CTA sections are required.");
-if (!chrome.includes("MT4 Grey Label") || chrome.includes("Built by PINCODE IT")) failures.push("Footer must use MT4 Grey Label branding without agency credit.");
+if (!chrome.includes("MT4 Grey Label") || chrome.includes("Built by PINCODE IT")) failures.push("Header/footer must use MT4 Grey Label branding without agency credit.");
 if (/(?:md|lg|xl|2xl):h-\[[^\]]+\]/.test(home)) failures.push("Responsive homepage layout must not use fixed Tailwind height values.");
-if (!logo.includes("<svg") || !logo.includes("GreyLabel Technology")) failures.push("Professional SVG brand mark is required.");
+if (!logo.includes("<svg") || !logo.includes("MT4 Grey Label")) failures.push("Professional MT4 Grey Label SVG brand mark is required.");
 if (!homeEntry.includes("HomePageTailwind")) failures.push("Homepage must render the Tailwind-native implementation.");
 if (/cdn\.tailwindcss\.com/i.test(globals + tailwind + chrome + home)) failures.push("Tailwind CDN is forbidden in production outputs.");
 

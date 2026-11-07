@@ -153,8 +153,8 @@ export function SharedSiteHeader() {
   return (
     <header data-site-header className="fixed inset-x-0 top-0 z-[9999] isolate px-3 py-3 sm:px-5">
       <div className="relative mx-auto flex min-h-[68px] w-full max-w-[1180px] items-center gap-3 rounded-[22px] border border-white/75 bg-white/78 px-3.5 shadow-[0_18px_55px_rgba(47,22,66,.16)] backdrop-blur-2xl supports-[backdrop-filter]:bg-white/68 sm:px-5">
-        <Link href="/" className="shrink-0 text-slate-950" aria-label="GreyLabel Technology home">
-          <BrandLogo className="h-11 w-[190px] max-[430px]:w-[158px]" />
+        <Link href="/" className="shrink-0 text-slate-950" aria-label="MT4 Grey Label home">
+          <BrandLogo className="h-11 w-[218px] max-[430px]:w-[176px]" />
         </Link>
 
         <button
@@ -228,7 +228,7 @@ export function SharedSiteHeader() {
         <a
           data-get-started
           className="ml-2 inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl border border-[#d8c6ea] bg-[#f0e7fb] px-4 text-[.8rem] font-extrabold !text-[#4a1f5f] no-underline shadow-[0_10px_28px_rgba(74,31,95,.12)] transition hover:-translate-y-0.5 hover:border-[#c8ace4] hover:bg-white hover:shadow-[0_14px_34px_rgba(74,31,95,.16)] max-[880px]:hidden"
-          href="mailto:admin@pincodeit.com?subject=GreyLabel%20Enquiry"
+          href="mailto:admin@pincodeit.com?subject=MT4%20Grey%20Label%20Enquiry"
         >
           Get Started
           <svg viewBox="0 0 20 20" aria-hidden="true" className="size-4" fill="none">
@@ -246,9 +246,8 @@ export function SharedSiteFooter() {
       <div className="mx-auto w-[min(1180px,calc(100%_-_32px))]">
         <div className="grid grid-cols-[1.35fr_1fr_1fr] gap-10 max-[720px]:grid-cols-1 max-[720px]:gap-7">
           <div>
-            <Link href="/" className="inline-flex items-center gap-3 text-white no-underline" aria-label="MT4 Grey Label home">
-              <BrandLogo compact className="size-12" />
-              <span className="text-xl font-extrabold tracking-[-.04em]">MT4 Grey Label</span>
+            <Link href="/" className="inline-block text-white no-underline" aria-label="MT4 Grey Label home">
+              <BrandLogo tone="light" className="h-12 w-[230px]" />
             </Link>
             <p className="mt-5 max-w-[390px] text-sm leading-7 text-violet-100/70">
               MT4 & MT5 grey label solutions, CRM, PAMM/MAM plugins, liquidity connectivity and broker websites.
