@@ -120,8 +120,8 @@ function MenuGroup({
       <div
         id={id}
         className={[
-          "absolute left-1/2 top-full z-[10000] grid min-w-[270px] -translate-x-1/2 gap-1 rounded-2xl border border-white/80 bg-white/82 p-2.5 shadow-[0_24px_70px_rgba(44,19,69,.18)] backdrop-blur-2xl transition duration-200",
-          "max-[880px]:static max-[880px]:mt-1 max-[880px]:min-w-0 max-[880px]:translate-x-0 max-[880px]:border-slate-200/70 max-[880px]:bg-white/65 max-[880px]:shadow-none",
+          "absolute left-1/2 top-full z-[10000] grid min-w-[270px] -translate-x-1/2 gap-1 rounded-2xl border border-white/70 bg-white/62 p-2.5 shadow-[0_28px_80px_rgba(44,19,69,.22)] backdrop-blur-3xl supports-[backdrop-filter]:bg-white/48 transition duration-200",
+          "max-[880px]:static max-[880px]:mt-1 max-[880px]:min-w-0 max-[880px]:translate-x-0 max-[880px]:border-white/60 max-[880px]:bg-white/52 max-[880px]:shadow-[0_18px_55px_rgba(44,19,69,.16)] max-[880px]:backdrop-blur-3xl max-[880px]:supports-[backdrop-filter]:bg-white/42",
           open
             ? "visible pointer-events-auto opacity-100"
             : "invisible pointer-events-none opacity-0 max-[880px]:hidden",
@@ -199,7 +199,7 @@ export function SharedSiteHeader() {
           id="kg-primary-navigation"
           className={[
             "ml-auto flex flex-1 items-center justify-end gap-1",
-            "max-[880px]:absolute max-[880px]:left-0 max-[880px]:right-0 max-[880px]:top-[calc(100%+10px)] max-[880px]:max-h-[calc(100dvh-105px)] max-[880px]:flex-col max-[880px]:items-stretch max-[880px]:gap-0 max-[880px]:overflow-y-auto max-[880px]:rounded-[20px] max-[880px]:border max-[880px]:border-white/80 max-[880px]:bg-white/88 max-[880px]:p-3 max-[880px]:shadow-[0_24px_70px_rgba(44,19,69,.2)] max-[880px]:backdrop-blur-2xl",
+            "max-[880px]:absolute max-[880px]:left-0 max-[880px]:right-0 max-[880px]:top-[calc(100%+10px)] max-[880px]:max-h-[calc(100dvh-105px)] max-[880px]:flex-col max-[880px]:items-stretch max-[880px]:gap-0 max-[880px]:overflow-y-auto max-[880px]:rounded-[20px] max-[880px]:border max-[880px]:border-white/70 max-[880px]:bg-white/62 max-[880px]:p-3 max-[880px]:shadow-[0_28px_80px_rgba(44,19,69,.22)] max-[880px]:backdrop-blur-3xl max-[880px]:supports-[backdrop-filter]:bg-white/48",
             mobileOpen ? "max-[880px]:flex" : "max-[880px]:hidden",
           ].join(" ")}
           aria-label="Primary navigation"
