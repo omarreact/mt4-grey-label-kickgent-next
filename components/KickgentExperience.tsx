@@ -21,6 +21,7 @@ const glassOverlayClasses = [
 
 const innerPageBackgrounds: Record<string, string> = {
   about: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=2200&q=84",
+  contact: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=2200&q=84",
   "mt4-grey-label": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=2200&q=84",
   "mt5-grey-label": "https://images.unsplash.com/photo-1642790106117-e829e14a795f?auto=format&fit=crop&w=2200&q=84",
   "turnkey-grey-label": "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=2200&q=84",
