@@ -111,6 +111,7 @@ function pintheme_manager_sync_menu($pages_by_slug) {
     $guides_parent = wp_update_nav_menu_item($menu_id, 0, ['menu-item-title' => 'Guides', 'menu-item-url' => '#', 'menu-item-type' => 'custom', 'menu-item-status' => 'publish']);
     foreach (['how-to-start-forex-brokerage','scale-forex-brokerage','turnkey-grey-label'] as $slug) if (!empty($pages_by_slug[$slug])) wp_update_nav_menu_item($menu_id, 0, ['menu-item-title' => get_the_title($pages_by_slug[$slug]), 'menu-item-object-id' => $pages_by_slug[$slug], 'menu-item-object' => 'page', 'menu-item-type' => 'post_type', 'menu-item-parent-id' => $guides_parent, 'menu-item-status' => 'publish']);
     if (!empty($pages_by_slug['about'])) wp_update_nav_menu_item($menu_id, 0, ['menu-item-title' => 'About', 'menu-item-object-id' => $pages_by_slug['about'], 'menu-item-object' => 'page', 'menu-item-type' => 'post_type', 'menu-item-status' => 'publish']);
+    if (!empty($pages_by_slug['contact'])) wp_update_nav_menu_item($menu_id, 0, ['menu-item-title' => 'Contact', 'menu-item-object-id' => $pages_by_slug['contact'], 'menu-item-object' => 'page', 'menu-item-type' => 'post_type', 'menu-item-status' => 'publish']);
     $locations = (array) get_theme_mod('nav_menu_locations', []);
     $locations['primary'] = $menu_id;
     $locations['footer'] = $menu_id;
