@@ -61,5 +61,6 @@ export default {
     "/how-to-start-forex-brokerage",
     "/scale-forex-brokerage",
     "/about",
+    "/contact",
   ],
 };
