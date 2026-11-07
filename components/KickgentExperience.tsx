@@ -62,6 +62,14 @@ export function KickgentExperience({ page }: Props) {
 
     if (pageHero && background) {
       pageHero.classList.add("!relative", "!isolate", "!overflow-hidden", "!bg-transparent", "!bg-none", "!text-white");
+      pageHero.dataset.tone = "dark";
+
+      root.querySelectorAll<HTMLElement>(".page-main, .related, .contact-main").forEach((element) => {
+        element.dataset.tone = "light";
+      });
+      root.querySelectorAll<HTMLElement>(".bottom-cta").forEach((element) => {
+        element.dataset.tone = "dark";
+      });
 
       const image = document.createElement("img");
       image.src = background;

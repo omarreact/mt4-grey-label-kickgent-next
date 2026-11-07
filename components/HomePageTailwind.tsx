@@ -244,6 +244,7 @@ export function HomePageTailwind() {
   return (
     <main className="overflow-hidden bg-[#100414] text-white">
       <section
+        data-tone="light"
         data-hero-banner
         data-active-slide={activeHero.id}
         className="relative isolate h-fit overflow-hidden bg-[#f3e7fb] p-0 text-center"
@@ -358,7 +359,7 @@ export function HomePageTailwind() {
         </div>
       </section>
 
-      <section className="border-y border-white/8 bg-[#18071f] px-4 py-14 sm:px-6 sm:py-16">
+      <section data-tone="dark" className="border-y border-white/8 bg-[#18071f] px-4 py-14 sm:px-6 sm:py-16">
         <div className="mx-auto grid max-w-[1180px] gap-12 lg:grid-cols-[.85fr_1.15fr] lg:items-center">
           <div>
             <div className="flex items-center gap-4">
@@ -409,7 +410,7 @@ export function HomePageTailwind() {
         </div>
       </section>
 
-      <section id="solutions" className="h-fit bg-[#f7f3fb] px-4 py-14 text-slate-950 sm:px-6 sm:py-16">
+      <section data-tone="light" id="solutions" className="h-fit bg-[#f7f3fb] px-4 py-14 text-slate-950 sm:px-6 sm:py-16">
         <div className="mx-auto max-w-[1180px]">
           <div className="mx-auto max-w-[760px] text-center">
             <span className="text-xs font-extrabold tracking-[.18em] text-violet-700">MORE THAN A PLATFORM</span>
@@ -443,7 +444,7 @@ export function HomePageTailwind() {
         </div>
       </section>
 
-      <section data-active-journey className="relative isolate overflow-hidden px-4 py-14 sm:px-6 sm:py-16">
+      <section data-tone="dark" data-active-journey className="relative isolate overflow-hidden px-4 py-14 sm:px-6 sm:py-16">
         <img
           src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=2200&q=86"
           alt=""
@@ -574,7 +575,7 @@ export function HomePageTailwind() {
         </div>
       </section>
 
-      <section className="h-fit bg-[#f7f3fb] px-4 py-14 text-slate-950 sm:px-6 sm:py-16">
+      <section data-tone="light" className="h-fit bg-[#f7f3fb] px-4 py-14 text-slate-950 sm:px-6 sm:py-16">
         <div className="mx-auto max-w-[1180px]">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div className="max-w-[780px]">
@@ -641,7 +642,7 @@ export function HomePageTailwind() {
         </div>
       </section>
 
-      <section className="bg-[#0f0314] px-4 py-14 sm:px-6 sm:py-16">
+      <section data-tone="dark" className="bg-[#0f0314] px-4 py-14 sm:px-6 sm:py-16">
         <div className="mx-auto grid max-w-[1180px] gap-5 lg:grid-cols-2">
           <article className="rounded-[28px] border border-white/10 bg-white/[.045] p-6 sm:p-8">
             <span className="text-xs font-extrabold tracking-[.16em] text-fuchsia-200">PLATFORM CHOICE</span>
@@ -684,7 +685,7 @@ export function HomePageTailwind() {
         </div>
       </section>
 
-      <section className="bg-[#f7f3fb] px-4 py-14 text-slate-950 sm:px-6 sm:py-16">
+      <section data-tone="light" className="bg-[#f7f3fb] px-4 py-14 text-slate-950 sm:px-6 sm:py-16">
         <div className="mx-auto grid max-w-[1180px] gap-8 lg:grid-cols-[.8fr_1.2fr]">
           <div>
             <span className="text-xs font-extrabold tracking-[.18em] text-violet-700">FREQUENTLY ASKED QUESTIONS</span>

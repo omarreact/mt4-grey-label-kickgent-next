@@ -282,7 +282,7 @@ export function SharedSiteHeader() {
 
 export function SharedSiteFooter() {
   return (
-    <footer className="h-fit border-t border-white/10 bg-[#0d0312] pb-6 pt-10 text-white">
+    <footer data-tone="dark" className="h-fit border-t border-white/10 bg-[#0d0312] pb-6 pt-10 text-white">
       <div className="mx-auto w-[min(1180px,calc(100%_-_32px))]">
         <div data-site-footer-grid className="grid grid-cols-[1.25fr_.8fr_.8fr_1fr] gap-7 max-[900px]:grid-cols-2 max-[720px]:gap-x-5 max-[720px]:gap-y-6">
           <div className="max-[900px]:col-span-2">

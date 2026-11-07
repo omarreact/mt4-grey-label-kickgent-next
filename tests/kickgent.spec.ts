@@ -1317,3 +1317,23 @@ test("desktop banner keeps zero outside bottom spacing", async ({ page }, testIn
   );
   expect(desktopFrameBackground).not.toBe("rgba(0, 0, 0, 0)");
 });
+
+test("semantic tone contract keeps typography readable on dark and light surfaces", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Tone contract audit runs once in Chromium");
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/");
+
+  const darkHeading = page.locator('section[data-tone="dark"] h2').first();
+  const lightHeading = page.locator('section[data-tone="light"] h2').first();
+  await expect(darkHeading).toBeVisible();
+  await expect(lightHeading).toBeVisible();
+  await expect(darkHeading).toHaveCSS("color", "rgb(252, 248, 255)");
+  await expect(lightHeading).toHaveCSS("color", "rgb(36, 16, 54)");
+
+  await page.goto("/about");
+  const innerHero = page.locator(".page-hero");
+  const innerMain = page.locator(".page-main");
+  await expect(innerHero).toHaveAttribute("data-tone", "dark");
+  await expect(innerMain).toHaveAttribute("data-tone", "light");
+  await expect(innerHero.locator("h1")).toHaveCSS("color", "rgb(255, 255, 255)");
+});

@@ -32,3 +32,98 @@ body { margin: 0; background: var(--color-background); color: var(--color-foregr
 /* Hero secondary CTA must remain dark on its light surface across generated outputs. */
 .hero-secondary-cta { color: #35184d !important; }
 .hero-secondary-cta svg { color: inherit; }
+
+
+/* Semantic typography contrast contract.
+   Dark surfaces default to light typography; light surfaces default to dark typography.
+   Explicit color utilities remain authoritative for accents, gradients and muted copy. */
+[data-tone="dark"] {
+  --tone-heading: #fcf8ff;
+  --tone-body: #ded2e6;
+  color: var(--tone-heading);
+}
+[data-tone="light"] {
+  --tone-heading: #241036;
+  --tone-body: #5f4d6c;
+  color: var(--tone-heading);
+}
+
+[data-tone="dark"] :is(h1,h2,h3,h4,h5,h6,strong,summary)
+:not([class*="text-[#"])
+:not([class*="text-white"])
+:not([class*="text-black"])
+:not([class*="text-slate-"])
+:not([class*="text-violet-"])
+:not([class*="text-fuchsia-"])
+:not([class*="text-purple-"])
+:not([class*="text-pink-"])
+:not([class*="text-emerald-"])
+:not([class*="text-sky-"])
+:not([class*="text-blue-"])
+:not([class*="text-green-"])
+:not([class*="text-red-"])
+:not([class*="text-gray-"])
+:not([class*="text-zinc-"])
+:not([class*="text-neutral-"])
+:not([class*="text-stone-"])
+:not([class*="text-transparent"]),
+[data-tone="light"] :is(h1,h2,h3,h4,h5,h6,strong,summary)
+:not([class*="text-[#"])
+:not([class*="text-white"])
+:not([class*="text-black"])
+:not([class*="text-slate-"])
+:not([class*="text-violet-"])
+:not([class*="text-fuchsia-"])
+:not([class*="text-purple-"])
+:not([class*="text-pink-"])
+:not([class*="text-emerald-"])
+:not([class*="text-sky-"])
+:not([class*="text-blue-"])
+:not([class*="text-green-"])
+:not([class*="text-red-"])
+:not([class*="text-gray-"])
+:not([class*="text-zinc-"])
+:not([class*="text-neutral-"])
+:not([class*="text-stone-"])
+:not([class*="text-transparent"]) {
+  color: var(--tone-heading);
+}
+
+[data-tone="dark"] :is(p,li,dt,dd,blockquote,figcaption,small)
+:not([class*="text-[#"])
+:not([class*="text-white"])
+:not([class*="text-black"])
+:not([class*="text-slate-"])
+:not([class*="text-violet-"])
+:not([class*="text-fuchsia-"])
+:not([class*="text-purple-"])
+:not([class*="text-pink-"])
+:not([class*="text-emerald-"])
+:not([class*="text-sky-"])
+:not([class*="text-blue-"])
+:not([class*="text-green-"])
+:not([class*="text-red-"])
+:not([class*="text-gray-"])
+:not([class*="text-zinc-"])
+:not([class*="text-neutral-"])
+:not([class*="text-stone-"]),
+[data-tone="light"] :is(p,li,dt,dd,blockquote,figcaption,small)
+:not([class*="text-[#"])
+:not([class*="text-white"])
+:not([class*="text-black"])
+:not([class*="text-slate-"])
+:not([class*="text-violet-"])
+:not([class*="text-fuchsia-"])
+:not([class*="text-purple-"])
+:not([class*="text-pink-"])
+:not([class*="text-emerald-"])
+:not([class*="text-sky-"])
+:not([class*="text-blue-"])
+:not([class*="text-green-"])
+:not([class*="text-red-"])
+:not([class*="text-gray-"])
+:not([class*="text-zinc-"])
+:not([class*="text-neutral-"])
+:not([class*="text-stone-"]) {
+  color: var(--tone-body);
+}

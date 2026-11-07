@@ -55,7 +55,7 @@ function ArrowIcon() {
 export function SharedClosingSections() {
   return (
     <>
-      <section id="how-it-works" data-global-how-it-works className="relative isolate h-fit overflow-hidden px-4 py-14 text-white sm:px-6 sm:py-16">
+      <section data-tone="dark" id="how-it-works" data-global-how-it-works className="relative isolate h-fit overflow-hidden px-4 py-14 text-white sm:px-6 sm:py-16">
         <img
           src="https://images.unsplash.com/photo-1788790716354-00a65a62bf58?auto=format&fit=crop&w=2200&q=86"
           alt=""
@@ -133,7 +133,7 @@ export function SharedClosingSections() {
         </div>
       </section>
 
-      <section data-global-cta className="h-fit bg-[#f7f3fb] px-4 py-10 text-[#241036] sm:px-6 sm:py-18">
+      <section data-tone="light" data-global-cta className="h-fit bg-[#f7f3fb] px-4 py-10 text-[#241036] sm:px-6 sm:py-18">
         <div className="mx-auto flex h-fit max-w-[1180px] flex-col gap-8 overflow-hidden rounded-[32px] border border-violet-100/80 bg-[radial-gradient(circle_at_84%_18%,rgba(192,132,252,.2),transparent_34%),linear-gradient(135deg,rgba(255,255,255,.96),rgba(246,240,251,.9))] p-7 shadow-[0_24px_70px_rgba(74,31,95,.12)] backdrop-blur-2xl sm:p-10 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-[720px]">
             <span className="text-xs font-extrabold tracking-[.18em] text-violet-700">START WITH THE RIGHT FOUNDATION</span>
